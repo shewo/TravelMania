@@ -1,15 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SellerDashboard from "./pages/SellerDashboard";
-import MyListings from "./pages/MyListings";
-import Rentals from "./pages/Rentals";
-import SalesHistory from "./pages/SalesHistory";
-import Reports from "./pages/Reports";
-import Settings from "./pages/Settings";
-import Support from "./pages/Support";
-
-function App() {
+import SellerDashboard from "../pages/SellerDashboard";
+import MyListings from "../pages/MyListings";
+import Rentals from "../pages/Rentals";
+import SalesHistory from "../pages/SalesHistory";
+import Reports from "../pages/Reports";
+import Settings from "../pages/Settings";
+import Support from "../pages/Support";
+function Dashboard() {
   return (
-    <Router>
+     <Router>
       <Routes>
         <Route path="/" element={<SellerDashboard />} />
         <Route path="/listings" element={<MyListings />} />
@@ -20,7 +19,7 @@ function App() {
         <Route path="/support" element={<Support />} />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App
+export default Dashboard
