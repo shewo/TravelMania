@@ -6,7 +6,7 @@ const HomePage1 = () => {
   return (
     <div 
       className="hero-section" 
-      style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(${bgImage})` }}
+      style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${bgImage})` }}
     >
       {/* Top Navigation */}
       <nav className="hero-nav">
