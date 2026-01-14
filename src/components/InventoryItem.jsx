@@ -7,6 +7,6 @@ export default function InventoryItem({ name }) {
         <button>Edit Listing</button>
         <button>View Orders</button>
       </div>
-    </div>
+    </div> 
   );
 }
