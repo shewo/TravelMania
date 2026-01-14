@@ -1,25 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import SellerDashboard from "./pages/SellerDashboard";
-import MyListings from "./pages/MyListings";
-import Rentals from "./pages/Rentals";
-import SalesHistory from "./pages/SalesHistory";
-import Reports from "./pages/Reports";
-import Settings from "./pages/Settings";
-import Support from "./pages/Support";
+import React from "react";  
+import Dashboard from "./Main-sections/Dashboard";
+import HomePage from "./Main-sections/Homepage";  
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<SellerDashboard />} />
-        <Route path="/listings" element={<MyListings />} />
-        <Route path="/rentals" element={<Rentals />} />
-        <Route path="/sales" element={<SalesHistory />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/support" element={<Support />} />
-      </Routes>
-    </Router>
+    <>
+    <HomePage />  
+    <Dashboard />
+    
+   
+  </>
+  
   );
 }
 
