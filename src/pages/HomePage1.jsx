@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/HomePage1.css'; 
 import bgImage from '../assets/footer-bg.jpg'; // Path eka check karaganna (e.g., ../assets/...)
+import Navbar from '../components/Navbar';
 
 const HomePage1 = () => {
   return (
@@ -9,22 +10,7 @@ const HomePage1 = () => {
       style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${bgImage})` }}
     >
       {/* Top Navigation */}
-      <nav className="hero-nav">
-        <div className="nav-group">
-          <a href="#home">HOME</a>
-          <a href="#map">MAP</a>
-        </div>
-        
-        <div className="hero-logo">
-          {/* Logo image eka nathnam text eka mehema danna */}
-          <h1 className="logo-text">TRAVELMANIA</h1>
-        </div>
-
-        <div className="nav-group">
-          <a href="#explore">EXPLORE</a>
-          <a href="#about">ABOUT US</a>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Content */}
       <div className="hero-main">

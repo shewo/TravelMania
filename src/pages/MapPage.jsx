@@ -2,22 +2,13 @@
 import React from 'react';
 import ShopMap from '../components/ShopMap';
 import '../styles/HomePage1.css'; // Reusing your global styles
+import Navbar from '../components/Navbar';
 
 const MapPage = () => {
     return (
         <div style={{ backgroundColor: "#0b0a0a", minHeight: "100vh", padding: "20px" }}>
             {/* Simple Header */}
-            <nav className="hero-nav" style={{ marginBottom: "20px" }}>
-                <div className="nav-group">
-                    <a href="/">HOME</a>
-                </div>
-                <div className="hero-logo">
-                    <h1 className="logo-text">TRAVELMANIA</h1>
-                </div>
-                <div className="nav-group">
-                    <a href="/map">MAP</a>
-                </div>
-            </nav>
+            <Navbar />
 
             {/* Map Content */}
             <div style={{ textAlign: "center", marginBottom: "30px" }}>

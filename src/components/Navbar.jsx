@@ -6,11 +6,11 @@ const Navbar = () => {
   return (
     <nav 
       className="hero-nav" 
-      style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${navBg})` }}
+      
     >
       <div className="nav-group">
-        <a href="#home">HOME</a>
-        <a href="#map">MAP</a>
+        <a href="/">HOME</a>
+        <a href="/map">MAP</a>
       </div>
       
       <div className="hero-logo">
