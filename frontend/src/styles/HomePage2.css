@@ -179,25 +179,25 @@
 /* --- HOVER EFFECTS (Bright Gold) --- */
 
 .hp2-cta-btn:hover .hp2-frame {
-  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
+  filter: drop-shadow(0 0 8px #ffffff);
 }
 
 /* Outer Frame Hover */
 .hp2-cta-btn:hover .hp2-inner {
-  stroke: #d4af37; /* Bright Gold */
+  stroke: #ffffff; /* Bright Gold */
   fill: rgba(212, 175, 55, 0.1); 
   stroke-width: 2px;
 }
 
 /* Inner Box Hover */
 .hp2-cta-btn:hover .hp2-innerBox {
-  stroke: #d4af37; /* Bright Gold */
+  stroke: #ffffff; /* Bright Gold */
 }
 
 /* Text Hover */
 .hp2-cta-btn:hover span {
-  color: #d4af37; /* Bright Gold */
-  text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+  color: #ffffff; /* Bright Gold */
+  
 }
 
 .hp2-cta-btn:active {

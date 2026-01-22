@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./Main-sections/Homepage";
 import MapPage from "./pages/MapPage";
 
+
 // 1. Import the wrapper (adjust path if you put it somewhere else)
 import SmoothScrollWrapper from "./components/SmoothScrollWrapper"; 
 
@@ -14,6 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/map" element={<MapPage />} />
+          
+          
         </Routes>
       </SmoothScrollWrapper>
     </Router>
