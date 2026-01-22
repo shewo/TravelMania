@@ -6,6 +6,7 @@ import HomePage4 from '../pages/HomePage4'
 import HomePage5 from '../pages/HomePage5'
 import Navbar from '../components/Navbar'
 import ParallaxGap from '../components/ParallaxGap'
+import Dashboard from './Dashboard'
 
 
 
@@ -60,6 +61,7 @@ function Homepage() {
 
       {/* 5. FINALLY PAGE 4 */}
       <HomePage4 />
+     
     </>
   )
 }

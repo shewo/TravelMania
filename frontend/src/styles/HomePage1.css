@@ -47,18 +47,25 @@
 .cta-text {
   position: relative; z-index: 2;
   font-family: 'Cinzel', serif; font-size: 0.95rem;
-  color: #edebd5; letter-spacing: 4px;
+  color: #d2cfaa; letter-spacing: 4px;
 }
 
-.hp1-cta:hover .hp1-frame polygon { stroke: #fff; filter: drop-shadow(0 0 8px #D4AF37); }
-.hp1-cta:hover .cta-text { color: #D4AF37; }
 
-/* --- MUSIC BUTTON --- */
+    
+.hp1-cta:hover .hp1-frame polygon {  stroke: #fff; /* Turns white */
+    filter: drop-shadow(0 0 8px #b7931e); /* Gold Glow */
+    opacity: 1;
+ }
+.hp1-cta:hover .cta-text { color: #f4f2e0; 
+transform: scale(1.01);}
+
 /* --- MUSIC BUTTON (Icon Only) --- */
+
+
 .hp1-music-control {
     position: absolute;
     bottom: 3rem;
-    right: 3rem;
+    left: 3rem;  /* CHANGED: Moves button to the left corner */
     z-index: 20;
     
     /* Remove Frame & Background */
@@ -67,8 +74,8 @@
     padding: 0;
     
     /* Icon Style */
-    color: #8f8c6e; /* Solid Gold Color */
-    font-size: 2rem; /* Make the logo bigger since it's alone */
+    color: #8f8c6e;
+    font-size: 2rem;
     cursor: pointer;
     
     /* Optional: Glassy Glow effect behind it */
@@ -78,8 +85,8 @@
 
 /* Hover Effect */
 .hp1-music-control:hover {
-    transform: scale(1.1) rotate(10deg); /* Slight spin/grow */
-    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8)); /* Glows brighter */
-    background: transparent; /* Ensures no box appears */
-    color: #fcf6ba; /* Lighter gold on hover */
+    transform: scale(1.1) rotate(10deg);
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
+    background: transparent;
+    color: #fcf6ba;
 }

@@ -60,13 +60,14 @@
 .hp5-gold-title {
     font-family: 'Cinzel', serif !important;
     font-weight: 700 !important;
-    font-size: 5rem !important;
+    font-size: 2rem !important;
     line-height: 1.1 !important;
     text-transform: uppercase !important;
     margin-bottom: 50px !important;
+    opacity: 0.9 !important;
 
     /* Your Gold Gradient */
-    background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c) !important;
+    background: #f1e2ab !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     color: transparent !important;
@@ -112,7 +113,7 @@
     font-size: 1.1rem;
     letter-spacing: 3px;
     text-transform: uppercase;
-    text-shadow: 0 0 5px #edebd5;
+    text-shadow: 0 0 5px #000000;
     transition: all 0.3s ease;
     
     /* Added property for bold text */

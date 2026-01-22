@@ -24,10 +24,13 @@ const HomePage5 = () => {
         
        
         {/* Title */}
-        <h1 className="hp5-gold-title">
-            TRAVEL<br />
-            MANIA
-        </h1>
+        <p className="hp5-gold-title">
+            "Travel Mania: <br/> Where every great journey finds its gear
+             We combine .<br/> smart travel management with an extensive rental marketplace,<br/>
+              giving you instant access to the equipment you need,<br/>
+             exactly when you need it. Don't just plan your trip—equip it."<br/>
+            
+        </p>
         
         {/* BUTTON CONTAINER (Side-by-Side) */}
         <div className="hp5-buttons-container">

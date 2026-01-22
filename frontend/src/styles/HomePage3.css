@@ -69,15 +69,15 @@
 
 /* Hover Effects */
 .hp3-scope .hp3-cta-btn:hover .hp3-inner {
-  stroke: #d4af37;
+  stroke: #ffffff;
   fill: rgba(212, 175, 55, 0.2); 
 }
 .hp3-scope .hp3-cta-btn:hover .hp3-innerBox {
-  stroke: #d4af37;
+  stroke: #ffffff;
 }
 .hp3-scope .hp3-cta-btn:hover span {
   color: #fff;
-  text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+ 
 }
 
 
