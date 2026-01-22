@@ -1,123 +1,234 @@
-.map-section-container {
+/* =========================================
+   1. MAIN LAYOUT & VIDEO BACKGROUND
+   ========================================= */
+.hp2-section-container {
   min-height: 100vh;
   width: 100%;
-  background-color: #fdf6e3; /* Light cream/parchment color */
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   padding: 50px 0;
   font-family: 'Cinzel', serif;
+  overflow: hidden; 
 }
 
-.map-content-wrapper {
+/* Video Positioning */
+.hp2-video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hp2-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hp2-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Adjust this if video is too dark */
+  z-index: 1;
+}
+
+.hp2-content-wrapper {
   width: 90%;
   max-width: 1200px;
   display: flex;
   align-items: center;
   gap: 60px;
-  flex-wrap: wrap; /* Mobile friendly wenna */
+  flex-wrap: wrap; 
+  position: relative; 
+  z-index: 2; /* Ensures content sits on top of video */
 }
 
-/* Tablet Frame & Map */
-.map-visual {
+/* =========================================
+   2. MAP & TEXT CONTENT
+   ========================================= */
+.hp2-visual {
   flex: 1;
   min-width: 400px;
   display: flex;
   justify-content: center;
 }
 
-.tablet-frame {
+.hp2-tablet-frame {
   width: 100%;
   max-width: 450px;
   background: #111;
   padding: 15px;
   border-radius: 30px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
   position: relative;
   border: 4px solid #333;
 }
 
-.map-display {
+.hp2-map-display {
   width: 100%;
   border-radius: 15px;
   display: block;
 }
 
-.map-search-bar {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  right: 30px;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 8px 15px;
-  border-radius: 5px;
-  border: 1px solid #d4af37;
-  color: #fff;
-  font-size: 10px;
-  letter-spacing: 1px;
-}
 
-/* Text Side */
-.map-text-info {
+
+.hp2-text-info {
   flex: 1;
   min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
 }
 
-.map-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  color: #d4af37;
+.hp2-title {
+  /* 1. Typography Style */
+  font-family: 'Cinzel', serif; 
+  font-size: clamp(2.5rem, 5vw, 4rem); /* Kept your responsive size */
   line-height: 1.1;
-  margin-bottom: 30px;
   font-weight: 800;
-  background: linear-gradient(to bottom, #d4af37, #8b6b32);
+  margin-bottom: 30px;
+  text-transform: uppercase; /* Recommended for this look */
+
+  /* 2. The Premium Gold Gradient */
+  background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  
+  /* 3. Text Clipping */
   -webkit-background-clip: text;
+  background-clip: text;
+  
+  /* 4. Transparency & Shadow */
+  color: transparent;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
 }
+/* =========================================
+   3. RESTORED BUTTON STYLES (EXACT MATCH)
+   ========================================= */
 
-.map-description {
-  font-family: 'Montserrat', sans-serif;
-  color: #333;
-  line-height: 1.8;
-  font-size: 1.1rem;
-  margin-bottom: 40px;
-  max-width: 500px;
-}
-
-/* Button */
-.explore-map-btn {
+.hp2-cta-btn {
+  position: relative; 
+  display: inline-block; 
+  margin-top: 15px;      
+  
   background: transparent;
-  border: 2px solid #d4af37;
-  color: #8b6b32;
-  padding: 12px 35px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  letter-spacing: 2px;
+  border: none;
+  padding: 0;
   cursor: pointer;
-  transition: 0.4s ease;
+
+  width: 300px; 
+  height: 64px;
+
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  
+  /* ORIGINAL COLOR: Dark Bronze */
+  color: #edebd5; 
 }
 
-.explore-map-btn:hover {
-  background: #d4af37;
-  color: white;
-  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
-}
-
-.bottom-star-decor {
+/* SVG Frame Styles */
+.hp2-frame {
   position: absolute;
-  bottom: 40px;
-  right: 60px;
-  font-size: 30px;
-  color: #e0d5ba;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
-/* Responsive adjustment */
+/* The Angled Outer Frame */
+.hp2-inner {
+  stroke:#aaa67a; /* ORIGINAL COLOR: Dark Bronze Outline */
+  stroke-width: 2.5px;
+  fill: transparent; 
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  transition: all 0.3s ease;
+}
+
+/* The Inner Rectangular Box */
+.hp2-innerBox {
+  fill: none;
+  stroke: #aaa67a; /* Match outer frame */
+  stroke-width: 1px;
+  transition: all 0.3s ease;
+}
+
+.hp2-cta-btn span {
+  position: relative;
+  z-index: 2;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  transition: color 0.3s ease;
+  
+  /* Optional: If the button is too dark on the video, un-comment the line below to make just the text white */
+  /* color: #e5e5e5; */
+}
+
+/* --- HOVER EFFECTS (Bright Gold) --- */
+
+.hp2-cta-btn:hover .hp2-frame {
+  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
+}
+
+/* Outer Frame Hover */
+.hp2-cta-btn:hover .hp2-inner {
+  stroke: #d4af37; /* Bright Gold */
+  fill: rgba(212, 175, 55, 0.1); 
+  stroke-width: 2px;
+}
+
+/* Inner Box Hover */
+.hp2-cta-btn:hover .hp2-innerBox {
+  stroke: #d4af37; /* Bright Gold */
+}
+
+/* Text Hover */
+.hp2-cta-btn:hover span {
+  color: #d4af37; /* Bright Gold */
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+.hp2-cta-btn:active {
+  transform: scale(0.98);
+}
+
+/* =========================================
+   4. DECORATIONS & RESPONSIVE
+   ========================================= */
+
+.hp2-bottom-star {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: #d4af37;
+  opacity: 0.8;
+  z-index: 2;
+}
+
 @media (max-width: 900px) {
-  .map-content-wrapper {
+  .hp2-content-wrapper {
     flex-direction: column;
     text-align: center;
   }
-  .map-description {
-    margin: 0 auto 40px;
+  
+  .hp2-text-info {
+    align-items: center;
+  }
+  
+  .hp2-visual {
+    margin-bottom: 20px;
   }
 }
