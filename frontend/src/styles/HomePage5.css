@@ -1,0 +1,189 @@
+/* 1. IMPORT FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+
+/* 2. MAIN CONTAINER */
+.hp5-hero-section {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: black;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* 3. VIDEO & OVERLAY */
+.hp5-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.hp5-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+/* 4. CONTENT WRAPPER */
+.hp5-content-wrapper {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+/* 5. TEXT STYLES */
+.hp5-subtitle {
+    color: #edebd5;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.hp5-gold-title {
+    font-family: 'Cinzel', serif !important;
+    font-weight: 700 !important;
+    font-size: 5rem !important;
+    line-height: 1.1 !important;
+    text-transform: uppercase !important;
+    margin-bottom: 50px !important;
+
+    /* Your Gold Gradient */
+    background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    
+    /* Your Shadow Filter */
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8)) !important;
+}
+
+/* =========================================
+   6. BUTTON CONTAINER
+   ========================================= */
+.hp5-buttons-container {
+    display: flex;
+    gap: 30px; /* Space between the two buttons */
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap; /* Wraps buttons on smaller screens */
+}
+
+/* =========================================
+   7. FANCY SVG BUTTON STYLES (Applied to Both)
+   ========================================= */
+.hp5-fancy-btn {
+    position: relative;
+    width: 380px; /* Width for the banner shape */
+    height: 64px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+/* Text Inside Button */
+.hp5-btn-text {
+    position: absolute;
+    z-index: 2;
+    color: #edebd5;
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px #edebd5;
+    transition: all 0.3s ease;
+    
+    /* Added property for bold text */
+    font-weight: bold; 
+}
+
+/* SVG Frame Positioning */
+.hp5-svg-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* The Lines inside the SVG */
+.hp5-poly, .hp5-rect {
+    fill: none;
+    stroke: #aaa67a; /* Gold color */
+    stroke-width: 1.0px;
+    transition: all 0.4s ease;
+    vector-effect: non-scaling-stroke;
+}
+
+.hp5-rect {
+    opacity: 0.5; /* Faint inner box */
+    stroke-width: 1.5px;
+}
+
+/* --- HOVER ANIMATIONS --- */
+.hp5-fancy-btn:hover .hp5-poly,
+.hp5-fancy-btn:hover .hp5-rect {
+    stroke: #fff; /* Turns white */
+    filter: drop-shadow(0 0 8px #D4AF37); /* Gold Glow */
+    opacity: 1;
+}
+
+.hp5-fancy-btn:hover .hp5-btn-text {
+    color: #fff;
+    text-shadow: 0 0 15px #D4AF37;
+    transform: scale(1.05); 
+}
+
+/* 8. MOBILE RESPONSIVE */
+@media (max-width: 1024px) {
+    .hp5-gold-title {
+        font-size: 3.5rem;
+    }
+    
+    .hp5-fancy-btn {
+        width: 320px; /* Slightly smaller on tablets */
+        height: 55px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hp5-buttons-container {
+        flex-direction: column; /* Stack buttons vertically on mobile */
+        gap: 20px;
+    }
+    
+    .hp5-gold-title {
+        font-size: 3rem;
+    }
+
+    .hp5-fancy-btn {
+        width: 280px; 
+        height: 50px;
+    }
+    
+    .hp5-btn-text {
+        font-size: 0.9rem;
+    }
+}

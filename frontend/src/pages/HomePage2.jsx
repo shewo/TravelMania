@@ -1,37 +1,68 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // 🔗 Imported Link for navigation
+import { Link } from 'react-router-dom'; 
 import '../styles/HomePage2.css'; 
 import mapImg from '../assets/map-image.png'; 
 
+// IMPORT YOUR VIDEO HERE
+// Make sure to place your video in the assets folder
+import bgVideo from '../assets/your-video-file.mp4'; 
+
 const HomePage2 = () => {
   return (
-    <div className="map-section-container">
-      <div className="map-content-wrapper">
+    <div className="hp2-section-container">
+      
+      {/* --- BACKGROUND VIDEO START --- */}
+      <div className="hp2-video-wrapper">
+        <video 
+          className="hp2-bg-video" 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+        >
+          <source src={bgVideo} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        {/* Optional: Dark overlay to make text pop */}
+        <div className="hp2-video-overlay"></div>
+      </div>
+      {/* --- BACKGROUND VIDEO END --- */}
+
+      <div className="hp2-content-wrapper">
         
-        {/* Left Side: Map Frame */}
-        <div className="map-visual">
-          <div className="tablet-frame">
-            <img src={mapImg} alt="Interactive Map" className="map-display" />
+        {/* Left Side: Map Visuals */}
+        <div className="hp2-visual">
+          <div className="hp2-tablet-frame">
+            <img src={mapImg} alt="Interactive Map" className="hp2-map-display" />
+            
           </div>
         </div>
 
         {/* Right Side: Text Content */}
-        <div className="map-text-info">
-          <h2 className="map-title">FIND YOUR GEAR, <br /> ANYWHERE</h2>
-          <p className="map-description">
-            Planning your next adventure? Simply search your destination on our 
-            interactive map. We'll instantly show you the nearest and best-rated 
-            travel equipment rental shops, so you can travel light and gear up on arrival. 
-            No more bulky luggage, just pure exploration.
-          </p>
+        <div className="hp2-text-info">
+          <h2 className="hp2-title">FIND YOUR GEAR, <br /> ANYWHERE</h2>
           
-          {/* 📍 The button is now wrapped in a Link to the /map route */}
-          <Link to="/map">
-            <button className="explore-map-btn">EXPLORE THE MAP</button>
+          <Link to="/map" style={{ textDecoration: 'none' }}>
+            <button className="hp2-cta-btn">
+              <svg
+                className="hp2-frame"
+                viewBox="0 0 420 64"
+                preserveAspectRatio="none"
+              >
+                <polygon
+                  className="hp2-inner"
+                  points="40,12 380,12 408,32 380,52 40,52 12,32"
+                />
+                <rect className="hp2-innerBox" x="20" y="18" width="380" height="28" />
+              </svg>
+              <span>EXPLORE THE MAP</span>
+            </button>
           </Link>
         </div>
 
       </div>
+
+      
     </div>
   );
 };

@@ -8,11 +8,11 @@ const MapPage = () => {
     return (
         <div style={{ backgroundColor: "#0b0a0a", minHeight: "100vh", padding: "20px" }}>
             {/* Simple Header */}
-            <Navbar />
+            <Navbar/>
 
             {/* Map Content */}
             <div style={{ textAlign: "center", marginBottom: "30px" }}>
-                <h1 className="hero-title" style={{ fontSize: "3rem" }}>EXPLORE DESTINATIONS</h1>
+               
                 <p style={{ color: "#C5B097", letterSpacing: "2px" }}>FIND GEAR AND SHOPS NEAR YOU</p>
             </div>
 
