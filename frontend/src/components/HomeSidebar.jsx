@@ -27,9 +27,9 @@ const HomeSidebar = ({ isOpen, onClose }) => {
         <nav className="sidebar-nav">
           <ul className="nav-list">
             <li className="nav-item"><a href="#home" onClick={onClose}>HOME</a></li>
-            <li className="nav-item"><a href="#releases" onClick={onClose}>RELEASES</a></li>
-            <li className="nav-item"><a href="#stockists" onClick={onClose}>STOCKISTS</a></li>
-            <li className="nav-item"><a href="#privacy" onClick={onClose}>PRIVACY</a></li>
+            <li className="nav-item"><a href="#releases" onClick={onClose}>MAP</a></li>
+            <li className="nav-item"><a href="#stockists" onClick={onClose}>RENTALS</a></li>
+            <li className="nav-item"><a href="#privacy" onClick={onClose}>DESTINATIONS</a></li>
           </ul>
         </nav>
 
