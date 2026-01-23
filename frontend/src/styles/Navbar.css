@@ -1,14 +1,17 @@
 /* Container: Fixed glass bar */
 .navbar-split {
-    position: fixed; /* Keep it at the top always */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 70px; /* Original height */
+    height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 1000; /* High z-index to stay above page content */
+    
+    /* CRITICAL FIX: Higher than sidebar (1050) */
+    z-index: 1100; 
+    
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.1); 
     backdrop-filter: blur(0px);
@@ -17,10 +20,10 @@
 
 /* Appearance when user scrolls down */
 .navbar-split.scrolled {
-    height: 70px; /* Shrinks slightly */
-    background: rgba(0, 0, 0, 0.85); /* Becomes darker */
-    backdrop-filter: blur(10px); /* Blurs content behind it */
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3); /* Adds a subtle gold border */
+    height: 70px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
 }
 
 /* Common Section Styles */
@@ -37,6 +40,7 @@
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* --- MENU BUTTON & ANIMATION --- */
 .menu-btn {
     background: none;
     border: none;
@@ -47,20 +51,50 @@
     cursor: pointer;
     font-size: 0.8rem;
     letter-spacing: 3px;
+    position: relative;
+    /* Extra safety z-index */
+    z-index: 1101; 
+    transition: color 0.3s ease;
 }
 
 .hamburger-icon {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    justify-content: space-between;
+    height: 15px;
     width: 25px;
+    position: relative;
 }
 
 .line {
     width: 100%;
     height: 1px;
     background-color: white;
-    transition: 0.3s;
+    transition: all 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+/* === MENU OPEN ANIMATION === */
+
+/* Top Line: Move down and Rotate */
+.menu-btn.open .line.top {
+    transform: translateY(7px) rotate(45deg);
+}
+
+/* Middle Line: Fade out */
+.menu-btn.open .line.middle {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+/* Bottom Line: Move up and Rotate */
+.menu-btn.open .line.bottom {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Optional: Ensure text remains white */
+.menu-btn.open .menu-text {
+    color: white; 
 }
 
 /* --- CENTER: Logo --- */
@@ -71,13 +105,13 @@
 }
 
 .nav-logo {
-    height: 71px; /* Base height */
+    height: 71px;
     transition: height 0.4s ease;
     object-fit: contain;
 }
 
 .navbar-split.scrolled .nav-logo {
-    height: 45px; /* Logo shrinks when scrolling */
+    height: 45px;
 }
 
 /* --- RIGHT: Action --- */
@@ -100,11 +134,10 @@
     color: #d4af37;
 }
 
-/* --- BUTTON CHANGE HERE --- */
 .action-btn {
     background: transparent;
-    border: none; /* REMOVED THE FRAME */
-    padding: 0;   /* Removed padding since there is no box */
+    border: none; 
+    padding: 0; 
     color: white;
     font-size: 0.75rem;
     letter-spacing: 2px;
@@ -113,8 +146,7 @@
 }
 
 .action-btn:hover {
-    color: #d4af37; /* Changed hover to just text color since bg is gone */
-    background: transparent;
+    color: #d4af37; 
 }
 
 /* Mobile Responsive */
@@ -123,9 +155,11 @@
         border: none;
         padding: 0 20px;
     }
+    
     .menu-text, .action-btn {
-        display: none; /* Icons only on mobile */
+        display: none; 
     }
+    
     .navbar-split {
         height: 70px;
     }

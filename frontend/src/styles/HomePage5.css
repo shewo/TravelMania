@@ -64,7 +64,7 @@
     line-height: 1.1 !important;
     text-transform: uppercase !important;
     margin-bottom: 50px !important;
-    opacity: 0.9 !important;
+    opacity: 0.6 !important;
 
     /* Your Gold Gradient */
     background: #f1e2ab !important;
@@ -108,7 +108,7 @@
 .hp5-btn-text {
     position: absolute;
     z-index: 2;
-    color: #edebd5;
+    color: #d2cfaa;
     font-family: 'Cinzel', serif;
     font-size: 1.1rem;
     letter-spacing: 3px;
