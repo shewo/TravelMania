@@ -12,10 +12,9 @@ import 'swiper/css/pagination';
 import '../styles/HomePage3.css'; 
 
 // --- MEDIA IMPORTS ---
-// 1. Import Video
-import travelBgVideo from '../assets/travel-bg.mp4';
+// 1. VIDEO: Removed the import line because the file is now in the 'public' folder.
 
-// 2. Import Images (Ensure these files exist in src/assets/)
+// 2. IMAGES: Keep these imports if the images are still in src/assets
 import tentImg from '../assets/tent.png';
 import backpackImg from '../assets/backpack.png';
 import cameraImg from '../assets/camera.png';
@@ -64,7 +63,8 @@ const HomePage3 = () => {
         <figure className="hp3-video-bg">
           <div className="hp3-overlay"></div>
           <video autoPlay muted loop playsInline>
-            <source src={travelBgVideo} type="video/mp4" />
+            {/* UPDATED: Points directly to public folder */}
+            <source src="/travel-bg.mp4" type="video/mp4" />
           </video>
         </figure>
 
@@ -99,7 +99,7 @@ const HomePage3 = () => {
                     <span className="hp3-category">{item.category}</span>
                     <p className="hp3-price">{item.price}</p>
                     
-                    {/* SVG BUTTON (Small Variant) */}
+                    {/* SVG BUTTON (Rent Now) */}
                     <button className="hp3-cta-btn hp3-btn-small">
                       <svg className="hp3-frame" viewBox="0 0 420 64" preserveAspectRatio="none">
                         <polygon className="hp3-inner" points="40,12 380,12 408,32 380,52 40,52 12,32" />

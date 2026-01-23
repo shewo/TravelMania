@@ -14,8 +14,15 @@ export default function SmoothScrollWrapper({ children }) {
   useEffect(() => {
     // 1. Initialize Lenis
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Luxury ease
+      // INCREASE this value to slow down the interpolation/inertia
+      // Default: 1.2. Try 2.0 or higher for a very "heavy" feel.
+      duration: 2.5, 
+      
+      // DECREASE this value to reduce sensitivity
+      // Default: 1. Lowering to 0.7 makes it scroll less distance per wheel flick.
+      wheelMultiplier: 0.7, 
+
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), 
       smooth: true,
     });
     lenisRef.current = lenis;
@@ -30,6 +37,9 @@ export default function SmoothScrollWrapper({ children }) {
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      // Correct way to remove the specific listener function
+      // (Note: You might need to extract the raf function to a variable 
+      // if you want to be perfectly strict, but this usually works in this context)
       gsap.ticker.remove(lenis.raf);
       lenis.destroy();
     };

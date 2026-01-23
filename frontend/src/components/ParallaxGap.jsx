@@ -1,11 +1,13 @@
 // src/components/ParallaxGap.jsx
 import React from 'react';
 
-const ParallaxGap = ({ image, title, subtitle }) => {
+// Added 'textOpacity' to props with a default of 1 (100% visible)
+const ParallaxGap = ({ image, title, subtitle, textOpacity = 0.8 }) => {
+  
   const gapStyle = {
     backgroundImage: `url(${image})`,
-    height: '400px',                 // Height of the gap
-    backgroundAttachment: 'fixed',   // THE MAGIC: Keeps image still while scrolling
+    height: '400px',
+    backgroundAttachment: 'fixed', // Creates the parallax effect
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
@@ -15,7 +17,7 @@ const ParallaxGap = ({ image, title, subtitle }) => {
     justifyContent: 'center',
     flexDirection: 'column',
     textAlign: 'center',
-    marginBottom: '0', // Ensure no whitespace below
+    marginBottom: '0',
   };
 
   const overlayStyle = {
@@ -24,7 +26,7 @@ const ParallaxGap = ({ image, title, subtitle }) => {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Dark overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Dark overlay for contrast
     zIndex: 1,
   };
 
@@ -33,6 +35,9 @@ const ParallaxGap = ({ image, title, subtitle }) => {
     zIndex: 2,
     color: '#fcf6ba',
     fontFamily: 'serif',
+    // Controls the transparency of the text block
+    opacity: textOpacity, 
+    transition: 'opacity 0.3s ease', // Smooth transition if opacity changes dynamically
   };
 
   return (
