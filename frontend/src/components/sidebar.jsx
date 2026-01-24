@@ -5,13 +5,13 @@ export default function Sidebar() {
   const location = useLocation();
 
   const menuItems = [
-    { name: "Dashboard", path: "/" },
-    { name: "My Listings", path: "/listings" },
-    { name: "Rentals", path: "/rentals" },
-    { name: "Sales History", path: "/sales" },
-    { name: "Reports", path: "/reports" },
-    { name: "Settings", path: "/settings" },
-    { name: "Support", path: "/support" },
+    { name: "Dashboard", path: "/Dashboard" },
+    { name: "My Listings", path: "/Dashboard/listings" },
+    { name: "Rentals", path: "/Dashboard/rentals" },
+    { name: "Sales History", path: "/Dashboard/sales" },
+    { name: "Reports", path: "/Dashboard/reports" },
+    { name: "Settings", path: "/Dashboard/settings" },
+    { name: "Support", path: "/Dashboard/support" },
   ];
 
   return (
