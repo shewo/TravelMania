@@ -1,2 +1,0 @@
-# TravelMania
-DEA Group project
