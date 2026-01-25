@@ -45,9 +45,25 @@
     justify-content: center;
     text-align: center;
     width: 100%;
+    padding: 0 20px;
 }
 
-/* 5. TEXT STYLES */
+/* --- NEW: PNG TITLE STYLES --- */
+.hp5-title-container {
+    margin-bottom: 20px; /* Space between the image title and the text paragraph */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.hp5-title-img {
+    max-width: 450px; /* Adjust based on how big you want the logo */
+    width: 90%;       /* Ensures it shrinks on mobile */
+    height: auto;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.8)); /* Pop effect */
+}
+
+/* 5. TEXT STYLES (The Paragraph) */
 .hp5-subtitle {
     color: #edebd5;
     font-family: 'Cinzel', serif;
@@ -60,11 +76,12 @@
 .hp5-gold-title {
     font-family: 'Cinzel', serif !important;
     font-weight: 700 !important;
-    font-size: 2rem !important;
-    line-height: 1.1 !important;
+    font-size: 1.2rem !important; /* Reduced size since it's now a paragraph */
+    line-height: 1.6 !important;
     text-transform: uppercase !important;
-    margin-bottom: 50px !important;
-    opacity: 0.6 !important;
+    margin-bottom: 40px !important;
+    margin-top: 0 !important; /* Removes gap between png and text */
+    opacity: 0.9 !important;
 
     /* Your Gold Gradient */
     background: #f1e2ab !important;
@@ -74,6 +91,7 @@
     
     /* Your Shadow Filter */
     filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8)) !important;
+    max-width: 900px;
 }
 
 /* =========================================
@@ -81,19 +99,19 @@
    ========================================= */
 .hp5-buttons-container {
     display: flex;
-    gap: 30px; /* Space between the two buttons */
+    gap: 30px; 
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-    flex-wrap: wrap; /* Wraps buttons on smaller screens */
+    margin-top: 10px;
+    flex-wrap: wrap; 
 }
 
 /* =========================================
-   7. FANCY SVG BUTTON STYLES (Applied to Both)
+   7. FANCY SVG BUTTON STYLES
    ========================================= */
 .hp5-fancy-btn {
     position: relative;
-    width: 380px; /* Width for the banner shape */
+    width: 380px; 
     height: 64px;
     background: transparent;
     border: none;
@@ -115,8 +133,6 @@
     text-transform: uppercase;
     text-shadow: 0 0 5px #000000;
     transition: all 0.3s ease;
-    
-    /* Added property for bold text */
     font-weight: bold; 
 }
 
@@ -139,7 +155,7 @@
 }
 
 .hp5-rect {
-    opacity: 0.5; /* Faint inner box */
+    opacity: 0.5; 
     stroke-width: 1.5px;
 }
 
@@ -160,23 +176,29 @@
 /* 8. MOBILE RESPONSIVE */
 @media (max-width: 1024px) {
     .hp5-gold-title {
-        font-size: 3.5rem;
+        font-size: 1.1rem !important; /* Adjusted for tablet */
     }
     
     .hp5-fancy-btn {
-        width: 320px; /* Slightly smaller on tablets */
+        width: 320px; 
         height: 55px;
     }
 }
 
 @media (max-width: 768px) {
     .hp5-buttons-container {
-        flex-direction: column; /* Stack buttons vertically on mobile */
+        flex-direction: column; 
         gap: 20px;
     }
     
+    .hp5-title-img {
+        margin-bottom: 10px;
+    }
+
     .hp5-gold-title {
-        font-size: 3rem;
+        font-size: 0.9rem !important; /* Smaller text on mobile */
+        line-height: 1.5 !important;
+        padding: 0 10px;
     }
 
     .hp5-fancy-btn {
