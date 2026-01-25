@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
 
 .hp1-hero-section {
+<<<<<<< HEAD
   width: 100%; height: 100vh;
   background-position: center; background-size: cover;
   display: flex; flex-direction: column; align-items: center;
@@ -20,10 +21,46 @@
 }
 
 /* --- NEW: PNG LOGO STYLES (Replaces Text Title) --- */
+=======
+  width: 100%;
+  height: 100vh;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.hp1-hero-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  padding-top: 80px;
+  z-index: 2;
+}
+
+.hp1-hero-subtitle {
+  color: #fcf6ba;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+/* --- LOGO PNG STYLING --- */
+>>>>>>> b36096d22218b89d7234a2016a3e0dfb90378034
 .hp1-hero-logo-container {
   margin-bottom: 3rem;
   display: flex;
   justify-content: center;
+<<<<<<< HEAD
   width: 100%;
 }
 
@@ -32,11 +69,26 @@
   width: 90%;       /* Ensures it shrinks nicely on mobile */
   height: auto;
   filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.8)); /* Adds depth/shadow to the image */
+=======
+  perspective: 1000px; /* Adds a bit of depth */
+}
+
+.hp1-hero-png {
+  max-width: 850px; /* Adjust size as needed */
+  height: auto;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.8));
+  transition: transform 0.5s ease;
+}
+
+.hp1-hero-png:hover {
+  transform: translateY(-5px);
+>>>>>>> b36096d22218b89d7234a2016a3e0dfb90378034
 }
 
 /* --- SLIMMER BUTTON --- */
 .hp1-cta {
   position: relative;
+<<<<<<< HEAD
   width: 320px; 
   height: 60px; 
   background: transparent; border: none; cursor: pointer;
@@ -95,4 +147,71 @@
     filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
     background: transparent;
     color: #fcf6ba;
+=======
+  width: 320px;
+  height: 60px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.hp1-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hp1-frame polygon, .hp1-frame rect {
+  fill: none;
+  stroke: #aaa67a;
+  stroke-width: 1.2px;
+  transition: all 0.3s ease;
+}
+
+.cta-text {
+  position: relative;
+  z-index: 2;
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  color: #d2cfaa;
+  letter-spacing: 4px;
+}
+
+.hp1-cta:hover .hp1-frame polygon {
+  stroke: #fff;
+  filter: drop-shadow(0 0 8px #b7931e);
+  opacity: 1;
+}
+
+.hp1-cta:hover .cta-text {
+  color: #f4f2e0;
+  transform: scale(1.01);
+}
+
+/* --- MUSIC BUTTON (Bottom Left Corner) --- */
+.hp1-music-control {
+  position: absolute;
+  bottom: 3rem;
+  left: 3rem;
+  z-index: 20;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #8f8c6e;
+  cursor: pointer;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+  transition: transform 0.3s ease, filter 0.3s ease, color 0.3s ease;
+}
+
+.hp1-music-control:hover {
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8));
+  color: #fcf6ba;
+>>>>>>> b36096d22218b89d7234a2016a3e0dfb90378034
 }

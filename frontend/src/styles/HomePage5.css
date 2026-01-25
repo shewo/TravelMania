@@ -1,0 +1,212 @@
+/* 1. IMPORT FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+
+/* 2. MAIN CONTAINER */
+.hp5-hero-section {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: black;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* 3. VIDEO & OVERLAY */
+.hp5-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.hp5-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+/* 4. CONTENT WRAPPER */
+.hp5-content-wrapper {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* --- NEW: PNG TITLE STYLES --- */
+.hp5-title-container {
+    margin-bottom: 20px; /* Space between the image title and the text paragraph */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.hp5-title-img {
+    max-width: 450px; /* Adjust based on how big you want the logo */
+    width: 90%;       /* Ensures it shrinks on mobile */
+    height: auto;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.8)); /* Pop effect */
+}
+
+/* 5. TEXT STYLES (The Paragraph) */
+.hp5-subtitle {
+    color: #edebd5;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.hp5-gold-title {
+    font-family: 'Cinzel', serif !important;
+    font-weight: 700 !important;
+    font-size: 1.2rem !important; /* Reduced size since it's now a paragraph */
+    line-height: 1.6 !important;
+    text-transform: uppercase !important;
+    margin-bottom: 40px !important;
+    margin-top: 0 !important; /* Removes gap between png and text */
+    opacity: 0.9 !important;
+
+    /* Your Gold Gradient */
+    background: #f1e2ab !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    
+    /* Your Shadow Filter */
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8)) !important;
+    max-width: 900px;
+}
+
+/* =========================================
+   6. BUTTON CONTAINER
+   ========================================= */
+.hp5-buttons-container {
+    display: flex;
+    gap: 30px; 
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap; 
+}
+
+/* =========================================
+   7. FANCY SVG BUTTON STYLES
+   ========================================= */
+.hp5-fancy-btn {
+    position: relative;
+    width: 380px; 
+    height: 64px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+/* Text Inside Button */
+.hp5-btn-text {
+    position: absolute;
+    z-index: 2;
+    color: #d2cfaa;
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px #000000;
+    transition: all 0.3s ease;
+    font-weight: bold; 
+}
+
+/* SVG Frame Positioning */
+.hp5-svg-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* The Lines inside the SVG */
+.hp5-poly, .hp5-rect {
+    fill: none;
+    stroke: #aaa67a; /* Gold color */
+    stroke-width: 1.0px;
+    transition: all 0.4s ease;
+    vector-effect: non-scaling-stroke;
+}
+
+.hp5-rect {
+    opacity: 0.5; 
+    stroke-width: 1.5px;
+}
+
+/* --- HOVER ANIMATIONS --- */
+.hp5-fancy-btn:hover .hp5-poly,
+.hp5-fancy-btn:hover .hp5-rect {
+    stroke: #fff; /* Turns white */
+    filter: drop-shadow(0 0 8px #D4AF37); /* Gold Glow */
+    opacity: 1;
+}
+
+.hp5-fancy-btn:hover .hp5-btn-text {
+    color: #fff;
+    text-shadow: 0 0 15px #D4AF37;
+    transform: scale(1.05); 
+}
+
+/* 8. MOBILE RESPONSIVE */
+@media (max-width: 1024px) {
+    .hp5-gold-title {
+        font-size: 1.1rem !important; /* Adjusted for tablet */
+    }
+    
+    .hp5-fancy-btn {
+        width: 320px; 
+        height: 55px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hp5-buttons-container {
+        flex-direction: column; 
+        gap: 20px;
+    }
+    
+    .hp5-title-img {
+        margin-bottom: 10px;
+    }
+
+    .hp5-gold-title {
+        font-size: 0.9rem !important; /* Smaller text on mobile */
+        line-height: 1.5 !important;
+        padding: 0 10px;
+    }
+
+    .hp5-fancy-btn {
+        width: 280px; 
+        height: 50px;
+    }
+    
+    .hp5-btn-text {
+        font-size: 0.9rem;
+    }
+}
