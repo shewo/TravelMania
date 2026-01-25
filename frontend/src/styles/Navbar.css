@@ -12,6 +12,9 @@
     /* CRITICAL FIX: Higher than sidebar (1050) */
     z-index: 1100; 
     
+    /* CRITICAL UPDATE: Allows logo to hang outside the box */
+    overflow: visible;
+
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.1); 
     backdrop-filter: blur(0px);
@@ -97,21 +100,37 @@
     color: white; 
 }
 
-/* --- CENTER: Logo --- */
+/* --- CENTER: Logo (UPDATED FOR POPUP EFFECT) --- */
 .nav-center {
     flex: 0 0 auto;
     padding: 0 40px;
     justify-content: center;
+    position: relative; /* Context for z-index */
 }
 
 .nav-logo {
-    height: 71px;
-    transition: height 0.4s ease;
+    /* 1. Base Size */
+    height: 85px; /* Slightly larger base size for impact */
+    width: auto;
     object-fit: contain;
+
+    /* 2. The "Popup" / Hanging Effect */
+    transform: translateY(30px) scale(1.1); 
+    
+    /* 3. Layering & Depth */
+    position: relative;
+    z-index: 1200; /* Ensure it sits ON TOP of everything */
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.6)); /* Shadow on the shape */
+
+    /* 4. Smooth Animation */
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+/* Logo State on Scroll (Retracts back into bar) */
 .navbar-split.scrolled .nav-logo {
     height: 45px;
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); /* Subtle shadow when docked */
 }
 
 /* --- RIGHT: Action --- */
@@ -162,5 +181,11 @@
     
     .navbar-split {
         height: 70px;
+    }
+
+    /* Optional: Tame the logo slightly on mobile */
+    .nav-logo {
+        height: 60px;
+        transform: translateY(15px) scale(1.05);
     }
 }
