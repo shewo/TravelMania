@@ -1,0 +1,229 @@
+/* =========================================
+   1. MAIN LAYOUT & VIDEO BACKGROUND
+   ========================================= */
+.hp2-section-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 50px 0;
+  font-family: 'Cinzel', serif;
+  overflow: hidden; 
+}
+
+/* Video Positioning */
+.hp2-video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hp2-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hp2-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Adjust opacity if video is too dark */
+  z-index: 1;
+}
+
+.hp2-content-wrapper {
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  flex-wrap: wrap; 
+  position: relative; 
+  z-index: 2; /* Ensures content sits on top of video */
+}
+
+/* =========================================
+   2. MAP & TEXT CONTENT
+   ========================================= */
+.hp2-visual {
+  flex: 1;
+  min-width: 400px;
+  display: flex;
+  justify-content: center;
+}
+
+.hp2-tablet-frame {
+  width: 100%;
+  max-width: 450px;
+  background: #111;
+  padding: 15px;
+  border-radius: 30px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  position: relative;
+  border: 4px solid #333;
+}
+
+.hp2-map-display {
+  width: 100%;
+  border-radius: 15px;
+  display: block;
+}
+
+.hp2-text-info {
+  flex: 1;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  
+  /* CHANGED: Align items to center so button and title match */
+  align-items: center; 
+  text-align: center;
+}
+
+/* --- PNG TITLE STYLES --- */
+.hp2-title-container {
+  margin-bottom: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Ensures the image itself is centered */
+}
+
+.hp2-title-png {
+  max-width: 500px; /* Adjust as needed */
+  width: 100%;      /* Ensures responsive scaling */
+  height: auto;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.8)); /* Pops against the video */
+}
+
+/* =========================================
+   3. BUTTON STYLES (CENTERED)
+   ========================================= */
+
+.hp2-cta-btn {
+  position: relative; 
+  display: block; 
+  margin-top: 15px;      
+  
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  width: 300px; 
+  height: 64px;
+
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  
+  color: #edebd5; 
+}
+
+/* SVG Frame Styles */
+.hp2-frame {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The Angled Outer Frame */
+.hp2-inner {
+  stroke:#aaa67a; 
+  stroke-width: 2.5px;
+  fill: transparent; 
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  transition: all 0.3s ease;
+}
+
+/* The Inner Rectangular Box */
+.hp2-innerBox {
+  fill: none;
+  stroke: #aaa67a; 
+  stroke-width: 1px;
+  transition: all 0.3s ease;
+}
+
+.hp2-cta-btn span {
+  position: relative;
+  z-index: 2;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  transition: color 0.3s ease;
+}
+
+/* --- HOVER EFFECTS (Bright Gold) --- */
+
+.hp2-cta-btn:hover .hp2-frame {
+  filter: drop-shadow(0 0 8px #ffffff);
+}
+
+/* Outer Frame Hover */
+.hp2-cta-btn:hover .hp2-inner {
+  stroke: #ffffff; 
+  fill: rgba(212, 175, 55, 0.1); 
+  stroke-width: 2px;
+}
+
+/* Inner Box Hover */
+.hp2-cta-btn:hover .hp2-innerBox {
+  stroke: #ffffff; 
+}
+
+/* Text Hover */
+.hp2-cta-btn:hover span {
+  color: #ffffff; 
+}
+
+.hp2-cta-btn:active {
+  transform: scale(0.98);
+}
+
+/* =========================================
+   4. RESPONSIVE
+   ========================================= */
+
+.hp2-bottom-star {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  font-size: 2rem;
+  color: #d4af37;
+  opacity: 0.8;
+  z-index: 2;
+}
+
+@media (max-width: 900px) {
+  .hp2-content-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hp2-text-info {
+    align-items: center;
+  }
+
+  .hp2-title-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .hp2-visual {
+    margin-bottom: 20px;
+  }
+}
