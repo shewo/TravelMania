@@ -2,14 +2,18 @@ import React, { useState, useRef } from 'react';
 import '../styles/HomePage1.css';
 import bgImage from '../assets/footer-bg.jpg';
 import musicBg from '../assets/travel-music.mp3';
+import logoPng from '../assets/hero-title.png'; // Make sure to import your PNG
 
 const HomePage1 = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
   const toggleMusic = () => {
-    if (isPlaying) { audioRef.current.pause(); }
-    else { audioRef.current.play(); }
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
     setIsPlaying(!isPlaying);
   };
 
@@ -23,8 +27,9 @@ const HomePage1 = () => {
       <div className="hp1-hero-main">
         <span className="hp1-hero-subtitle">✦ A Gift From The Gods ✦</span>
 
-        <div className="hp1-hero-title">
-          <h1 className="hp1-gold-text">A MYTHICAL<br />JOURNEY<br />AWAITS</h1>
+        {/* --- REPLACED TEXT WITH PNG --- */}
+        <div className="hp1-hero-logo-container">
+          <img src={logoPng} alt="Mythical Journey" className="hp1-hero-png" />
         </div>
 
         <div className="hp1-hero-action">
@@ -38,44 +43,27 @@ const HomePage1 = () => {
         </div>
       </div>
 
-      {/* --- MUSIC BUTTON (Centered Speaker) --- */}
+      {/* --- MUSIC BUTTON --- */}
       <button className="hp1-music-control" onClick={toggleMusic} aria-label="Toggle Music">
         {isPlaying ? (
-             /* PLAYING: Icon shifted left to center perfectly */
-             <svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
-                {/* Thin Outer Ring */}
-                <circle cx="12" cy="12" r="10" strokeWidth="1.5" />
-                
-                {/* Inner Group: Scaled (0.6) and Shifted LEFT (-2px) */}
-                <g transform="translate(10, 12) scale(0.6) translate(-12, -12)">
-                   {/* Solid Speaker Body */}
-                   <path d="M7 9v6h4l5 5V4l-5 5H7z" fill="currentColor" stroke="none"/>
-                   
-                   {/* Small Wave */}
-                   <path d="M15.54 8.46a5 5 0 0 1 0 7.07" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                   
-                   {/* Big Wave */}
-                   <path d="M19.07 4.93a10 10 0 0 1 0 14.14" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </g>
-             </svg>
+          <svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" strokeWidth="1.5" />
+            <g transform="translate(10, 12) scale(0.6) translate(-12, -12)">
+              <path d="M7 9v6h4l5 5V4l-5 5H7z" fill="currentColor" stroke="none"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </g>
+          </svg>
         ) : (
-             /* MUTED: Icon shifted left to center perfectly */
-             <svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
-                {/* Thin Outer Ring */}
-                <circle cx="12" cy="12" r="10" strokeWidth="1.5" />
-
-                {/* Inner Group: Scaled (0.6) and Shifted LEFT (-2px) */}
-                <g transform="translate(10, 12) scale(0.6) translate(-12, -12)">
-                   {/* Solid Speaker Body */}
-                   <path d="M7 9v6h4l5 5V4l-5 5H7z" fill="currentColor" stroke="none"/>
-                   
-                   {/* X Mark */}
-                   <path d="M16 10l4 4m0-4l-4 4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                </g>
-             </svg>
+          <svg width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" strokeWidth="1.5" />
+            <g transform="translate(10, 12) scale(0.6) translate(-12, -12)">
+              <path d="M7 9v6h4l5 5V4l-5 5H7z" fill="currentColor" stroke="none"/>
+              <path d="M16 10l4 4m0-4l-4 4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </g>
+          </svg>
         )}
       </button>
-
     </div>
   );
 };

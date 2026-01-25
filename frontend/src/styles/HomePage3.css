@@ -77,7 +77,6 @@
 }
 .hp3-scope .hp3-cta-btn:hover span {
   color: #fff;
- 
 }
 
 
@@ -129,33 +128,20 @@
   padding-top: 20px;
 }
 
-.hp3-scope .hp3-section-title {
-  /* Typography */
-  font-family: 'Cinzel', serif;
-  font-size: 3rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-
-  /* Premium Gold Gradient */
-  background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-  
-  /* Text Clipping */
-  -webkit-background-clip: text;
-  background-clip: text;
-  
-  /* Transparency & Shadow */
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
-}
-.hp3-scope .hp3-subtitle {
-  font-family: 'Montserrat', sans-serif;
-  color: #fcf6ba;
-  margin-bottom: 3rem;
-  font-size: 1.1rem;
+/* --- NEW: PNG TITLE STYLES --- */
+.hp3-title-container {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
+.hp3-title-png {
+  max-width: 800px; /* Adjust size as needed */
+  width: 90%;       /* Ensures mobile responsiveness */
+  height: auto;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.8)); /* Depth/Shadow */
+}
 
 /* =========================================
    CARD STYLES (Clean / No Box)
@@ -248,7 +234,11 @@
 
 /* Mobile */
 @media (max-width: 768px) {
-  .hp3-scope .hp3-section-title { font-size: 2rem; }
   .hp3-scope .hp3-product-card { height: auto; min-height: 480px; }
   .hp3-scope .hp3-slider-section { padding-bottom: 100px; }
+  
+  /* Ensure image scales properly on mobile */
+  .hp3-title-container {
+      margin-bottom: 1.5rem;
+  }
 }

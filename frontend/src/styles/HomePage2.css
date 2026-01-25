@@ -35,7 +35,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Adjust this if video is too dark */
+  background: rgba(0, 0, 0, 0.4); /* Adjust opacity if video is too dark */
   z-index: 1;
 }
 
@@ -77,44 +77,39 @@
   display: block;
 }
 
-
-
 .hp2-text-info {
   flex: 1;
   min-width: 400px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
+  
+  /* CHANGED: Align items to center so button and title match */
+  align-items: center; 
+  text-align: center;
 }
 
-.hp2-title {
-  /* 1. Typography Style */
-  font-family: 'Cinzel', serif; 
-  font-size: clamp(2.5rem, 5vw, 4rem); /* Kept your responsive size */
-  line-height: 1.1;
-  font-weight: 800;
+/* --- PNG TITLE STYLES --- */
+.hp2-title-container {
   margin-bottom: 30px;
-  text-transform: uppercase; /* Recommended for this look */
-
-  /* 2. The Premium Gold Gradient */
-  background: linear-gradient(to bottom, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
-  
-  /* 3. Text Clipping */
-  -webkit-background-clip: text;
-  background-clip: text;
-  
-  /* 4. Transparency & Shadow */
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Ensures the image itself is centered */
 }
+
+.hp2-title-png {
+  max-width: 500px; /* Adjust as needed */
+  width: 100%;      /* Ensures responsive scaling */
+  height: auto;
+  filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.8)); /* Pops against the video */
+}
+
 /* =========================================
-   3. RESTORED BUTTON STYLES (EXACT MATCH)
+   3. BUTTON STYLES (CENTERED)
    ========================================= */
 
 .hp2-cta-btn {
   position: relative; 
-  display: inline-block; 
+  display: block; 
   margin-top: 15px;      
   
   background: transparent;
@@ -130,7 +125,6 @@
   text-transform: uppercase;
   font-weight: 700;
   
-  /* ORIGINAL COLOR: Dark Bronze */
   color: #edebd5; 
 }
 
@@ -145,7 +139,7 @@
 
 /* The Angled Outer Frame */
 .hp2-inner {
-  stroke:#aaa67a; /* ORIGINAL COLOR: Dark Bronze Outline */
+  stroke:#aaa67a; 
   stroke-width: 2.5px;
   fill: transparent; 
   stroke-linecap: butt;
@@ -156,7 +150,7 @@
 /* The Inner Rectangular Box */
 .hp2-innerBox {
   fill: none;
-  stroke: #aaa67a; /* Match outer frame */
+  stroke: #aaa67a; 
   stroke-width: 1px;
   transition: all 0.3s ease;
 }
@@ -171,9 +165,6 @@
   height: 100%;
   width: 100%;
   transition: color 0.3s ease;
-  
-  /* Optional: If the button is too dark on the video, un-comment the line below to make just the text white */
-  /* color: #e5e5e5; */
 }
 
 /* --- HOVER EFFECTS (Bright Gold) --- */
@@ -184,20 +175,19 @@
 
 /* Outer Frame Hover */
 .hp2-cta-btn:hover .hp2-inner {
-  stroke: #ffffff; /* Bright Gold */
+  stroke: #ffffff; 
   fill: rgba(212, 175, 55, 0.1); 
   stroke-width: 2px;
 }
 
 /* Inner Box Hover */
 .hp2-cta-btn:hover .hp2-innerBox {
-  stroke: #ffffff; /* Bright Gold */
+  stroke: #ffffff; 
 }
 
 /* Text Hover */
 .hp2-cta-btn:hover span {
-  color: #ffffff; /* Bright Gold */
-  
+  color: #ffffff; 
 }
 
 .hp2-cta-btn:active {
@@ -205,7 +195,7 @@
 }
 
 /* =========================================
-   4. DECORATIONS & RESPONSIVE
+   4. RESPONSIVE
    ========================================= */
 
 .hp2-bottom-star {
@@ -226,6 +216,11 @@
   
   .hp2-text-info {
     align-items: center;
+  }
+
+  .hp2-title-container {
+    display: flex;
+    justify-content: center;
   }
   
   .hp2-visual {

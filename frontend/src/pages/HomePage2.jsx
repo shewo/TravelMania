@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom'; 
 import '../styles/HomePage2.css'; 
 import mapImg from '../assets/map-image.png'; 
+import titlePng from '../assets/find-gear-title.png'; // 1. IMPORT YOUR PNG HERE
 
 // IMPORT YOUR VIDEO HERE
-// Make sure to place your video in the assets folder
 import bgVideo from '../assets/your-video-file.mp4'; 
 
 const HomePage2 = () => {
@@ -23,7 +23,6 @@ const HomePage2 = () => {
           <source src={bgVideo} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        {/* Optional: Dark overlay to make text pop */}
         <div className="hp2-video-overlay"></div>
       </div>
       {/* --- BACKGROUND VIDEO END --- */}
@@ -34,13 +33,16 @@ const HomePage2 = () => {
         <div className="hp2-visual">
           <div className="hp2-tablet-frame">
             <img src={mapImg} alt="Interactive Map" className="hp2-map-display" />
-            
           </div>
         </div>
 
         {/* Right Side: Text Content */}
         <div className="hp2-text-info">
-          <h2 className="hp2-title">FIND YOUR GEAR, <br /> ANYWHERE</h2>
+          
+          {/* --- 2. REPLACED TEXT TITLE WITH PNG --- */}
+          <div className="hp2-title-container">
+            <img src={titlePng} alt="Find Your Gear, Anywhere" className="hp2-title-png" />
+          </div>
           
           <Link to="/map" style={{ textDecoration: 'none' }}>
             <button className="hp2-cta-btn">
@@ -61,8 +63,6 @@ const HomePage2 = () => {
         </div>
 
       </div>
-
-      
     </div>
   );
 };
