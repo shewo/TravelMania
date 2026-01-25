@@ -137,11 +137,7 @@
 }
 
 .hp3-title-png {
-<<<<<<< HEAD
-  max-width: 500px; /* Adjust size as needed */
-=======
   max-width: 800px; /* Adjust size as needed */
->>>>>>> b36096d22218b89d7234a2016a3e0dfb90378034
   width: 90%;       /* Ensures mobile responsiveness */
   height: auto;
   filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.8)); /* Depth/Shadow */
@@ -232,11 +228,7 @@
 }
 
 /* Swiper Controls */
-<<<<<<< HEAD
-.hp3-scope .swiper-button-next, .hp3-scope .swiper-button-prev { color: #d4af37; }
-=======
 .hp3-scope .swiper-button-next, .hp3-scope .swiper-button-prev { color: #866c3d; }
->>>>>>> b36096d22218b89d7234a2016a3e0dfb90378034
 .hp3-scope .swiper-pagination-bullet { background: #edebd5; }
 .hp3-scope .swiper-pagination-bullet-active { background: #edebd5; }
 
