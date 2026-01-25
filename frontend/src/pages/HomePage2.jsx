@@ -12,7 +12,7 @@ const HomePage2 = () => {
     <div className="hp2-section-container">
       
       {/* --- BACKGROUND VIDEO START --- */}
-      <div className="hp2-video-wrapper">
+      <div className="hp2-video-wrapper"> 
         <video 
           className="hp2-bg-video" 
           autoPlay 
