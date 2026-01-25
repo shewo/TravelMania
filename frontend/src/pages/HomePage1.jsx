@@ -2,7 +2,11 @@ import React, { useState, useRef } from 'react';
 import '../styles/HomePage1.css';
 import bgImage from '../assets/footer-bg.jpg';
 import musicBg from '../assets/travel-music.mp3';
+<<<<<<< HEAD
 import logoPng from '../assets/hero-title.png'; // 1. IMPORT YOUR PNG HERE
+=======
+import logoPng from '../assets/hero-title.png'; // Make sure to import your PNG
+>>>>>>> b36096d22218b89d7234a2016a3e0dfb90378034
 
 const HomePage1 = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -27,9 +31,15 @@ const HomePage1 = () => {
       <div className="hp1-hero-main">
         <span className="hp1-hero-subtitle">✦ A Gift From The Gods ✦</span>
 
+<<<<<<< HEAD
         {/* --- 2. TEXT REMOVED & REPLACED WITH IMAGE --- */}
         <div className="hp1-hero-logo-container">
            <img src={logoPng} alt="Mythical Journey" className="hp1-hero-png" />
+=======
+        {/* --- REPLACED TEXT WITH PNG --- */}
+        <div className="hp1-hero-logo-container">
+          <img src={logoPng} alt="Mythical Journey" className="hp1-hero-png" />
+>>>>>>> b36096d22218b89d7234a2016a3e0dfb90378034
         </div>
 
         <div className="hp1-hero-action">
