@@ -66,6 +66,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TravelProjectApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="travel-project-backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.travelproject.TravelProjectApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -82,7 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1769334437435</updated>
-      <workItem from="1769447144253" duration="2467000" />
+      <workItem from="1769447144253" duration="3054000" />
     </task>
     <servers />
   </component>
