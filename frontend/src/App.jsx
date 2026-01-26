@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./Main-sections/Homepage";
 import MapPage from "./pages/MapPage";
+import StorePage from "./pages/StorePage";
 
 
 // 1. Import the wrapper (adjust path if you put it somewhere else)
@@ -15,6 +16,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/map" element={<MapPage />} />
+
+          <Route path="/store/:id" element={<StorePage />} />
           
           
         </Routes>

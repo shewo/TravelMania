@@ -33,19 +33,10 @@ public class ShopController {
         return shopRepository.findShopsNearby(userLocation, 5000);
     }
 
-
-    @GetMapping("/all")
-    public List<shop> getAllShops() {
-        return shopRepository.findAll();
-    }
-
-
     @GetMapping("/{id}")
     public ResponseEntity<shop> getShopById(@PathVariable Long id) {
         // 1. Try to find the shop in the database using the ID
         Optional<shop> shopData = shopRepository.findById(id);
-
-
 
         // 2. Check if a shop was actually found
         if (shopData.isPresent()) {
@@ -55,6 +46,5 @@ public class ShopController {
             // If NOT found, return a "404 Not Found" status
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 }

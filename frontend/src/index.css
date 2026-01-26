@@ -28,3 +28,23 @@ html {
 .w-full {
   width: 100%;
 }
+
+/* Fix for Leaflet Routing Machine in Dark Mode apps */
+.leaflet-routing-container {
+    color: black !important;        /* Force text to be black */
+    background-color: white !important;
+    opacity: 0.9;
+}
+
+.leaflet-routing-container h2, 
+.leaflet-routing-container h3, 
+.leaflet-routing-container span, 
+.leaflet-routing-container td {
+    color: black !important;        /* Ensure all headers and details are black */
+    font-family: sans-serif;        /* Use a simple font for readability */
+}
+
+.leaflet-routing-alt tr:hover {
+    background-color: #eee !important; /* Light grey on hover */
+    cursor: pointer;
+}
