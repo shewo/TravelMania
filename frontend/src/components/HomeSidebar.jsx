@@ -29,7 +29,7 @@ const HomeSidebar = ({ isOpen, onClose }) => {
             <li className="nav-item"><a href="#home" onClick={onClose}>HOME</a></li>
             <li className="nav-item"><a href="#releases" onClick={onClose}>MAP</a></li>
             <li className="nav-item"><a href="#stockists" onClick={onClose}>RENTALS</a></li>
-            <li className="nav-item"><a href="#privacy" onClick={onClose}>DESTINATIONS</a></li>
+            <li className="nav-item"><a href="/Dashboard" onClick={onClose}>DASHBOARD</a></li>
           </ul>
         </nav>
 
