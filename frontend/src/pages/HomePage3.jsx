@@ -12,13 +12,13 @@ import 'swiper/css/pagination';
 import '../styles/HomePage3.css'; 
 
 // --- MEDIA IMPORTS ---
-// 1. VIDEO: Removed the import line because the file is now in the 'public' folder.
-
-// 2. IMAGES: Keep these imports if the images are still in src/assets
 import tentImg from '../assets/tent.png';
 import backpackImg from '../assets/backpack.png';
 import cameraImg from '../assets/camera.png';
 import stoveImg from '../assets/stove.png';
+
+// 1. IMPORT YOUR TITLE PNG HERE
+import rentTitlePng from '../assets/rent-gear-title.png'; 
 
 // Sample Data using the Imported Images
 const rentalProducts = [
@@ -63,15 +63,17 @@ const HomePage3 = () => {
         <figure className="hp3-video-bg">
           <div className="hp3-overlay"></div>
           <video autoPlay muted loop playsInline>
-            {/* UPDATED: Points directly to public folder */}
             <source src="/travel-bg.mp4" type="video/mp4" />
           </video>
         </figure>
 
         {/* Content Layer */}
         <div className="hp3-content-layer">
-          <h2 className="hp3-section-title">Rent Your Gear</h2>
-          <p className="hp3-subtitle">Top quality equipment for your next trip</p>
+          
+          {/* --- 2. REPLACED TEXT TITLE WITH PNG --- */}
+          <div className="hp3-title-container">
+            <img src={rentTitlePng} alt="Rent Your Gear" className="hp3-title-png" />
+          </div>
 
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
