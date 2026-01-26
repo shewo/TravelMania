@@ -1,0 +1,187 @@
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400&display=swap');
+
+/* 1. Backdrop (Pitipassa Kalu wena eka) */
+.signup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  z-index: 1200; /* Navbar ekatath wada udin thiyenna oni */
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+
+.signup-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 2. Sliding Drawer (RIGHT SIDE) */
+.signup-drawer {
+  position: fixed;
+  top: 0;
+  right: 0; /* Dakunu paththa */
+  bottom: 0;
+  width: 400px; /* Drawer width */
+  background: #080808; 
+  border-left: 1px solid rgba(197, 160, 89, 0.3); 
+  box-shadow: -10px 0 40px rgba(0,0,0,0.8);
+  z-index: 1201; /* Backdrop ekata wada udin */
+  
+  /* Animation: Dakunu paththe hangila thiyenne */
+  transform: translateX(100%); 
+  transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+  
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  overflow-y: auto; /* Podi screens wala scroll wenna */
+}
+
+.signup-drawer.open {
+  transform: translateX(0); /* Athulata enawa */
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  color: #c5a059;
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 10;
+}
+.close-btn:hover { color: white; transform: rotate(-90deg); }
+
+/* --- Header Styles --- */
+.drawer-header {
+  margin-top: 20px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.drawer-title {
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  color: #e5cca5;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.gold-text { color: #c5a059; }
+
+/* --- Input Fields (UPDATED WITH FIX) --- */
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  left: 0;
+  color: #c5a059;
+  width: 18px;
+  z-index: 5;
+}
+
+.drawer-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+  padding: 12px 0 12px 30px;
+  color: #f0e6d2;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.drawer-input:focus { 
+  border-bottom-color: #c5a059; 
+}
+
+/* === AUTOFILL FIX (DARK BACKGROUND) === */
+.drawer-input:-webkit-autofill,
+.drawer-input:-webkit-autofill:hover, 
+.drawer-input:-webkit-autofill:focus, 
+.drawer-input:-webkit-autofill:active {
+  /* Box shadow eken background eka Dark Grey (#121212) karanawa */
+  -webkit-box-shadow: 0 0 0 30px #121212 inset !important;
+  -webkit-text-fill-color: #f0e6d2 !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: #c5a059;
+}
+
+/* --- Buttons --- */
+.gold-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 15px;
+  background: rgba(197, 160, 89, 0.1);
+  border: 1px solid #c5a059;
+  color: #c5a059;
+  font-family: 'Cinzel', serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-transform: uppercase;
+}
+
+.gold-btn:hover { 
+  background: #c5a059; 
+  color: black; 
+}
+
+/* --- Switch / Toggle Text --- */
+.switch-text {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Lato', sans-serif;
+}
+
+.switch-link {
+  color: #c5a059;
+  cursor: pointer;
+  margin-left: 5px;
+  text-decoration: underline;
+}
+
+/* --- Profile View Styles (Optional) --- */
+.profile-view-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .signup-drawer {
+    width: 100%; /* Mobile wala full width */
+  }
+}
