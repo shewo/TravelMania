@@ -195,7 +195,7 @@ body, html {
 
 .hp1-cta:hover .hp1-inner { fill: rgba(212, 175, 55, 0.1); stroke: #f1e2ab ; }
 .hp1-cta:hover .hp1-innerBox { stroke: rgba(255, 255, 255, 0.5); }
-.hp1-cta:hover .cta-text { color: #f1e2ab ; }
+.hp1-cta:hover .cta-text { color: #D1B48C; }
 
 /* --- RIGHT SIDE IMAGE --- */
 .product-image-container {
@@ -247,7 +247,7 @@ body, html {
 .section-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.8rem;
-  color: #f1e2ab ;
+  color: #D1B48C ;
   margin: 0 0 20px 0;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -317,7 +317,7 @@ body, html {
 
 .review-author {
   font-weight: 700;
-  color: #f1e2ab ;
+  color: #D1B48C ;
   font-size: 1rem;
 }
 
