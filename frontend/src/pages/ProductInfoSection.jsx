@@ -15,14 +15,14 @@ const ProductInfoSection = () => {
     image: productPng, 
     specs: [
      
-     { label: "Rental Condition", value: "Grade A (Like New)" }, // Important for rentals
+     { label: "Rental Condition", value: "Grade A" }, // Important for rentals
       { label: "Cleaning Fee", value: "Included" },             // Specific to renting
       { label: "Min. Duration", value: "2 Days" }
     ]
   };
 
   const details = {
-    title: "The Experience",
+    title: "Gear Insight",
     description: "The Nomad Explorer 45L builds off the powerful legacy of high-end trekking gear, offering next-generation performance for both long hauls and quick weekend getaways. Perfect for alpine shoots, wildlife tracking, and all-weather adventures.",
     reviews: [
       { id: 1, user: "Alex R.", rating: 5, comment: "Super comfortable for long hikes. The rain cover saved me!" },
@@ -72,7 +72,7 @@ const ProductInfoSection = () => {
                       <polygon className="hp1-inner" points="30,5 290,5 315,30 290,55 30,55 5,30" />
                       <rect className="hp1-innerBox" x="12" y="10" width="296" height="40" rx="0" />
                     </svg>
-                    <span className="cta-text">Check Availability</span>
+                    <span className="cta-text">Secure This Gear</span>
                   </button>
                 </div>
               </div>
@@ -107,7 +107,7 @@ const ProductInfoSection = () => {
           {/* REVIEWS */}
           <div className="details-col reviews-col">
             <div className="reviews-header-row">
-              <h3 className="section-title">User Reviews</h3>
+              <h3 className="section-title">Field Reports</h3>
               <span className="review-badge">{details.reviews.length}</span>
             </div>
 
