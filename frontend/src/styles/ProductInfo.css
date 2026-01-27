@@ -42,6 +42,29 @@ body, html {
   pointer-events: none; 
 }
 
+/* === WATERMARK LOGO BACKGROUND (NEW) === */
+.watermark-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Keeps it centered in the viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; /* Sits effectively with the overlay, behind content */
+  pointer-events: none; /* Crucial: lets you click buttons through the logo */
+  overflow: hidden;
+}
+
+.watermark-logo {
+  width: 40%; /* Large cinematic size */
+  opacity: 0.1; /* Very subtle visibility */
+  user-select: none;
+  filter: blur(2px); /* Soft focus effect */
+  mix-blend-mode: soft-light; /* Blends beautifully with the dark background */
+}
+
 /* =========================================
    SECTION 1: HERO (Top)
    ========================================= */
@@ -51,7 +74,7 @@ body, html {
   align-items: center;
   justify-content: center;
   position: relative;
-  z-index: 2; /* Sits above video */
+  z-index: 2; /* Sits above video and watermark */
 }
 
 .product-grid {
@@ -226,7 +249,7 @@ body, html {
   background: transparent;
   padding: 60px 20px 80px 20px; 
   position: relative;
-  z-index: 2; 
+  z-index: 2; /* Keeps details clickable above watermark */
 }
 
 .details-grid {
