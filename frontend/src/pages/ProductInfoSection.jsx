@@ -4,19 +4,18 @@ import { FaStar } from 'react-icons/fa';
 
 // --- IMPORT ASSETS ---
 import productPng from '../assets/backpack.png'; 
-// RENAMED VARIABLE TO AVOID CONFLICTS
 import backpackVideo from '../assets/bg-video2.mp4'; 
+import logoPng from '../assets/title png1.png'; // Added your logo import
 
 const ProductInfoSection = () => {
   const product = {
     title: "Nomad Explorer 45L",
     subtitle: "All-Weather Hiking Backpack",
-    price: "$15 / day",
+    price: "Rs.1600 / day",
     image: productPng, 
     specs: [
-     
-     { label: "Rental Condition", value: "Grade A" }, // Important for rentals
-      { label: "Cleaning Fee", value: "Included" },             // Specific to renting
+      { label: "Rental Condition", value: "Grade A" },
+      { label: "Cleaning Fee", value: "Included" },
       { label: "Min. Duration", value: "2 Days" }
     ]
   };
@@ -34,7 +33,6 @@ const ProductInfoSection = () => {
     <div className="product-page-wrapper">
       
       {/* === BACKGROUND VIDEO === */}
-      {/* Used the new variable 'backpackVideo' here */}
       <video className="bg-video" autoPlay loop muted playsInline>
         <source src={backpackVideo} type="video/mp4" />
       </video>
@@ -42,9 +40,15 @@ const ProductInfoSection = () => {
       {/* === DARK GRADIENT OVERLAY === */}
       <div className="video-overlay"></div>
 
+      {/* === WATERMARK LOGO BACKGROUND === */}
+      {/* This sits behind the text and backpack image */}
+      <div className="watermark-container">
+        <img src={logoPng} alt="Travel Mania Watermark" className="watermark-logo" />
+      </div>
+
       {/* ==========================
           SECTION 1: HERO (Top) 
-         ========================== */}
+          ========================== */}
       <div className="hero-container">
         <div className="product-grid">
           
@@ -91,7 +95,7 @@ const ProductInfoSection = () => {
 
       {/* ==========================
           SECTION 2: DETAILS (Bottom)
-         ========================== */}
+          ========================== */}
       <div className="details-container">
         <div className="details-grid">
           
