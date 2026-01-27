@@ -14,10 +14,10 @@ const ProductInfoSection = () => {
     price: "$15 / day",
     image: productPng, 
     specs: [
-      { label: "Capacity", value: "45 Liters" },
-      { label: "Material", value: "Waterproof Nylon" },
-      { label: "Weight", value: "1.2 kg" },
-      { label: "Laptop Sleeve", value: "Up to 16\"" }
+     
+     { label: "Rental Condition", value: "Grade A (Like New)" }, // Important for rentals
+      { label: "Cleaning Fee", value: "Included" },             // Specific to renting
+      { label: "Min. Duration", value: "2 Days" }
     ]
   };
 
