@@ -1,0 +1,450 @@
+/* =========================================
+   1. SCOPED CONTAINER (Travel Mania Gear)
+   ========================================= */
+#tm-gear-page-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: transparent; /* Transparent bg for video */
+  color: #edebd5; 
+  font-family: 'Montserrat', sans-serif;
+  padding: 60px 20px;
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* =========================================
+   2. VIDEO BACKGROUND STYLES
+   ========================================= */
+.tm-gear-video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.tm-gear-video-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tm-gear-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 1;
+}
+
+.tm-gear-content-layer {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================
+   3. HEADER & SEARCH
+   ========================================= */
+#tm-gear-page-wrapper .tm-gear-header {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+#tm-gear-page-wrapper .tm-gear-title {
+  font-family: 'Cinzel', serif;
+  font-size: 3.5rem;
+  color: #D1B48C;
+  margin-bottom: 40px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.9);
+  letter-spacing: 2px;
+}
+
+#tm-gear-page-wrapper .tm-gear-search-wrapper {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+#tm-gear-page-wrapper .tm-gear-search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #D1B48C;
+  color: #fff;
+  padding: 15px 40px 15px 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  outline: none;
+  transition: all 0.4s ease;
+  text-align: center;
+  text-shadow: 0 2px 5px rgba(0,0,0,1);
+}
+
+#tm-gear-page-wrapper .tm-gear-search-input:focus {
+  border-bottom-color: #D1B48C;
+}
+
+#tm-gear-page-wrapper .tm-gear-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  fill: #D1B48C;
+}
+
+/* =========================================
+   4. FILTERS & SLIDER
+   ========================================= */
+#tm-gear-page-wrapper .tm-gear-filter-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 60px;
+  margin-top: 40px;
+}
+
+#tm-gear-page-wrapper .tm-gear-filter-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Category Buttons (Transparent Glass) */
+#tm-gear-page-wrapper .tm-gear-cat-btn {
+  background: transparent;
+  border: 1px solid #D1B48C;
+  color: #D1B48C;
+  padding: 12px 35px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+#tm-gear-page-wrapper .tm-gear-cat-btn:hover {
+  background: rgba(212, 175, 55, 0.1);
+  color: #fff;
+  border-color: #fff;
+}
+
+#tm-gear-page-wrapper .tm-gear-cat-btn.active {
+  background: rgba(212, 175, 55, 0.2); 
+  color: #D1B48C;
+  border-color: #D1B48C;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+/* Slider Container */
+#tm-gear-page-wrapper .tm-gear-slider-container {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+/* Track (Line) */
+#tm-gear-page-wrapper .tm-gear-track {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+/* Active Range (Gold Line) */
+#tm-gear-page-wrapper .tm-gear-range {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #D1B48C;
+  z-index: 2;
+  box-shadow: 0 0 10px #D1B48C;
+}
+
+/* Input (Invisible) */
+#tm-gear-page-wrapper .tm-gear-thumb {
+  -webkit-appearance: none;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 0;
+  width: 100%;
+  margin: 0;
+  z-index: 5;
+}
+
+/* --- THE FIX: SOLID BLACK DOTS --- */
+#tm-gear-page-wrapper .tm-gear-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: all;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  
+  /* SOLID BLACK DOT (Not Transparent) */
+  background-color: #050505; 
+  border: 2px solid #D1B48C;
+  
+  cursor: pointer;
+  box-shadow: 0 0 10px #D1B48C;
+  margin-top: -4px;
+}
+
+#tm-gear-page-wrapper .tm-gear-thumb::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background-color: #1a1a1a; /* Slightly lighter black on hover */
+}
+
+/* Labels (Transparent Box) */
+#tm-gear-page-wrapper .tm-gear-val-left,
+#tm-gear-page-wrapper .tm-gear-val-right {
+  position: absolute;
+  top: -45px;
+  transform: translateX(-50%);
+  background: transparent;
+  border: 1px solid #D1B48C;
+  color: #edebd5;
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 6;
+  text-shadow: 0 2px 4px #000;
+}
+
+#tm-gear-page-wrapper .tm-gear-val-left::after,
+#tm-gear-page-wrapper .tm-gear-val-right::after {
+  display: none;
+}
+
+/* =========================================
+   5. TRANSPARENT PRODUCT CARDS (Floating)
+   ========================================= */
+#tm-gear-page-wrapper .tm-gear-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 50px;
+  max-width: 1300px;
+  margin: 60px auto 0;
+  justify-content: center;
+}
+
+#tm-gear-page-wrapper .tm-gear-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: transparent !important; 
+  border: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  height: 100%;
+  padding: 10px;
+  transition: transform 0.4s ease;
+}
+
+#tm-gear-page-wrapper .tm-gear-card:hover {
+  transform: translateY(-10px);
+}
+
+#tm-gear-page-wrapper .tm-gear-img-box {
+  height: 240px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+#tm-gear-page-wrapper .tm-gear-img-box img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
+  transition: transform 0.5s ease;
+}
+
+#tm-gear-page-wrapper .tm-gear-card:hover img {
+  transform: scale(1.1);
+}
+
+.tm-gear-category-tag {
+  color: #D1B48C;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px black;
+  margin-bottom: 5px;
+  display: block;
+}
+
+#tm-gear-page-wrapper .tm-gear-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  margin: 10px 0 5px;
+  color: #fff;
+  text-shadow: 0 4px 8px rgba(0,0,0,1);
+  min-height: 3.5rem;
+  letter-spacing: 1px;
+}
+
+#tm-gear-page-wrapper .tm-gear-price {
+  color: #D1B48C;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  text-shadow: 0 2px 5px rgba(0,0,0,1);
+}
+
+/* =========================================
+   6. SVG BUTTON STYLES
+   ========================================= */
+.tm-gear-rent-btn {
+  position: relative; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #edebd5;
+  margin-top: auto; 
+  transition: transform 0.1s ease;
+}
+
+.tm-gear-rent-btn:active {
+  transform: scale(0.95);
+}
+
+.tm-gear-btn-small {
+  width: 220px;
+  height: 55px;
+  font-size: 0.85rem;
+}
+
+.tm-gear-btn-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tm-gear-btn-poly {
+  stroke: #866c3d;
+  stroke-width: 2.5px;
+  fill: rgba(0,0,0,0.6);
+  transition: all 0.3s ease;
+}
+
+.tm-gear-btn-rect {
+  fill: none;
+  stroke: #866c3d;
+  stroke-width: 1px;
+  transition: all 0.3s ease;
+}
+
+.tm-gear-rent-btn span {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 2px 4px rgba(0,0,0,1);
+  pointer-events: none;
+}
+
+.tm-gear-rent-btn:hover .tm-gear-btn-poly {
+  stroke: #fff;
+  fill: rgba(212, 175, 55, 0.3);
+}
+
+.tm-gear-rent-btn:hover span {
+  color: #fff;
+}
+
+/* =========================================
+   7. CART ICON (CIRCLE ONLY)
+   ========================================= */
+#tm-gear-page-wrapper .tm-gear-cart-float {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  
+  width: 70px;
+  height: 70px;
+  background-color: #3b362e; /* Dark Brown/Grey */
+  
+  border-radius: 50%;
+  border: 2px solid #554e44;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+  z-index: 999999;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s;
+}
+
+#tm-gear-page-wrapper .tm-gear-cart-float:hover {
+  transform: scale(1.1);
+  background-color: #4a453d;
+}
+
+#tm-gear-page-wrapper .tm-gear-bag-icon {
+  width: 32px;
+  height: 32px;
+  stroke: #D1B48C; 
+  stroke-width: 2;
+}
+
+#tm-gear-page-wrapper .tm-gear-cart-count {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background-color: #D1B48C; /* Red */
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #3b362e;
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+  #tm-gear-page-wrapper .tm-gear-title { font-size: 2.5rem; }
+  #tm-gear-page-wrapper .tm-gear-grid { grid-template-columns: 1fr; }
+  #tm-gear-page-wrapper .tm-gear-cart-float { top: 80px; width: 60px; height: 60px; }
+  #tm-gear-page-wrapper .tm-gear-bag-icon { width: 26px; height: 26px; }
+}
