@@ -8,7 +8,7 @@ import Navbar from '../components/Navbar'
 import ParallaxGap from '../components/ParallaxGap'
 import ProductInfoSection from '../pages/ProductInfoSection'
 import ProductPage from '../pages/ProductPage'
-import Camping from '../pages/Camping'
+
 
 
 
