@@ -21,15 +21,15 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // CSRF disable කරනවා (Stateless නිසා අවුලක් නෑ)
+                .csrf(csrf -> csrf.disable()) // disable CSRF  (Stateless )
                 .authorizeHttpRequests(auth -> auth
-                        // 1. මේ URLs වලට Token නැතුව යන්න දෙනවා (Login/Register)
+                        // 1this url can access site without token(Login/Register)
                         .requestMatchers("/api/auth/**").permitAll()
-                        // 2. අනිත් හැම එකටම Token ඕනේ කියනවා
+                        // 2.all tokens
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Session තියාගන්නේ නෑ
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // remove Session
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

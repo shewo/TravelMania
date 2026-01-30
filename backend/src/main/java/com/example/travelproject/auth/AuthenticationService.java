@@ -45,21 +45,21 @@ public class AuthenticationService {
 
     // 🔥 GOOGLE LOGIN LOGIC 🔥
     public AuthenticationResponse googleLogin(GoogleLoginRequest request) {
-        // 1. Email එකෙන් User ඉන්නවද බලනවා
+        // 1. check user using email
         var user = repository.findByEmail(request.getEmail())
                 .orElseGet(() -> {
-                    // 2. User නැත්නම් අලුතින් හදනවා
+                    // 2. create user when not found old user
                     var newUser = User.builder()
                             .name(request.getName())
                             .email(request.getEmail())
-                            // Google අයගේ password එක අපි දන්නේ නෑ, ඒ නිසා Random එකක් දානවා (Login වෙන්න බෑ මේකෙන්, Google විතරයි)
+                            // we dont know google users password.becouse we use random password (cant login, only google)
                             .password(passwordEncoder.encode(UUID.randomUUID().toString()))
                             .role("TRAVELER")
                             .build();
                     return repository.save(newUser);
                 });
 
-        // 3. Token එක හදලා යවනවා
+        // 3. create Token and send
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
     }

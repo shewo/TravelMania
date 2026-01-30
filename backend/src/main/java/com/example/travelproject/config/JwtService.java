@@ -17,11 +17,10 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    // වැදගත්: මෙය ඉතා දිග රහස් අංකයක් විය යුතුය (256-bit).
-    // Production එකේදී මෙය application.properties එකෙන් ගන්න එක වඩා හොඳයි.
+    // important code like,(256-bit).
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
 
-    // 1. User කෙනෙක් Login වුණාම Token එක හදන method එක
+    // 1. create token when log the user
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
@@ -36,12 +35,12 @@ public class JwtService {
                 .compact();
     }
 
-    // 2. Token එකෙන් Email එක එළියට ගන්න method එක
+    // 2. get email in to token
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // 3. Token එක Valid ද කියලා check කරන method එක
+    // 3.is toke valid or not
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);

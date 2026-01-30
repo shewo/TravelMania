@@ -34,21 +34,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        // 1. Header එකේ "Bearer " කියන එක තියෙනවද බලනවා
+        // 1. check "Bearer " in header
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 2. Token එක extract කරගන්නවා (මුල් අකුරු 7 අයින් කරලා)
+        // 2. extract the Token (remove frist 7 numbers)
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
 
-        // 3. User authenticate වෙලා නැත්නම් විතරක් check කරනවා
+        // 3. User authenticate without sign in user
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
 
-            // 4. Token එක valid නම් Security Context එක update කරනවා
+            // 4. update security contaxt when toen is valid
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,

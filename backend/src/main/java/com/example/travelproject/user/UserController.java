@@ -14,8 +14,8 @@ public class UserController {
 
     private final UserService userService;
 
-    // 🔥 වැදගත්: Login, Register, Google Login දැන් තියෙන්නේ AuthenticationController එකේ.
-    // මෙතන තියෙන්නේ Token එක අරගෙන ඇතුලට ආපු අයට User Data බලන්න විතරයි.
+    // : Login, Register, Google Login now store in AuthenticationController
+    //  Token  User Data
 
     // 1. GET ALL Endpoint (Admin වැඩ වලට)
     @GetMapping
@@ -23,7 +23,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // 2. User ID එකෙන් විස්තර ගන්න (Profile Page එකට වගේ)
+    // 2. get details using User ID  (like Profile Page )
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
