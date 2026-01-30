@@ -1,23 +1,36 @@
 // src/pages/MapPage.jsx
 import React from 'react';
 import ShopMap from '../components/ShopMap';
-import '../styles/HomePage1.css'; // Reusing your global styles
 import Navbar from '../components/Navbar';
+import Footer from './HomePage4'; // Importing the Footer (HomePage4)
+import '../styles/HomePage1.css'; 
+import '../styles/MapPage.css'; // New modern styles
 
 const MapPage = () => {
     return (
-        <div style={{ backgroundColor: "#0b0a0a", minHeight: "100vh", padding: "20px" }}>
-            {/* Simple Header */}
+        <div className="mappage-container">
             <Navbar/>
+            
+            {/* Ambient Background Glow */}
+            <div className="mappage-bg-glow"></div>
 
-            {/* Map Content */}
-            <div style={{ textAlign: "center", marginBottom: "30px" }}>
-               
-                <p style={{ color: "#C5B097", letterSpacing: "2px" }}>FIND GEAR AND SHOPS NEAR YOU</p>
+            {/* Header Section */}
+            <div className="mappage-header">
+                <h1 className="mappage-title">Explore Locations</h1>
+                <p className="mappage-subtitle">Find Gear & Shops Near You</p>
             </div>
 
-            <div style={{ height: "70vh", width: "90%", margin: "0 auto", border: "2px solid #D1B48C", borderRadius: "20px" }}>
-                <ShopMap />
+            {/* Modern Map Wrapper */}
+            <div className="map-wrapper">
+                <div className="map-border-glow"></div>
+                <div className="map-inner-container">
+                    <ShopMap />
+                </div>
+            </div>
+            
+            {/* Footer Section */}
+            <div style={{ width: '100%', marginTop: '50px' }}>
+                <Footer />
             </div>
         </div>
     );
