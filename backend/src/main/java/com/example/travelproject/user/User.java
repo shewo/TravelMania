@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "app_user")
-public class User implements UserDetails { // 1. UserDetails implement කළා
+public class User implements UserDetails { // 1. UserDetails implement
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

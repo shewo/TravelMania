@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*") // Frontend (React) සදහා
+@CrossOrigin(origins = "*") // Frontend (React)
 @RequiredArgsConstructor
 public class UserController {
 
@@ -17,7 +17,7 @@ public class UserController {
     // : Login, Register, Google Login now store in AuthenticationController
     //  Token  User Data
 
-    // 1. GET ALL Endpoint (Admin වැඩ වලට)
+    // 1. GET ALL Endpoint (Admin works)
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());

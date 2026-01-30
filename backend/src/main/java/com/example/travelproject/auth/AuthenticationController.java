@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*") // Frontend connect වෙන්න
+@CrossOrigin(origins = "*") // Frontend connect
 public class AuthenticationController {
 
     private final AuthenticationService service;
@@ -22,7 +22,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
-    // 🔥 Google Login Endpoint
+    // Google Login Endpoint
     @PostMapping("/google")
     public ResponseEntity<AuthenticationResponse> googleLogin(@RequestBody GoogleLoginRequest request) {
         return ResponseEntity.ok(service.googleLogin(request));
