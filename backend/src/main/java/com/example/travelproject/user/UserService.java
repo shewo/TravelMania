@@ -10,9 +10,9 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    // Login Logic අයින් කළා (දැන් AuthenticationService එකේ තියෙන්නේ)
+    //remove login logic (දnow  AuthenticationService )
 
-    // Data ගන්න Method විතරයි මෙතන ඉතුරු වෙන්නේ
+    // method for get data
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
