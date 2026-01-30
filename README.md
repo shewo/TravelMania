@@ -1,16 +1,53 @@
-# React + Vite
+✈️ TravelManiya
+TravelManiya is a full-stack travel web application designed to make trip planning seamless and exciting. It allows users to discover destinations, book packages, manage itineraries, and share travel experiences
+✨ Key Features
+User Authentication: Secure login and registration (JWT based).
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Destination Discovery: Search and filter destinations by category, price, or popularity.
 
-Currently, two official plugins are available:
+Booking System: Easy booking flow for hotels, flights, and tour packages.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+User Dashboard: Manage current bookings, view travel history, and update profiles.
 
-## React Compiler
+Admin Panel: Manage users, add new destinations, and oversee bookings.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Reviews & Ratings: Users can leave feedback on their travel experiences.
 
-## Expanding the ESLint configuration
+🛠️ Tech Stack
+Frontend
+Library: React.js
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+State Management: Redux Toolkit / Context API
+
+Styling: CSS Modules / Tailwind CSS / Material UI
+
+Routing: React Router DOM
+
+HTTP Client: Axios
+
+Backend
+Framework: Spring Boot
+
+Language: Java 17+
+
+Security: Spring Security & JWT
+
+Database: MySQL / PostgreSQL
+
+ORM: Spring Data JPA (Hibernate)
+
+Build Tool: Maven
+
+🚀 Getting Started
+Follow these instructions to set up the project locally.
+
+Prerequisites
+Ensure you have the following installed:
+
+Node.js (v16 or higher)
+
+Java Development Kit (JDK) (v17 or higher)
+
+MySQL (or your preferred SQL database)
+
+Maven
