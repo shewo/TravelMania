@@ -1,12 +1,24 @@
 package com.example.travelproject.user;
 
 import jakarta.persistence.*;
-import lombok.Data; // Lombok generates Getters/Setters automatically
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Entity
+import java.util.Collection;
+import java.util.List;
+
 @Data
-@Table(name = "app_user") // Renamed because "user" is a reserved SQL word
-public class User {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "app_user")
+public class User implements UserDetails { // 1. UserDetails implement කළා
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,10 +27,48 @@ public class User {
     private String name;
 
     @Column(unique = true, nullable = false)
-    private String email; // Used for Login
+    private String email;
 
     @Column(nullable = false)
-    private String password; // In a real app, this should be encrypted!
+    private String password;
 
-    private String role; // e.g., "SELLER" or "TRAVELER"
+    private String role; // "SELLER" or "TRAVELER"
+
+    // --- Spring Security Methods ---
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Role with Security Authority
+        return List.of(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public String getUsername() {
+        return email; //login email
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

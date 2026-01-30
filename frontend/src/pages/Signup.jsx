@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X, Mail, Lock, User, ArrowRight, LogOut } from 'lucide-react'; 
-import { GoogleLogin } from '@react-oauth/google'; // Google Component
-import { jwtDecode } from "jwt-decode"; // Token decode package
+import { GoogleLogin } from '@react-oauth/google'; 
+import { jwtDecode } from "jwt-decode"; 
 import '../styles/Signup.css';
 
 const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
@@ -12,32 +12,53 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // --- HELPER: SAVE TOKEN & NOTIFY PARENT ---
+  const handleAuthResponse = (data, userDetails = {}) => {
+    // 1. Token eka localStorage eke save karagannawa
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+      
+      // Token eka decode karala balamu (Optional)
+      const decodedToken = jwtDecode(data.token);
+      console.log("Decoded Token:", decodedToken);
+
+      // Parent component ekata kiyanawa api log una kiyala
+      // Backend eken user object eka enne nathi nisa, api thiyena details yawanawa
+      onLoginSuccess({
+        email: decodedToken.sub, // JWT eke 'sub' kiyanne email ekata
+        ...userDetails, // Google walin nam name/picture enawa
+        token: data.token
+      });
+    }
+  };
+
   // --- 1. GOOGLE LOGIN HANDLE ---
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-        // Google eken ena token eka decode karanawa
         const decoded = jwtDecode(credentialResponse.credential);
-        console.log("Google User:", decoded);
+        console.log("Google User Decoded:", decoded);
 
-        // Backend ekata yawana data object eka
-        const googleUser = {
-            name: decoded.name,
+        // Backend eke 'GoogleLoginRequest' ekata galapena object eka
+        const googlePayload = {
             email: decoded.email,
-            password: "", // Google nisa password na
-            role: "TRAVELER", // Default role
-            picture: decoded.picture
+            name: decoded.name
         };
 
-        // Backend call eka
-        const response = await fetch('http://localhost:8080/api/users/google-login', {
+        // 🔥 URL Updated to /api/auth/google
+        const response = await fetch('http://localhost:8080/api/auth/google', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(googleUser),
+            body: JSON.stringify(googlePayload),
         });
 
         if (response.ok) {
-            const data = await response.json();
-            if (onLoginSuccess) onLoginSuccess(data); // Auto Login wenawa
+            const data = await response.json(); // { token: "..." } enawa
+            // Token eka save karala UI update karanawa
+            handleAuthResponse(data, { 
+                name: decoded.name, 
+                picture: decoded.picture, 
+                role: 'TRAVELER' 
+            });
         } else {
             console.error("Google Login Backend Error");
             alert("Google Login Failed!");
@@ -51,13 +72,16 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
   // --- 2. NORMAL EMAIL/PASS LOGIN HANDLE ---
   const handleSubmit = async (e) => {
     e.preventDefault(); 
+    
+    // 🔥 URLs Updated to /api/auth/...
     const url = isLogin 
-      ? 'http://localhost:8080/api/users/login' 
-      : 'http://localhost:8080/api/users/register';
+      ? 'http://localhost:8080/api/auth/authenticate' 
+      : 'http://localhost:8080/api/auth/register';
 
+    // Payload eka hadanawa
     const payload = isLogin 
-      ? { email: formData.email, password: formData.password } 
-      : { ...formData, role: 'TRAVELER' };
+      ? { email: formData.email, password: formData.password } // Login
+      : { name: formData.name, email: formData.email, password: formData.password, role: 'TRAVELER' }; // Register
 
     try {
       const response = await fetch(url, {
@@ -67,20 +91,32 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        if (onLoginSuccess) onLoginSuccess(data); 
+        const data = await response.json(); // { token: "..." }
+        
+        // Success wunaama
+        handleAuthResponse(data, { 
+            name: isLogin ? "User" : formData.name, // Login weddi nama danne na backend eken gannakan
+            email: formData.email 
+        });
+
         setFormData({ name: '', email: '', password: '' });
       } else {
         const errorMsg = await response.text(); 
-        alert("Error: " + errorMsg);
+        // Backend eken json nathiwa text awoth handle karanna
+        try {
+            const errorJson = JSON.parse(errorMsg);
+            alert("Error: " + (errorJson.message || "Authentication Failed"));
+        } catch {
+            alert("Error: Login Failed. Please check credentials.");
+        }
       }
     } catch (error) {
       console.error("Network Error:", error);
-      alert("Something went wrong!");
+      alert("Something went wrong! Is the backend running?");
     }
   };
 
-  // --- RENDER SECTION ---
+  // --- RENDER SECTION (UI eka wens kale na) ---
   return (
     <>
       <div className={`signup-backdrop ${isOpen ? 'open' : ''}`} onClick={onClose}/>
@@ -88,23 +124,24 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
       <div className={`signup-drawer ${isOpen ? 'open' : ''}`}>
         <button className="close-btn" onClick={onClose}><X size={24} /></button>
 
-        {/* LOGIC CHECK: User kenek innawada? */}
+        {/* VIEW 1: LOGGED IN USER PROFILE */}
         {user ? (
-          
-          /* VIEW 1: LOGGED IN USER PROFILE */
           <div className="profile-view-container" style={{height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
             <img 
-              src={`https://ui-avatars.com/api/?name=${user.name}&background=c5a059&color=000&size=128&bold=true`} 
+              src={user.picture || `https://ui-avatars.com/api/?name=${user.name || 'User'}&background=c5a059&color=000&size=128&bold=true`} 
               alt="Profile" 
               style={{borderRadius: '50%', border: '4px solid #c5a059', marginBottom: '20px', boxShadow: '0 0 20px rgba(197, 160, 89, 0.4)'}}
             />
-            <h2 className="drawer-title" style={{fontSize: '24px'}}>{user.name}</h2>
+            <h2 className="drawer-title" style={{fontSize: '24px'}}>{user.name || "Traveler"}</h2>
             <p className="switch-text" style={{marginTop: '5px'}}>{user.email}</p>
             <p className="gold-text" style={{fontSize: '12px', letterSpacing: '2px', textTransform: 'uppercase', marginTop: '10px'}}>{user.role || 'TRAVELER'}</p>
 
             <div style={{flex: 1}}></div>
 
-            <button onClick={onLogout} className="gold-btn" style={{borderColor: '#ff4444', color: '#ff4444', backgroundColor: 'rgba(255, 68, 68, 0.1)'}}>
+            <button onClick={() => {
+                localStorage.removeItem('token'); // Logout weddi token ain karanawa
+                onLogout();
+            }} className="gold-btn" style={{borderColor: '#ff4444', color: '#ff4444', backgroundColor: 'rgba(255, 68, 68, 0.1)'}}>
               SIGN OUT <LogOut size={16} />
             </button>
           </div>
@@ -117,7 +154,7 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
               <h2 className="drawer-title">{isLogin ? 'WELCOME' : 'JOIN THE'} <br /><span className="gold-text">{isLogin ? 'BACK' : 'CLAN'}</span></h2>
             </div>
 
-            {/* --- GOOGLE BUTTON START --- */}
+            {/* --- GOOGLE BUTTON --- */}
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                 <GoogleLogin
                     onSuccess={handleGoogleSuccess}
@@ -127,7 +164,6 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
                     text={isLogin ? "signin_with" : "signup_with"}
                 />
             </div>
-            {/* --- GOOGLE BUTTON END --- */}
 
             {/* DIVIDER */}
             <div style={{display: 'flex', alignItems: 'center', marginBottom: '20px', color: 'rgba(197, 160, 89, 0.5)', fontSize: '12px'}}>
