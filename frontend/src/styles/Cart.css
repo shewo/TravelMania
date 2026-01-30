@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+
+/* Main Page Container - Transparent so your background shows through */
+.cart-container {
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: white;
+}
+
+/* Header */
+.cart-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.cart-header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  color: #eebb5a; /* Gold */
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.cart-count {
+  color: #aaa;
+  font-size: 1.1rem;
+}
+
+/* Layout: Grid for Items (Left) and Summary (Right) */
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px; /* Summary is fixed width */
+  gap: 40px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+  .cart-layout {
+    grid-template-columns: 1fr; /* Stack on mobile */
+  }
+}
+
+/* --- LEFT SIDE: CART ITEMS --- */
+.cart-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  /* Glass Effect */
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  transition: border-color 0.3s ease;
+}
+
+.cart-item:hover {
+  border-color: rgba(238, 187, 90, 0.3);
+}
+
+.item-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-right: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.item-details {
+  flex-grow: 1;
+}
+
+.item-name {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 5px;
+}
+
+.item-price {
+  color: #eebb5a; /* Gold Price */
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Quantity Controls */
+.item-quantity {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-right: 30px;
+}
+
+.qty-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qty-btn:hover {
+  background: #eebb5a;
+  color: black;
+}
+
+.qty-value {
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.remove-btn {
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.3s;
+  font-size: 1.2rem;
+}
+
+.remove-btn:hover {
+  color: #ff4d4d; /* Red on hover */
+}
+
+/* --- RIGHT SIDE: ORDER SUMMARY --- */
+.cart-summary {
+  /* Glass Effect */
+  background: rgba(0, 0, 0, 0.6); /* Slightly darker for contrast */
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(238, 187, 90, 0.3); /* Gold border */
+  border-radius: 16px;
+  padding: 30px;
+  height: fit-content;
+}
+
+.summary-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  color: white;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 15px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #eebb5a; /* Gold Total */
+}
+
+.checkout-btn {
+  width: 100%;
+  margin-top: 30px;
+  background: linear-gradient(135deg, #eebb5a 0%, #d4a036 100%);
+  color: #1a1a1a;
+  border: none;
+  padding: 15px;
+  border-radius: 8px;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.checkout-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(238, 187, 90, 0.3);
+}
