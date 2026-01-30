@@ -9,6 +9,8 @@ import ParallaxGap from '../components/ParallaxGap'
 import ProductInfoSection from '../pages/ProductInfoSection'
 import ProductPage from '../pages/ProductPage'
 import AllStores from '../pages/AllStores'
+import Cart from '../pages/Cart'
+import Checkout from '../pages/Checkout'
 // --- CHANGE: Import your renamed photo here ---
 // Ensure the file in your 'assets' folder is named "gapbg.jpg"
 import gapBg from '../assets/footer-bg.jpg' 
@@ -63,6 +65,8 @@ function Homepage() {
 <ProductInfoSection/>
 <ProductPage/>
 <AllStores/>
+<Cart/>
+<Checkout/>
 
    
     </>
