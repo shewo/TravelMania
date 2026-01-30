@@ -25,7 +25,7 @@ const ProductPage = () => {
     { id: 6, name: "Storm-Ready GPS", cat: "Wild", price: 3000, img: imgGPS },
     { id: 7, name: "Driftwood Surfboard", cat: "Coast", price: 4500, img: imgBoard },
     // REPLACED HAMMOCK WITH STOVE
-    { id: 8, name: "Camping Stove", cat: "Wild", price: 1200, img: imgStove }, 
+    { id: 8, name: "Camping Stove", cat: "Wild", price: 1200, img: imgStove },  
   ];
 
   // --- STATE ---
