@@ -8,15 +8,7 @@ import Navbar from '../components/Navbar'
 import ParallaxGap from '../components/ParallaxGap'
 import ProductInfoSection from '../pages/ProductInfoSection'
 import ProductPage from '../pages/ProductPage'
-
-
-
-
-import Dashboard from './Dashboard'
-import Signup from '../pages/Signup'
-
-
-
+import AllStores from '../pages/AllStores'
 // --- CHANGE: Import your renamed photo here ---
 // Ensure the file in your 'assets' folder is named "gapbg.jpg"
 import gapBg from '../assets/footer-bg.jpg' 
@@ -70,6 +62,8 @@ function Homepage() {
       <HomePage4 />
 <ProductInfoSection/>
 <ProductPage/>
+<AllStores/>
+
    
     </>
   )

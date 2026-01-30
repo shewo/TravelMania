@@ -1,0 +1,192 @@
+/* Container: Make sure it's transparent so your main background shows */
+.stores-container {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Montserrat', sans-serif;
+  color: #edebd5; /* Default text color matching ProductPage */
+}
+
+/* Header styling */
+.stores-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.stores-header h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  color: #D1B48C;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  margin-bottom: 10px;
+}
+
+.stores-header p {
+  color: #edebd5;
+  font-size: 1.2rem;
+}
+
+/* Search Bar - Matching ProductPage Style */
+.search-bar-container {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.search-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #D1B48C;
+  color: #fff;
+  padding: 15px 40px 15px 10px;
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  outline: none;
+  transition: all 0.4s ease;
+  text-align: center;
+  text-shadow: 0 2px 5px rgba(0,0,0,1);
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-input:focus {
+  border-bottom-color: #D1B48C;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  fill: #D1B48C;
+}
+
+/* Grid Layout */
+.stores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px 0;
+}
+
+/* --- THE LIQUID GLASS CARD --- */
+.store-card {
+  /* The Glass Effect */
+  background: rgba(0, 0, 0, 0.4); /* Dark semi-transparent background */
+  backdrop-filter: blur(12px);     /* The Blur */
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+  
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.store-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+  border-color: rgba(238, 187, 90, 0.4); /* Gold border on hover */
+}
+
+/* Image Area */
+.store-image-wrapper {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.store-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.store-card:hover .store-img {
+  transform: scale(1.1); /* Zoom effect on hover */
+}
+
+.store-rating {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #D1B48C; /* Gold star color matching ProductPage */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Card Content */
+.store-details {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.store-category {
+  color: #D1B48C; /* Gold Text matching ProductPage */
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.store-name {
+  font-size: 1.5rem;
+  margin: 0 0 10px 0;
+  color: #edebd5;
+  font-weight: 600;
+}
+
+.store-desc {
+  color: #edebd5; /* Matching ProductPage text color */
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  flex-grow: 1;
+}
+
+/* Footer & Button */
+.store-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+}
+
+.store-location {
+  font-size: 0.9rem;
+  color: #edebd5;
+}
+
+.store-btn {
+  background: linear-gradient(135deg, #eebb5a 0%, #d4a036 100%); /* Gold Gradient */
+  color: #1a1a1a;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.store-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(238, 187, 90, 0.4);
+}

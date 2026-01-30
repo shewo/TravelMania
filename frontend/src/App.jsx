@@ -6,6 +6,7 @@ import StorePage from "./pages/StorePage";
 import Dashboard from "./Main-sections/Dashboard";
 
 
+
 // 1. Import the wrapper (adjust path if you put it somewhere else)
 import SmoothScrollWrapper from "./components/SmoothScrollWrapper"; 
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/dashboard/*" element={<Dashboard />} />
 
           <Route path="/store/:id" element={<StorePage />} />
+    
           
           
         </Routes>
