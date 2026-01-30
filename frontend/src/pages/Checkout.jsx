@@ -4,7 +4,7 @@ import '../styles/Checkout.css';
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState('card');
 
-  // Dummy Totals (Ideally passed from Cart state)
+  // Dummy Totals
   const subtotal = 75900;
   const shipping = 750;
   const total = subtotal + shipping;
@@ -41,12 +41,12 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <div className="form-group" style={{marginBottom: '20px'}}>
+              <div className="form-group" style={{ marginBottom: '25px' }}>
                 <label>Email Address</label>
                 <input type="email" className="glass-input" placeholder="john@example.com" required />
               </div>
 
-              <div className="form-group" style={{marginBottom: '20px'}}>
+              <div className="form-group" style={{ marginBottom: '25px' }}>
                 <label>Address</label>
                 <input type="text" className="glass-input" placeholder="123 Forest View Rd" required />
               </div>
@@ -104,7 +104,9 @@ const Checkout = () => {
             )}
             
             {paymentMethod === 'cod' && (
-               <p style={{color: '#aaa', fontSize: '0.9rem'}}>Pay in cash when your gear arrives.</p>
+               <p style={{color: '#aaa', fontSize: '0.9rem', textAlign:'center', marginTop:'20px'}}>
+                 Pay in cash when your gear arrives.
+               </p>
             )}
 
           </div>
@@ -146,7 +148,6 @@ const Checkout = () => {
               <span>LKR {total.toLocaleString()}</span>
             </div>
 
-            {/* This button triggers the form submit remotely or you can move it inside the form */}
             <button 
               type="submit" 
               form="checkout-form" 
