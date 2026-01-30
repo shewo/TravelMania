@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
 
-        // inject the service
+        // constructor inject the service
         private  final ProductService productService;
         public ProductController(ProductService productService) {
             this.productService = productService;
