@@ -43,7 +43,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
 
-    // 🔥 GOOGLE LOGIN LOGIC 🔥
+    //  GOOGLE LOGIN LOGIC
     public AuthenticationResponse googleLogin(GoogleLoginRequest request) {
         // 1. check user using email
         var user = repository.findByEmail(request.getEmail())

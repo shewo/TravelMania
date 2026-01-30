@@ -16,7 +16,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Database එකේ column name එක 'shop_id' නිසා name එක දුන්නා
+
     @Column(name = "shopId")
     private Long shopId;
 

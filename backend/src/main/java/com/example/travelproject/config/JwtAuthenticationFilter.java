@@ -21,7 +21,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService; // මේ Bean එක අපි ඊළඟ පියවරේදී හදමු
+    private final UserDetailsService userDetailsService; // create bean next step
 
     @Override
     protected void doFilterInternal(
