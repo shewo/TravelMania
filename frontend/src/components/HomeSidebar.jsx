@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/HomeSidebar.css';
 import { FaInstagram, FaFacebookF } from "react-icons/fa";
 
@@ -26,10 +27,10 @@ const HomeSidebar = ({ isOpen, onClose }) => {
         {/* --- NAVIGATION --- */}
         <nav className="sidebar-nav">
           <ul className="nav-list">
-            <li className="nav-item"><a href="#home" onClick={onClose}>HOME</a></li>
-            <li className="nav-item"><a href="#releases" onClick={onClose}>MAP</a></li>
-            <li className="nav-item"><a href="#stockists" onClick={onClose}>RENTALS</a></li>
-            <li className="nav-item"><a href="/Dashboard" onClick={onClose}>DASHBOARD</a></li>
+            <li className="nav-item"><Link to="/" onClick={onClose}>HOME</Link></li>
+            <li className="nav-item"><Link to="/map" onClick={onClose}>MAP</Link></li>
+            <li className="nav-item"><Link to="/Sellerac" onClick={onClose}>SELLER</Link></li>
+            <li className="nav-item"><Link to="/Dashboard" onClick={onClose}>DASHBOARD</Link></li>
           </ul>
         </nav>
 
