@@ -87,7 +87,7 @@ html,body,#root {
 /* padding / spacing */
 .dp-outer {
   padding-top: 60px; 
-  padding-left: 60px;     /* meka freely wenas karanna puluwan */
+  padding-left: 60px;    
 }
 
 /* actual circle */
@@ -218,7 +218,7 @@ html,body,#root {
 } 
 /* --- 1. Main Sidebar Layout (Structure) --- */
 /* --- 1. Main Sidebar Layout --- */
-.sidebar-container {
+.sellersidebar-container {
   position: fixed;
   left: 0;
   top: 0;
