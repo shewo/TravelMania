@@ -3,7 +3,7 @@ import "../styles/Seller.css";
 import dp from "../assets/dp.jpeg";
 import { MdEmail, MdPhone } from "react-icons/md";
 // Import your sidebar component
-import Sellersidebar from "../Components/Sellersidebar"; 
+import Sellersidebar from "../components/Sellersidebar"; 
 
 function Seller() {
   return (
