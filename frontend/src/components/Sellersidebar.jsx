@@ -1,38 +1,42 @@
 import React from 'react';
 import "../styles/Seller.css"; 
-import { MdSwapHoriz, MdSettings, MdLogout, MdDashboard } from "react-icons/md";
+import { MdSwapHoriz, MdSettings, MdLogout } from "react-icons/md";
 
 const Sellersidebar = () => {
   return (
-    <div className="sidebar-container">
+    // Renamed to 'seller-sidebar-container' to avoid conflict
+    <div className="seller-sidebar-container">
       
+      {/* Header */}
+      <div className="seller-sidebar-header">
+        <h2 className="seller-sidebar-brand">TRAVEL MANIA</h2>
+      </div>
 
-      {/* හැම button එකම මේ ලිස්ට් එක ඇතුලට දාන්න */}
-      <ul className="menu">
+      {/* Menu */}
+      <div className="seller-sidebar-menu">
         
-        {/* 1. Switch Button */}
-        <div style={{ marginBottom: '10px' }}>
-            <button className="gold-switch-btn">
-              <MdSwapHoriz size={20} /> Switch to Seller
-            </button>
-        </div>
-
-        {/* 2. Dashboard (Optional - ඔයාට ඕන නම් තියාගන්න) */}
-        {/* <li className="active">
-          <MdDashboard size={20} style={{ marginRight: '10px' }} /> Dashboard
-        </li> */}
-
-        {/* 3. Settings Button */}
-        <button className="menu-btn">
-          <MdSettings size={20} style={{ marginRight: '10px' }} /> Settings
-        </button>
-        
-        {/* 4. Log Out Button */}
-        <button className="menu-btn logout-btn">
-          <MdLogout size={20} style={{ marginRight: '10px' }} /> Log Out
+        {/* Switch Button */}
+        <button className="seller-gold-btn">
+          <MdSwapHoriz size={22} /> 
+          <span>Switch to Buyer</span>
         </button>
 
-      </ul>
+        {/* Settings Button */}
+        <button className="seller-menu-btn">
+          <MdSettings size={22} /> 
+          <span>Settings</span>
+        </button>
+        
+      </div>
+
+      {/* Footer */}
+      <div className="seller-sidebar-footer">
+        <button className="seller-menu-btn seller-logout-btn">
+          <MdLogout size={22} /> 
+          <span>Log Out</span>
+        </button>
+      </div>
+
     </div>
   );
 };
