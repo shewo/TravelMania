@@ -1,558 +1,288 @@
-html,body,#root {
-    font-family: "Inter", "Segoe UI", sans-serif;
-   color: #f5d07a;
-   height: 100%;
+/* =========================================
+   1. GLOBAL RESET & MAIN LAYOUT
+   ========================================= */
+html, body, #root {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  color: #f5d07a;
+  min-height: 100%;
   margin: 0;
   padding: 0;
- min-height: 200vh;
+  overflow-x: hidden;
 }
-.bg-container {   /* seeler dash */
-  min-height: 200vh;
-  background-image: url("./bg-dashboard.png");
-  background-size: cover;        /* Fit image to screen */
-  background-position: center top;   /* Center the image */
-  background-repeat: no-repeat; 
+
+/* Main Dashboard Wrapper */
+.seller-dashboard {
+  min-height: 100vh;
+  width: 100%;
+  /* Update this path to match your background image location */
+  background-image: url("../assets/bg-dashboard.png"); 
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
   background-attachment: fixed;
-
-  display: flex;
-  
-
+  display: flex; 
 }
-.seller h1 {
-   position: absolute;
-  top: 70px;            /* distance from top */
-  left: 450px;        /* distance from right */
-   font-family: "Inter", "Segoe UI", sans-serif;
-  font-size: 60px;      /* adjust if needed */
-  background-color: #d4af37;
+
+/* =========================================
+   2. CONTENT AREA (Right Side)
+   ========================================= */
+.dashboard-content {
+  flex: 1;
+  /* MARGIN LEFT: Must match the sidebar width (240px) */
+  margin-left: 240px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Padding top pushes content below the background text */
+  padding-top: 480px; 
+  padding-bottom: 80px;
+  gap: 40px;
+}
+
+.dashboard-header .dashboard-title {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 60px;
+  background: linear-gradient(135deg, #f5d07a 0%, #d4af37 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-shadow: none;
-  animation: fadeInDown 0.6s ease-out;
-
-  
-
-}
-
-
-
-.overlay-text {  /* welcome backy */
-  font-size: 30px;
-   position: absolute; 
-   top: 150px;
-   left: 300px;
-}
-
-
-
-
-
-.bio-detail {  /* about */
-  position: absolute;
-  left: 350px;
-  top: 600px;
-  border-radius: 8px;
-  overflow: hidden;
-  width: 400px;
-  height: 450px;
+  margin-bottom: 20px;
   text-align: center;
+}
+
+/* =========================================
+   3. UNIQUE SIDEBAR STYLES (RENAMED)
+   ========================================= */
+/* These classes use 'seller-' prefix to avoid conflict with Homepage */
+
+.seller-sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(15px);
+  border-right: 1px solid rgba(212, 175, 55, 0.3);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px;
+  z-index: 1000;
+}
+
+.seller-sidebar-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.seller-sidebar-brand {
+  color: #f5d07a;
+  font-size: 24px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.seller-sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.seller-menu-btn, .seller-gold-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Inter", sans-serif;
+}
+
+.seller-menu-btn {
+  background: transparent;
+  color: #b0b0b0;
+}
+
+.seller-menu-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  color: #f5d07a;
+  transform: translateX(5px);
+}
+
+.seller-gold-btn {
+  background: linear-gradient(135deg, #d4af37 0%, #f5d07a 100%);
+  color: #000;
+  font-weight: bold;
+  justify-content: center;
+}
+
+.seller-gold-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.seller-logout-btn {
+  color: #ff6b6b;
+  margin-top: auto;
+}
+
+.seller-logout-btn:hover {
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff4757;
+}
+
+.seller-sidebar-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================
+   4. GLASS CARDS (Profile, Bio, Contact)
+   ========================================= */
+.profile-container, 
+.seller-bio, 
+.contact-container {
+  width: 90%;
+  max-width: 850px;
+  background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(212, 175, 55, 0.25);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-.bio-detail:hover{
-    box-shadow: 
-    0 16px 48px rgba(212, 175, 55, 0.25),
-    0 0 80px rgba(212, 175, 55, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-.bio-detail h3 {
-  padding-top: 1px;
-   font-size: 40px;
-}
-.bio-detail p{
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-bottom: 150px;
-  font-size: 18px;
-  text-align: justify;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+  padding: 30px;
+  transition: all 0.3s ease;
 }
 
-
-/* padding / spacing */
-.dp-outer {
-  padding-top: 60px; 
-  padding-left: 60px;     /* meka freely wenas karanna puluwan */
+.profile-container:hover, 
+.seller-bio:hover, 
+.contact-container:hover {
+  box-shadow: 0 16px 48px rgba(212, 175, 55, 0.25);
+  transform: translateY(-5px);
 }
 
-/* actual circle */
-.dp-wrapper {
-  width: 120px;         /* circle size */
-  height: 120px;
+.profile-container {
+  display: flex;
+  align-items: center;
+  padding: 40px 60px;
+  flex-wrap: wrap;
+}
+
+.profile-image-wrapper {
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid #c9a35a;
+  border: 3px solid #c9a35a;
+  box-shadow: 0 0 20px rgba(201, 163, 90, 0.3);
 }
 
-/* image */
-.dp-wrapper img {
+.profile-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.top { 
-    position: absolute;
-    left: 350px; 
-    top: 250px;
-    width: 850px;
-    height: 250px; 
-    border: 1px solid rgba(212, 175, 55, 0.25);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 8px;
-    box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-.top:hover{
-    box-shadow: 
-    0 16px 48px rgba(212, 175, 55, 0.25),
-    0 0 80px rgba(212, 175, 55, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-.seller-info{
-  
-  position: absolute;
-  padding-top: 50px;
-  padding-left: 375px;
+.profile-details {
+  padding-left: 50px;
 }
 
-/* name */
-.seller-name{
-  font-size: 28px;
-  font-family: 'Lucida Sans', sans-serif;
-  color: #f5f5f5;
-  margin: 0;
-}
-
-/* small gold line under name */
-
-
-/* role */
-.seller-role{
-  font-size: 16px;
-  font-family: 'Lucida Sans', sans-serif;
-  color: #c9a35a;
-  letter-spacing: 0.5px;
-}
-.since{
-   font-size: 16px;
-  font-family: 'Lucida Sans', sans-serif;
-  color: #c9a35a;
-  letter-spacing: 0px;
-}
-
-
-.con{  /* contact in */
-  position: absolute;
-  right: 50px;
-  top: 600px;
-  overflow: hidden;
-  width: 400px;
-  height: 450px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 8px;
-  box-shadow: 
-  0 8px 32px rgba(0, 0, 0, 0.8),
-  inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-.con:hover{
-    box-shadow: 
-    0 16px 48px rgba(212, 175, 55, 0.25),
-    0 0 80px rgba(212, 175, 55, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-.con h3{
-  font-size: 38px;
-   font-family: "Inter", "Segoe UI", sans-serif;
-  text-align: center;
-  margin-bottom: 30px;
-  
-}
-
-.contact-list{
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  padding: 0 35px;
-  padding-top: 20px;
-}
-
-.contact-item{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 12px;
-  border-radius: 6px;
-  background: rgba(212, 175, 55, 0.08);
-  box-shadow: inset 0 0 10px rgba(212, 175, 55, 0.15);
-}
-
-.label{
-  font-size: 18px;
-  font-family: 'Lucida Sans', sans-serif;
-  padding-left: 5px;
-}
-
-.value{
-  font-size: 18px;
+.profile-name {
+  font-size: 32px;
   color: #fff;
-} 
-/* --- 1. Main Sidebar Layout (Structure) --- */
-/* --- 1. Main Sidebar Layout --- */
-.sidebar-container {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 240px;
-  height: 100vh;
-  padding: 32px 24px;
-  background: linear-gradient(
-    180deg,
-    rgba(15, 15, 15, 0.98),
-    rgba(10, 10, 10, 0.95)
-  );
-  border-right: 1px solid rgba(212, 175, 55, 0.15);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 1000;
-  color: #b0b0b0;
-  display: flex;       /* Added flex to push footer to bottom */
-  flex-direction: column;
-}
-
-/* --- 2. Logo --- */
-.logo {
-  font-size: 24px;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 50px;
-  letter-spacing: 2px;
-  background: linear-gradient(135deg, #f5d07a 0%, #d4af37 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  position: relative;
-  padding-bottom: 20px;
-  margin-top: 0;
-}
-
-.logo::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #d4af37, transparent);
-}
-
-/* --- 3. Menu & Buttons Shared Styles --- */
-.menu {
-  list-style: none;
-  padding: 0;
   margin: 0;
-  flex-grow: 1; /* Pushes the footer down */
 }
 
-/* Apply the same style to both list items and the new buttons */
-.menu li, 
-.menu-btn {
-  position: relative;
-  width: 100%;
-  padding: 16px 20px;
-  
-  margin-bottom: 220px;   /* <--- New smaller value */
-  margin-top: 25px;
-  cursor: pointer;
-  border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 15px;
-  letter-spacing: 0.3px;
+.divider-line {
+  width: 150px;
+  height: 2px;
+  background: linear-gradient(90deg, #c9a35a, transparent);
+  margin: 10px 0;
+}
+
+.profile-specialty {
+  font-size: 18px;
+  color: #c9a35a;
+  margin-bottom: 5px;
+}
+
+.membership-tenure {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* Grid Layout */
+.dashboard-content-grid {
   display: flex;
-  align-items: center;
-  
-  /* Reset button styles */
-  background: transparent;
-  border: none;
-  color: #b0b0b0;
-  text-align: left;
-  font-family: inherit;
+  gap: 30px;
+  width: 90%;
+  max-width: 850px;
 }
 
-/* Hover Effects */
-.menu li:hover,
-.menu-btn:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(212, 175, 55, 0.15),
-    rgba(212, 175, 55, 0.08)
-  );
-  transform: translateX(5px);
-  padding-left: 24px;
+.seller-bio, .contact-container {
+  flex: 1;
+}
+
+.section-heading {
+  font-size: 28px;
   color: #f5d07a;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-/* Active State */
-
-
-/* Gold Side Indicator (The small bar on the left) */
-.menu li::before,
-.menu-btn::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 3px;
-  height: 0;
-  background: linear-gradient(180deg, #f5d07a, #d4af37);
-  border-radius: 2px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(-50%);
+.bio-text {
+  font-size: 17px;
+  line-height: 1.6;
+  text-align: justify;
+  color: #e0e0e0;
 }
 
-.menu li:hover::before,
-
-.menu-btn:hover::before {
-  height: 60%;
-}
-
-/* --- 4. Special Buttons --- */
-
-/* Gold Switch Button */
-.gold-switch-btn {
-  
-  width: 100%;
-  background-color: #d4af37;
-  color: #000;
-  border: none;
-  margin-top: 100px;
-  padding: 12px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  transition: 0.3s;
-}
-
-.gold-switch-btn:hover {
-  background-color: #f5d07a;
-  transform: scale(1.02);
-}
-
-/* Logout Button Specifics */
-.logout-btn {
-  margin-bottom: 10px;
-  color: #ff8787;
-  border: 1px solid rgba(255, 107, 107, 0.2);
-}
-
-.logout-btn:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 107, 107, 0.15),
-    rgba(255, 107, 107, 0.08)
-  ) !important;
-  border-color: rgba(255, 107, 107, 0.4);
-  color: #ff6b6b !important;
-}
-
-.logout-btn:hover::before {
-  background: #ff6b6b; /* Red line for logout */
-}
-
-/* Footer Container */
-.sidebar-footer {
-  margin-top: auto; /* Ensures footer sticks to bottom if there is space */
+.contact-list {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-}
-  /* Reset button styles */
-gold */
-
-/* =========================
-   MOBILE RESPONSIVE FIX
-   ========================= */{
-@media (max-width: 768px) {
-
-  html, body, #root {
-    min-height: 100%;
-  }
-
-  .bg-container {
-    min-height: 100vh;
-    background-attachment: scroll;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  /* SELLER TITLE */
-  .seller h1 {
-    position: static;
-    font-size: 28px;
-    text-align: center;
-    margin-top: 25px;
-  }
-
-  /* TOP CARD */
-  .top {
-    position: static;
-    width: 90%;
-    height: auto;
-    margin-top: 20px;
-    padding: 20px;
-  }
-
-  .seller-info {
-    position: static;
-    padding: 0;
-    text-align: center;
-  }
-
-  .dp-outer {
-    padding: 0;
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-  }
-
-  .dp-wrapper {
-    width: 120px;
-    height: 120px;
-  }
-
-  /* ABOUT US */
-  .bio-detail {
-    position: static;
-    width: 90%;
-    height: auto;
-    margin-top: 25px;
-  }
-
-  .bio-detail h3 {
-    font-size: 26px;
-  }
-
-  .bio-detail p {
-    font-size: 15px;
-    padding-bottom: 30px;
-  }
-
-  /* CONTACT */
-  .con {
-    position: static;
-    width: 90%;
-    height: auto;
-    margin-top: 25px;
-  }
-
-  .con h3 {
-    font-size: 26px;
-  }
-
-  /* SIDEBAR */
-  .sidebar {
-    position: static;
-    width: 90%;
-    height: auto;
-    margin-top: 25px;
-  }
-
-}
-  .top {
-    order: 1;   /* 1st – uda */
-  }
-
-  .bio-detail {
-    order: 2;   /* 2nd */
-  }
-
-  .con {
-    order: 3;   /* 3rd – yata */
-  }
-
-/* =========================
-   TABLET RESPONSIVE
-   ========================= */
-@media (min-width: 769px) and (max-width: 1024px) {
-
-  .bg-container {
-    min-height: 150vh;
-    background-attachment: scroll;
-  }
-
-  /* TITLE */
-  .seller h1 {
-    font-size: 42px;
-    left: 120px;
-    top: 60px;
-  }
-
-  /* TOP CARD */
-  .top {
-    left: 120px;
-    width: 750px;
-    height: auto;
-  }
-
-  .seller-info {
-    padding-left: 300px;
-  }
-
-  /* ABOUT */
-  .bio-detail {
-    left: 120px;
-    width: 360px;
-    height: auto;
-  }
-
-  /* CONTACT */
-  .con {
-    right: 60px;
-    width: 360px;
-    height: auto;
-  }
-
-  /* SIDEBAR */
-  .sidebar {
-    width: 200px;
-  }
+  gap: 15px;
 }
 
 .contact-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 17px;
+  gap: 15px;
+  padding: 12px;
+  border-radius: 6px;
+  background: rgba(212, 175, 55, 0.08);
 }
 
-.icon {
-  font-size: 20px;
-  color: #f5d07a; /* gold */
+.contact-icon {
+  font-size: 22px;
+  color: #f5d07a;
 }
-/* card */
+
+.contact-label {
+  font-size: 12px;
+  color: #c9a35a;
+  text-transform: uppercase;
+  display: block;
 }
-/* card */
+
+.contact-value {
+  font-size: 16px;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-content-grid { flex-direction: column; }
+}
+
+@media (max-width: 768px) {
+  .seller-sidebar-container { display: none; }
+  .dashboard-content { margin-left: 0; padding-top: 350px; }
+}

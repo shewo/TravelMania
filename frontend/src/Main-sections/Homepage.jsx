@@ -14,6 +14,7 @@ import Checkout from '../pages/Checkout'
 // --- CHANGE: Import your renamed photo here ---
 // Ensure the file in your 'assets' folder is named "gapbg.jpg"
 import gapBg from '../assets/footer-bg.jpg' 
+import Seller from '../pages/Seller'
 
 function Homepage() {
   return (
@@ -67,6 +68,7 @@ function Homepage() {
 <AllStores/>
 <Cart/>
 <Checkout/>
+<Seller/>
 
    
     </>
