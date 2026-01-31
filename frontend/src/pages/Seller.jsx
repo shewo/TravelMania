@@ -2,7 +2,7 @@ import "../styles/Seller.css";
 import dp from "../assets/dp.jpeg";
 import { MdEmail, MdPhone, MdLocationOn } from "react-icons/md";
 import { FaGlobe } from "react-icons/fa";
-import Sellersidebar from "./Components/Sellersidebar";
+import Sellersidebar from "../Components/Sellersidebar";
 
 
 
