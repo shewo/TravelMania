@@ -162,11 +162,19 @@ html, body, #root {
   transition: all 0.3s ease;
 }
 
+<<<<<<< HEAD
 .profile-container:hover, 
 .seller-bio:hover, 
 .contact-container:hover {
   box-shadow: 0 16px 48px rgba(212, 175, 55, 0.25);
   transform: translateY(-5px);
+=======
+
+/* padding / spacing */
+.dp-outer {
+  padding-top: 60px; 
+  padding-left: 60px;    
+>>>>>>> e853e4eefc8a0e1a7932edbf7b1a15bfdd8a7284
 }
 
 .profile-container {
@@ -198,6 +206,64 @@ html, body, #root {
 .profile-name {
   font-size: 32px;
   color: #fff;
+<<<<<<< HEAD
+=======
+} 
+/* --- 1. Main Sidebar Layout (Structure) --- */
+/* --- 1. Main Sidebar Layout --- */
+.sellersidebar-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 240px;
+  height: 100vh;
+  padding: 32px 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 15, 15, 0.98),
+    rgba(10, 10, 10, 0.95)
+  );
+  border-right: 1px solid rgba(212, 175, 55, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1000;
+  color: #b0b0b0;
+  display: flex;       /* Added flex to push footer to bottom */
+  flex-direction: column;
+}
+
+/* --- 2. Logo --- */
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 50px;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #f5d07a 0%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  padding-bottom: 20px;
+  margin-top: 0;
+}
+
+.logo::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+/* --- 3. Menu & Buttons Shared Styles --- */
+.menu {
+  list-style: none;
+  padding: 0;
+>>>>>>> e853e4eefc8a0e1a7932edbf7b1a15bfdd8a7284
   margin: 0;
 }
 
