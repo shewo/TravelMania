@@ -21,10 +21,10 @@ html,body,#root {
 .seller h1 {
    position: absolute;
   top: 70px;            /* distance from top */
-  left: 375px;        /* distance from right */
+  left: 450px;        /* distance from right */
    font-family: "Inter", "Segoe UI", sans-serif;
   font-size: 60px;      /* adjust if needed */
-  background: linear-gradient(135deg, #f5d07a 0%, #d4af37 100%);
+  background-color: #d4af37;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -50,7 +50,7 @@ html,body,#root {
 
 .bio-detail {  /* about */
   position: absolute;
-  left: 300px;
+  left: 350px;
   top: 600px;
   border-radius: 8px;
   overflow: hidden;
@@ -108,7 +108,7 @@ html,body,#root {
 
 .top { 
     position: absolute;
-    left: 300px; 
+    left: 350px; 
     top: 250px;
     width: 850px;
     height: 250px; 
@@ -142,13 +142,7 @@ html,body,#root {
 }
 
 /* small gold line under name */
-.name-line{
-  width: 150px;
-  height: 1px;
-  background: linear-gradient(90deg, #c9a35a, #ffd27d);
-  margin: 6px 0 10px 0;
-  border-radius: 5px;
-}
+
 
 /* role */
 .seller-role{
@@ -167,11 +161,11 @@ html,body,#root {
 
 .con{  /* contact in */
   position: absolute;
-  right: 100px;
+  right: 50px;
   top: 600px;
   overflow: hidden;
   width: 400px;
-  height: 350px;
+  height: 450px;
   border: 1px solid rgba(212, 175, 55, 0.25);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -221,7 +215,182 @@ html,body,#root {
 .value{
   font-size: 18px;
   color: #fff;
+} 
+/* --- 1. Main Sidebar Layout (Structure) --- */
+/* --- 1. Main Sidebar Layout --- */
+.sidebar-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 240px;
+  height: 100vh;
+  padding: 32px 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 15, 15, 0.98),
+    rgba(10, 10, 10, 0.95)
+  );
+  border-right: 1px solid rgba(212, 175, 55, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1000;
+  color: #b0b0b0;
+  display: flex;       /* Added flex to push footer to bottom */
+  flex-direction: column;
 }
+
+/* --- 2. Logo --- */
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 50px;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #f5d07a 0%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  padding-bottom: 20px;
+  margin-top: 0;
+}
+
+.logo::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+/* --- 3. Menu & Buttons Shared Styles --- */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1; /* Pushes the footer down */
+}
+
+/* Apply the same style to both list items and the new buttons */
+.menu li, 
+.menu-btn {
+  position: relative;
+  width: 100%;
+  padding: 16px 20px;
+  
+  margin-bottom: 220px;   /* <--- New smaller value */
+  margin-top: 25px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  
+  /* Reset button styles */
+  background: transparent;
+  border: none;
+  color: #b0b0b0;
+  text-align: left;
+  font-family: inherit;
+}
+
+/* Hover Effects */
+.menu li:hover,
+.menu-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.15),
+    rgba(212, 175, 55, 0.08)
+  );
+  transform: translateX(5px);
+  padding-left: 24px;
+  color: #f5d07a;
+}
+
+/* Active State */
+
+
+/* Gold Side Indicator (The small bar on the left) */
+.menu li::before,
+.menu-btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 0;
+  background: linear-gradient(180deg, #f5d07a, #d4af37);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(-50%);
+}
+
+.menu li:hover::before,
+
+.menu-btn:hover::before {
+  height: 60%;
+}
+
+/* --- 4. Special Buttons --- */
+
+/* Gold Switch Button */
+.gold-switch-btn {
+  
+  width: 100%;
+  background-color: #d4af37;
+  color: #000;
+  border: none;
+  margin-top: 100px;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+.gold-switch-btn:hover {
+  background-color: #f5d07a;
+  transform: scale(1.02);
+}
+
+/* Logout Button Specifics */
+.logout-btn {
+  margin-bottom: 10px;
+  color: #ff8787;
+  border: 1px solid rgba(255, 107, 107, 0.2);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 107, 0.15),
+    rgba(255, 107, 107, 0.08)
+  ) !important;
+  border-color: rgba(255, 107, 107, 0.4);
+  color: #ff6b6b !important;
+}
+
+.logout-btn:hover::before {
+  background: #ff6b6b; /* Red line for logout */
+}
+
+/* Footer Container */
+.sidebar-footer {
+  margin-top: auto; /* Ensures footer sticks to bottom if there is space */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+  /* Reset button styles */
 gold */
 
 /* =========================
