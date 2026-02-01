@@ -20,33 +20,33 @@ import stoveImg from '../assets/stove.png';
 // 1. IMPORT YOUR TITLE PNG HERE
 import rentTitlePng from '../assets/rent-gear-title.png'; 
 
-// Sample Data using the Imported Images
+// Updated Sample Data with Highland, Coast, and Wild categories
 const rentalProducts = [
   { 
     id: 1, 
     name: "Camping Tent", 
-    category: "Shelter", 
+    category: "Wild", 
     price: "Rs. 1500/day", 
     image: tentImg 
   },
   { 
     id: 2, 
     name: "Hiking Backpack", 
-    category: "Gear", 
+    category: "Highland", 
     price: "Rs. 800/day", 
     image: backpackImg 
   },
   { 
     id: 3, 
     name: "GoPro Hero 11", 
-    category: "Electronics", 
+    category: "Coast", 
     price: "Rs. 2500/day", 
     image: cameraImg 
   },
   { 
     id: 4, 
     name: "Camping Stove", 
-    category: "Cooking", 
+    category: "Wild", 
     price: "Rs. 1200/day", 
     image: stoveImg 
   }
@@ -70,7 +70,7 @@ const HomePage3 = () => {
         {/* Content Layer */}
         <div className="hp3-content-layer">
           
-          {/* --- 2. REPLACED TEXT TITLE WITH PNG --- */}
+          {/* --- TITLE PNG --- */}
           <div className="hp3-title-container">
             <img src={rentTitlePng} alt="Rent Your Gear" className="hp3-title-png" />
           </div>
@@ -98,6 +98,7 @@ const HomePage3 = () => {
                   </div>
                   <div className="hp3-card-details">
                     <h3>{item.name}</h3>
+                    {/* The updated category will render here */}
                     <span className="hp3-category">{item.category}</span>
                     <p className="hp3-price">{item.price}</p>
                     
