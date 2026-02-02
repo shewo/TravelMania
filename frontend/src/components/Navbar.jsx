@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
 import '../styles/Navbar.css'; 
 import logo from '../assets/title png1.png'; 
 import HomeSidebar from './HomeSidebar'; 
@@ -9,6 +10,8 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [user, setUser] = useState(null);
+  
+  const navigate = useNavigate(); // 2. Initialize hook
 
   useEffect(() => {
     const storedUser = localStorage.getItem('travelUser');
@@ -33,6 +36,12 @@ const Navbar = () => {
     localStorage.removeItem('travelUser');
     setUser(null);
     setIsSignupOpen(false);
+    navigate('/'); // Optional: Redirect home on logout
+  };
+
+  // 3. Create navigation handler
+  const handleProfileClick = () => {
+    navigate('/Sellerac');
   };
 
   return (
@@ -52,7 +61,6 @@ const Navbar = () => {
 
       <nav className={`navbar-split ${isScrolled ? 'scrolled' : ''}`}>
         
-        {/* LEFT SECTION */}
         <div className="nav-section nav-left">
           <button 
             className={`menu-btn ${isSidebarOpen ? 'open' : ''}`} 
@@ -67,26 +75,20 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* CENTER SECTION */}
         <div className="nav-section nav-center">
           <img src={logo} alt="Travel Mania" className="nav-logo" />
         </div>
 
-        {/* RIGHT SECTION */}
         <div className="nav-section nav-right">
           
           {user ? (
-            /* ========================================================
-               UPDATED: NAME REMOVED, ONLY AVATAR SHOWN
-               ======================================================== */
-            <div className="user-profile" onClick={() => setIsSignupOpen(true)}>
+            /* 4. Update onClick to use handleProfileClick */
+            <div className="user-profile" onClick={handleProfileClick}>
               <img 
-                // Me link eken auto akuru deka (Initials) wadinawa image eka athulata
-                src={`https://ui-avatars.com/api/?name=${user.name}&background=c5a059&color=000&bold=true&length=2`} 
+                src={user.picture || `https://ui-avatars.com/api/?name=${user.name}&background=c5a059&color=000&bold=true&length=2`} 
                 alt="User Avatar" 
                 className="avatar-img"
               />
-              {/* Methana thibba nama ain kala */}
             </div>
           ) : (
             <button 
