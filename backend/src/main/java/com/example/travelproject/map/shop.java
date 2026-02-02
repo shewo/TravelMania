@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Data
+@Table(name = "shop")
 public class shop {
 
     @Id
@@ -15,6 +16,7 @@ public class shop {
 
     private String name;
     private String description;
+    private String contactNo;
 
     // 1. Tell Jackson to IGNORE this complex object so it doesn't crash
     @JsonIgnore
