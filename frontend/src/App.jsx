@@ -5,6 +5,7 @@ import MapPage from "./pages/MapPage";
 import StorePage from "./pages/StorePage";
 import Dashboard from "./Main-sections/Dashboard";
 import Sellerac from "./Main-sections/Sellerac";
+import Reviews from "./pages/Reviews";
 
 
 
@@ -23,6 +24,7 @@ function App() {
 
           <Route path="/store/:id" element={<StorePage />} />
           <Route path="/Sellerac" element={<Sellerac />} />
+          <Route path="/reviews" element={<Reviews />} />
     
           
           
