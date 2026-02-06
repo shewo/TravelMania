@@ -16,27 +16,30 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @Column(name = "shopId")
+    @Column(name = "shop_id")
     private Long shopId;
 
-    @Column(name = "productName", nullable = false)
+    @Column(name = "product_name", nullable = false)
     private String productName;
 
-    @Column(name = "productDescription", length = 5000)
+    @Column(name = "product_description", length = 5000)
     private String productDescription;
 
     private String category;
 
     private Double price;
 
-
-
     private Integer available;
 
-    @Column(name = "imageUrl")
+    @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "mobileNumber", length = 10)
-    private String mobileNumber;
+    @Column(name = "rental_condition")
+    private String rentalCondition;
+
+    @Column(name = "min_duration")
+    private Integer minDuration;
+
+    @Column(name = "cleaning_fee")
+    private String cleaningFee;
 }
