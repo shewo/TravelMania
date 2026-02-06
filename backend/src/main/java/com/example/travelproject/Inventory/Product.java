@@ -1,5 +1,7 @@
 package com.example.travelproject.Inventory;
 
+import com.example.travelproject.map.shop; // Import the shop class
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +18,20 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "shop_id")
-    private Long shopId;
+    // --- Relationship Mapping ---
+
+    /**
+     * Many-to-One relationship with Shop.
+     * We removed 'Long shopId' and replaced it with the 'shop' object.
+     * @JoinColumn(name = "shop_id") creates the foreign key column in the database.
+     * @JsonIgnore prevents infinite loops when fetching products.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id", nullable = false)
+    @JsonIgnore
+    private shop shop;
+
+    // --- Product Details ---
 
     @Column(name = "product_name", nullable = false)
     private String productName;
