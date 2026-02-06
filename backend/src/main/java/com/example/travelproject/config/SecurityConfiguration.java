@@ -26,18 +26,27 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // 1. CORS Configuration eka load karanawa
+                // 1. CORS Configuration
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Login saha Register walata ona kenekuta enna denawa
+                        // Login and Register - allow anyone
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // Testing walata meka open kala (Shop Create karanna)
+                        // Shops - allow anyone
                         .requestMatchers("/api/shops/**").permitAll()
 
-                        // Anith hama dema secure karanawa
+                        // ✅ PRODUCTS - ALLOW ANYONE (ADD THIS LINE)
+                        .requestMatchers("/api/products/**").permitAll()
+
+                        // Users - allow anyone (for now)
+                        .requestMatchers("/api/users/**").permitAll()
+
+                        // Sellers - allow anyone (for now)
+                        .requestMatchers("/api/seller/**").permitAll()
+
+                        // Everything else requires authentication
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess
@@ -53,8 +62,7 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // --- METHANA THAMA WENAS KALE ---
-        // Oyaage dan error eke thibba 5173 saha kalin thibba 5174 dekama damma.
+        // Allow both ports 5173 and 5174
         configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174"));
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

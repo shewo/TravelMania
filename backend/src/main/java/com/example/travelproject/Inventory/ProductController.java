@@ -11,26 +11,26 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
 
-        // constructor inject the service
-        private  final ProductService productService;
-        public ProductController(ProductService productService) {
-            this.productService = productService;
-        }
+    // constructor inject the service
+    private  final ProductService productService;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
-        //add new item
-        @PostMapping("/add")
-        public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-            try { // use try catch becouse unshure
-                Product newProduct = productService.addProduct(product);
-                return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
-            }catch (RuntimeException e){
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
+    //add new item
+    @PostMapping("/add")
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        try { // use try catch becouse unshure
+            Product newProduct = productService.addProduct(product);
+            return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+        }catch (RuntimeException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
-        // See all products
-        @GetMapping("/all")
-        public List<Product> getAllProducts() {
+    // See all products
+    @GetMapping("/all")
+    public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
     // 3. Get by Shop
