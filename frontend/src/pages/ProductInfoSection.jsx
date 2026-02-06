@@ -1,84 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import React from 'react';
 import '../styles/ProductInfo.css'; 
 import { FaStar } from 'react-icons/fa';
 
+// --- IMPORT ASSETS ---
+import productPng from '../assets/backpack.png'; 
 import backpackVideo from '../assets/bg-video2.mp4'; 
 import logoPng from '../assets/title png1.png';
-import defaultProductImage from '../assets/backpack.png';
 
 const ProductInfoSection = () => {
-  const { id } = useParams(); // Get product ID from URL
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const product = {
+    title: "Nomad Explorer 45L",
+    subtitle: "All-Weather Hiking Backpack",
+    price: "Rs.1600 / day",
+    image: productPng, 
+    specs: [
+      { label: "Rental Condition", value: "Grade A" },
+      { label: "Cleaning Fee", value: "Included" },
+      { label: "Min. Duration", value: "2 Days" }
+    ]
+  };
 
-  useEffect(() => {
-    // Fetch product data from backend
-    const fetchProduct = async () => {
-      try {
-        // If you have an ID from route params
-        const response = await axios.get(`http://localhost:8080/api/products/all`);
-        // For demo, get the first product. In production, use specific ID
-        const productData = response.data[0] || {};
-        
-        setProduct({
-          title: productData.productName || "Product Name",
-          subtitle: productData.category || "Category",
-          price: `Rs.${productData.price || 0} / day`,
-          image: productData.imageUrl || defaultProductImage,
-          specs: [
-            { label: "Rental Condition", value: productData.rentalCondition || "N/A" },
-            { label: "Cleaning Fee", value: productData.cleaningFee || "N/A" },
-            { label: "Min. Duration", value: productData.minDuration ? `${productData.minDuration} Days` : "N/A" }
-          ],
-          description: productData.productDescription || "No description available.",
-          available: productData.available || 0
-        });
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
-
-  // Static reviews (you can also fetch from backend if you have a reviews table)
   const details = {
     title: "Gear Insight",
+    description: "The Nomad Explorer 45L builds off the powerful legacy of high-end trekking gear, offering next-generation performance for both long hauls and quick weekend getaways. Perfect for alpine shoots, wildlife tracking, and all-weather adventures.",
     reviews: [
       { id: 1, user: "Alex R.", rating: 5, comment: "Super comfortable for long hikes. The rain cover saved me!" },
       { id: 2, user: "Maria S.", rating: 5, comment: "Perfect size for a weekend trip. Lots of pockets." }
     ]
   };
 
-  if (loading) {
-    return <div style={{ color: 'white', padding: '50px', textAlign: 'center' }}>Loading...</div>;
-  }
-
-  if (!product) {
-    return <div style={{ color: 'white', padding: '50px', textAlign: 'center' }}>Product not found</div>;
-  }
-
   return (
     <div className="product-page-wrapper">
       
-      {/* Background Video */}
+      {/* === BACKGROUND VIDEO === */}
       <video className="bg-video" autoPlay loop muted playsInline>
         <source src={backpackVideo} type="video/mp4" />
       </video>
 
-      {/* Dark Overlay */}
+      {/* === DARK GRADIENT OVERLAY === */}
       <div className="video-overlay"></div>
 
-      {/* Watermark Logo */}
+      {/* === WATERMARK LOGO BACKGROUND === */}
       <div className="watermark-container">
         <img src={logoPng} alt="Travel Mania Watermark" className="watermark-logo" />
       </div>
 
-      {/* HERO SECTION */}
+      {/* SECTION 1: HERO (Top) */}
       <div className="hero-container">
         <div className="product-grid">
           
@@ -95,10 +62,6 @@ const ProductInfoSection = () => {
                     <span className="spec-value">{spec.value}</span>
                   </div>
                 ))}
-                <div className="spec-item">
-                  <span className="spec-label">Available</span>
-                  <span className="spec-value">{product.available} units</span>
-                </div>
               </div>
 
               {/* ACTION AREA */}
@@ -127,7 +90,7 @@ const ProductInfoSection = () => {
         </div>
       </div>
 
-      {/* DETAILS SECTION */}
+      {/* SECTION 2: DETAILS (Bottom) */}
       <div className="details-container">
         <div className="details-grid">
           
@@ -136,7 +99,7 @@ const ProductInfoSection = () => {
             <div className="gold-bar-vertical"></div>
             <div>
               <h3 className="section-title">{details.title}</h3>
-              <p className="section-paragraph">{product.description}</p>
+              <p className="section-paragraph">{details.description}</p>
             </div>
           </div>
 
