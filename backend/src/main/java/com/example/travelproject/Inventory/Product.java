@@ -25,10 +25,13 @@ public class Product {
     @Column(name = "product_description", length = 5000)
     private String productDescription;
 
+    @Column(name = "category")
     private String category;
 
+    @Column(name = "price")
     private Double price;
 
+    @Column(name = "available")
     private Integer available;
 
     @Column(name = "image_url")
