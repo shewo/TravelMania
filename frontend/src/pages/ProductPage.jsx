@@ -137,8 +137,14 @@ const ProductPage = () => {
                 <div className="tm-gear-img-box">
                   <img 
                     src={product.imageUrl || defaultImg} 
-                    alt={product.productName} 
-                    onError={(e) => { e.target.src = defaultImg; }}
+                    alt={product.productName}
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      if (!e.target.dataset.fallback) {
+                        e.target.dataset.fallback = "true";
+                        e.target.src = defaultImg;
+                      }
+                    }}
                   />
                 </div>
                 <span className="tm-gear-category-tag">{product.category}</span>
@@ -149,7 +155,7 @@ const ProductPage = () => {
                 <button 
                     className="tm-gear-rent-btn tm-gear-btn-small" 
                     onClick={(e) => {
-                      e.stopPropagation(); // Prevent card click navigation
+                      e.stopPropagation();
                       setCart([...cart, product]);
                     }}
                 >
