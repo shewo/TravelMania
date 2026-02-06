@@ -1,49 +1,60 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../styles/ProductPage.css';
 
 // --- 1. IMPORT YOUR ASSETS HERE ---
 import bgVideo from '../assets/bg-video2.mp4'; 
 
-// Import your Product Images (Make sure files exist in src/assets/)
-import imgTent from '../assets/tent.png';       
-import imgSnorkel from '../assets/snorkel.png'; 
-import imgBinos from '../assets/binos.png';
-import imgPad from '../assets/pad.png';
-import imgBag from '../assets/backpack.png';
-import imgGPS from '../assets/gps.png';
-import imgBoard from '../assets/board.png';
-import imgStove from '../assets/stove.png'; 
+// Default fallback image
+import defaultImg from '../assets/backpack.png';
 
 const ProductPage = () => {
-  // --- 2. UPDATED DATA LIST ---
-  const initialProducts = [
-    { id: 1, name: "Apex Mountain Tent", cat: "Highland", price: 5500, img: imgTent },
-    { id: 2, name: "Coral Explorer Kit", cat: "Coast", price: 2200, img: imgSnorkel },
-    { id: 3, name: "Night Stalker Lens", cat: "Wild", price: 3800, img: imgBinos },
-    { id: 4, name: "Thermal Sleep Pad", cat: "Highland", price: 1500, img: imgPad },
-    { id: 5, name: "Rugged Trek Pack", cat: "Wild", price: 4200, img: imgBag },
-    { id: 6, name: "Storm-Ready GPS", cat: "Wild", price: 3000, img: imgGPS },
-    { id: 7, name: "Driftwood Surfboard", cat: "Coast", price: 4500, img: imgBoard },
-    // REPLACED HAMMOCK WITH STOVE
-    { id: 8, name: "Camping Stove", cat: "Wild", price: 1200, img: imgStove },  
-  ];
+  const navigate = useNavigate();
 
   // --- STATE ---
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [activeCat, setActiveCat] = useState("All");
   const [cart, setCart] = useState([]);
   
   // Filter State
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(6000);
+  const [maxPrice, setMaxPrice] = useState(50000);
+
+  // --- FETCH PRODUCTS FROM DATABASE ---
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/products/all');
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // --- EXTRACT UNIQUE CATEGORIES FROM DB PRODUCTS ---
+  const categories = ["All", ...new Set(products.map(p => p.category).filter(Boolean))];
 
   // --- FILTERING LOGIC ---
-  const filtered = initialProducts.filter(p => {
-    const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
-    const matchesCat = activeCat === "All" || p.cat === activeCat;
-    const matchesPrice = p.price >= minPrice && p.price <= maxPrice;
+  const filtered = products.filter(p => {
+    const matchesSearch = (p.productName || "").toLowerCase().includes(search.toLowerCase());
+    const matchesCat = activeCat === "All" || p.category === activeCat;
+    const matchesPrice = (p.price || 0) >= minPrice && (p.price || 0) <= maxPrice;
     return matchesSearch && matchesCat && matchesPrice;
   });
+
+  // --- HANDLE PRODUCT CLICK (navigate to ProductInfoSection) ---
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
 
   return (
     <div id="tm-gear-page-wrapper">
@@ -78,9 +89,9 @@ const ProductPage = () => {
           </div>
           
           <div className="tm-gear-filter-row">
-            {/* Category Filter */}
+            {/* Category Filter - now dynamic from DB */}
             <div className="tm-gear-filter-group">
-              {["All", "Highland", "Coast", "Wild"].map(c => (
+              {categories.map(c => (
                 <button 
                   key={c} 
                   className={`tm-gear-cat-btn ${activeCat === c ? 'active' : ''}`}
@@ -95,7 +106,7 @@ const ProductPage = () => {
             <div style={{ width: '300px', marginTop: '20px' }}>
               <PriceSlider 
                   min={0} 
-                  max={6000} 
+                  max={50000} 
                   onChange={({ min, max }) => {
                       setMinPrice(min);
                       setMaxPrice(max);
@@ -107,26 +118,50 @@ const ProductPage = () => {
 
         {/* 2. PRODUCT GRID */}
         <div className="tm-gear-grid">
-          {filtered.map(product => (
-            <div key={product.id} className="tm-gear-card">
-              <div className="tm-gear-img-box"><img src={product.img} alt={product.name} /></div>
-              <span className="tm-gear-category-tag">{product.cat}</span>
-              <h3 className="tm-gear-name">{product.name}</h3>
-              <p className="tm-gear-price">LKR {product.price}.00</p>
-              
-              {/* SVG Button */}
-              <button 
-                  className="tm-gear-rent-btn tm-gear-btn-small" 
-                  onClick={() => setCart([...cart, product])}
-              >
-                  <svg className="tm-gear-btn-frame" viewBox="0 0 420 64" preserveAspectRatio="none">
-                      <polygon className="tm-gear-btn-poly" points="40,12 380,12 408,32 380,52 40,52 12,32" />
-                      <rect className="tm-gear-btn-rect" x="20" y="18" width="380" height="28" />
-                  </svg>
-                  <span>Rent Now</span>
-              </button>
+          {loading ? (
+            <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#f1e2ab', fontSize: '20px', padding: '40px' }}>
+              Loading products...
             </div>
-          ))}
+          ) : filtered.length === 0 ? (
+            <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#f1e2ab', fontSize: '20px', padding: '40px' }}>
+              No products found.
+            </div>
+          ) : (
+            filtered.map(product => (
+              <div 
+                key={product.id} 
+                className="tm-gear-card"
+                onClick={() => handleProductClick(product.id)}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className="tm-gear-img-box">
+                  <img 
+                    src={product.imageUrl || defaultImg} 
+                    alt={product.productName} 
+                    onError={(e) => { e.target.src = defaultImg; }}
+                  />
+                </div>
+                <span className="tm-gear-category-tag">{product.category}</span>
+                <h3 className="tm-gear-name">{product.productName}</h3>
+                <p className="tm-gear-price">LKR {product.price}.00</p>
+                
+                {/* SVG Button */}
+                <button 
+                    className="tm-gear-rent-btn tm-gear-btn-small" 
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent card click navigation
+                      setCart([...cart, product]);
+                    }}
+                >
+                    <svg className="tm-gear-btn-frame" viewBox="0 0 420 64" preserveAspectRatio="none">
+                        <polygon className="tm-gear-btn-poly" points="40,12 380,12 408,32 380,52 40,52 12,32" />
+                        <rect className="tm-gear-btn-rect" x="20" y="18" width="380" height="28" />
+                    </svg>
+                    <span>Rent Now</span>
+                </button>
+              </div>
+            ))
+          )}
         </div>
       </div>
 
