@@ -25,7 +25,7 @@ function App() {
           <Route path="/store/:id" element={<StorePage />} />
           <Route path="/Sellerac" element={<Sellerac />} />
           <Route path="/reviews" element={<Reviews />} />
-          <Route path="/product/:id" element={<ProductInfoSection />} />
+          
     
           
           

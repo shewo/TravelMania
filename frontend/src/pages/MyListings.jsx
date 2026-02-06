@@ -16,25 +16,10 @@ const CATEGORIES = [
 ];
 
 export default function MyListings() {
-  const [view, setView] = useState("categories");
+  const [view, setView] = useState("categories"); // 'categories' or 'products'
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showAddForm, setShowAddForm] = useState(false);
-  
-  // Form state
-  const [formData, setFormData] = useState({
-    productName: "",
-    productDescription: "",
-    category: "",
-    price: "",
-    available: "",
-    imageUrl: "",
-    rentalCondition: "",
-    minDuration: "",
-    cleaningFee: "",
-    shopId: 1 // You should get this from logged-in user context
-  });
 
   // Fetch products when category matches
   const fetchProducts = async (categoryName) => {
@@ -62,60 +47,6 @@ export default function MyListings() {
     setProducts([]);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleAddProduct = async (e) => {
-    e.preventDefault();
-    
-    try {
-      const productData = {
-        shopId: formData.shopId,
-        productName: formData.productName,
-        productDescription: formData.productDescription,
-        category: selectedCategory?.name || formData.category,
-        price: parseFloat(formData.price),
-        available: parseInt(formData.available),
-        imageUrl: formData.imageUrl,
-        rentalCondition: formData.rentalCondition,
-        minDuration: parseInt(formData.minDuration),
-        cleaningFee: formData.cleaningFee
-      };
-
-      const response = await axios.post('http://localhost:8080/api/products/add', productData);
-      
-      if (response.status === 201) {
-        alert("Product added successfully!");
-        setShowAddForm(false);
-        // Reset form
-        setFormData({
-          productName: "",
-          productDescription: "",
-          category: "",
-          price: "",
-          available: "",
-          imageUrl: "",
-          rentalCondition: "",
-          minDuration: "",
-          cleaningFee: "",
-          shopId: 1
-        });
-        // Refresh products list
-        if (selectedCategory) {
-          fetchProducts(selectedCategory.name);
-        }
-      }
-    } catch (error) {
-      console.error("Error adding product:", error);
-      alert("Failed to add product. Please try again.");
-    }
-  };
-
   return (
     <div className="dashboard">
       <Sidebar />
@@ -130,6 +61,7 @@ export default function MyListings() {
 
         {view === "categories" && (
           <>
+            {/* Filters (kept for theme consistency) */}
             <div className="filters" style={{ marginBottom: "20px" }}>
               <button className="filter-btn active">All</button>
               <button className="filter-btn">Active</button>
@@ -137,6 +69,7 @@ export default function MyListings() {
               <button className="filter-btn">Draft</button>
             </div>
 
+            {/* Categories List */}
             <div className="inventory">
               {CATEGORIES.map((cat) => (
                 <div key={cat.name} className="inventory-item">
@@ -167,7 +100,6 @@ export default function MyListings() {
               
               <button
                 className="add-new-btn"
-                onClick={() => setShowAddForm(true)}
                 style={{
                   padding: "10px 20px",
                   background: "#4a90e2",
@@ -182,248 +114,6 @@ export default function MyListings() {
               </button>
             </div>
 
-            {/* Add Product Form Modal */}
-            {showAddForm && (
-              <div style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: "rgba(0,0,0,0.7)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 1000
-              }}>
-                <div style={{
-                  background: "linear-gradient(145deg, rgba(20, 20, 20, 0.95), rgba(10, 10, 10, 0.98))",
-                  padding: "30px",
-                  borderRadius: "16px",
-                  width: "90%",
-                  maxWidth: "600px",
-                  maxHeight: "90vh",
-                  overflowY: "auto",
-                  border: "1px solid rgba(212, 175, 55, 0.3)",
-                  boxShadow: "0 8px 32px rgba(212, 175, 55, 0.2)"
-                }}>
-                  <h2 style={{ color: "#f5d07a", marginBottom: "20px" }}>Add New Product</h2>
-                  
-                  <form onSubmit={handleAddProduct}>
-                    <div style={{ marginBottom: "15px" }}>
-                      <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>Product Name *</label>
-                      <input
-                        type="text"
-                        name="productName"
-                        value={formData.productName}
-                        onChange={handleInputChange}
-                        required
-                        style={{
-                          width: "100%",
-                          padding: "10px",
-                          background: "rgba(255,255,255,0.1)",
-                          border: "1px solid rgba(212, 175, 55, 0.3)",
-                          borderRadius: "5px",
-                          color: "white"
-                        }}
-                      />
-                    </div>
-
-                    <div style={{ marginBottom: "15px" }}>
-                      <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>Description *</label>
-                      <textarea
-                        name="productDescription"
-                        value={formData.productDescription}
-                        onChange={handleInputChange}
-                        required
-                        rows="4"
-                        style={{
-                          width: "100%",
-                          padding: "10px",
-                          background: "rgba(255,255,255,0.1)",
-                          border: "1px solid rgba(212, 175, 55, 0.3)",
-                          borderRadius: "5px",
-                          color: "white"
-                        }}
-                      />
-                    </div>
-
-                    <div style={{ marginBottom: "15px" }}>
-                      <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>Category</label>
-                      <input
-                        type="text"
-                        name="category"
-                        value={selectedCategory?.name || formData.category}
-                        onChange={handleInputChange}
-                        readOnly={!!selectedCategory}
-                        style={{
-                          width: "100%",
-                          padding: "10px",
-                          background: "rgba(255,255,255,0.1)",
-                          border: "1px solid rgba(212, 175, 55, 0.3)",
-                          borderRadius: "5px",
-                          color: "white"
-                        }}
-                      />
-                    </div>
-
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px", marginBottom: "15px" }}>
-                      <div>
-                        <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>Price (Rs.) *</label>
-                        <input
-                          type="number"
-                          name="price"
-                          value={formData.price}
-                          onChange={handleInputChange}
-                          required
-                          step="0.01"
-                          style={{
-                            width: "100%",
-                            padding: "10px",
-                            background: "rgba(255,255,255,0.1)",
-                            border: "1px solid rgba(212, 175, 55, 0.3)",
-                            borderRadius: "5px",
-                            color: "white"
-                          }}
-                        />
-                      </div>
-
-                      <div>
-                        <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>Available Qty *</label>
-                        <input
-                          type="number"
-                          name="available"
-                          value={formData.available}
-                          onChange={handleInputChange}
-                          required
-                          style={{
-                            width: "100%",
-                            padding: "10px",
-                            background: "rgba(255,255,255,0.1)",
-                            border: "1px solid rgba(212, 175, 55, 0.3)",
-                            borderRadius: "5px",
-                            color: "white"
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    <div style={{ marginBottom: "15px" }}>
-                      <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>Image URL</label>
-                      <input
-                        type="text"
-                        name="imageUrl"
-                        value={formData.imageUrl}
-                        onChange={handleInputChange}
-                        placeholder="https://example.com/image.jpg"
-                        style={{
-                          width: "100%",
-                          padding: "10px",
-                          background: "rgba(255,255,255,0.1)",
-                          border: "1px solid rgba(212, 175, 55, 0.3)",
-                          borderRadius: "5px",
-                          color: "white"
-                        }}
-                      />
-                    </div>
-
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px", marginBottom: "15px" }}>
-                      <div>
-                        <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>Rental Condition</label>
-                        <input
-                          type="text"
-                          name="rentalCondition"
-                          value={formData.rentalCondition}
-                          onChange={handleInputChange}
-                          placeholder="Grade A"
-                          style={{
-                            width: "100%",
-                            padding: "10px",
-                            background: "rgba(255,255,255,0.1)",
-                            border: "1px solid rgba(212, 175, 55, 0.3)",
-                            borderRadius: "5px",
-                            color: "white"
-                          }}
-                        />
-                      </div>
-
-                      <div>
-                        <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>Min. Duration (Days)</label>
-                        <input
-                          type="number"
-                          name="minDuration"
-                          value={formData.minDuration}
-                          onChange={handleInputChange}
-                          placeholder="2"
-                          style={{
-                            width: "100%",
-                            padding: "10px",
-                            background: "rgba(255,255,255,0.1)",
-                            border: "1px solid rgba(212, 175, 55, 0.3)",
-                            borderRadius: "5px",
-                            color: "white"
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    <div style={{ marginBottom: "15px" }}>
-                      <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>Cleaning Fee</label>
-                      <input
-                        type="text"
-                        name="cleaningFee"
-                        value={formData.cleaningFee}
-                        onChange={handleInputChange}
-                        placeholder="Included"
-                        style={{
-                          width: "100%",
-                          padding: "10px",
-                          background: "rgba(255,255,255,0.1)",
-                          border: "1px solid rgba(212, 175, 55, 0.3)",
-                          borderRadius: "5px",
-                          color: "white"
-                        }}
-                      />
-                    </div>
-
-                    <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
-                      <button
-                        type="submit"
-                        style={{
-                          flex: 1,
-                          padding: "12px",
-                          background: "linear-gradient(135deg, #d4af37 0%, #f5d07a 100%)",
-                          color: "#0a0a0a",
-                          border: "none",
-                          borderRadius: "8px",
-                          fontWeight: "600",
-                          cursor: "pointer"
-                        }}
-                      >
-                        Add Product
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setShowAddForm(false)}
-                        style={{
-                          flex: 1,
-                          padding: "12px",
-                          background: "rgba(255,255,255,0.1)",
-                          color: "white",
-                          border: "1px solid rgba(255,255,255,0.2)",
-                          borderRadius: "8px",
-                          fontWeight: "600",
-                          cursor: "pointer"
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            )}
-
             <div className="inventory">
               {loading ? (
                 <p>Loading products...</p>
@@ -432,7 +122,7 @@ export default function MyListings() {
                   <div key={product.id} className="inventory-item">
                     <span>{product.productName}</span>
                     <div>
-                        <span style={{ marginRight: "15px", color: "#f5d07a" }}>Rs.{product.price}</span>
+                        <span style={{ marginRight: "15px", color: "#f5d07a" }}>${product.price}</span>
                         <button>Edit</button>
                         <button style={{ background: "#ff6b6b", color: "white" }}>Delete</button>
                     </div>
@@ -441,7 +131,7 @@ export default function MyListings() {
               ) : (
                 <div style={{ padding: "20px", textAlign: "center", color: "#888" }}>
                   <p>No products found in this category.</p>
-                  <p>Click "+ Add Product" to add your first item.</p>
+                  <p>Seller already added products will appear here.</p>
                 </div>
               )}
             </div>
