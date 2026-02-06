@@ -204,8 +204,12 @@ const ProductInfoSection = () => {
                 src={product.image} 
                 alt={product.title} 
                 className="product-png"
+                referrerPolicy="no-referrer"
                 onError={(e) => {
-                  e.target.src = defaultProductImage;
+                  if (!e.target.dataset.fallback) {
+                    e.target.dataset.fallback = "true";
+                    e.target.src = defaultProductImage;
+                  }
                 }}
               />
             </div>
