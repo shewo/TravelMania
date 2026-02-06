@@ -77,6 +77,15 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        return productService.getAllProducts().stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst()
+                .map(p -> new ResponseEntity<>(p, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
 
 
 }
