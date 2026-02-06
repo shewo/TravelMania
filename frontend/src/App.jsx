@@ -6,29 +6,24 @@ import StorePage from "./pages/StorePage";
 import Dashboard from "./Main-sections/Dashboard";
 import Sellerac from "./Main-sections/Sellerac";
 import Reviews from "./pages/Reviews";
-
-
-
-// 1. Import the wrapper (adjust path if you put it somewhere else)
+import ProductInfoSection from "./pages/ProductInfoSection";
 import SmoothScrollWrapper from "./components/SmoothScrollWrapper"; 
 
 function App() {
   return (
     <Router>
-      {/* 2. Add the wrapper inside Router but outside Routes */}
       <SmoothScrollWrapper>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/map" element={<MapPage />} />
           <Route path="/dashboard/*" element={<Dashboard />} />
-
           <Route path="/store/:id" element={<StorePage />} />
           <Route path="/Sellerac" element={<Sellerac />} />
           <Route path="/reviews" element={<Reviews />} />
           
-    
-          
-          
+          {/* Product routes */}
+          <Route path="/product/:id" element={<ProductInfoSection />} />
+          <Route path="/product" element={<ProductInfoSection />} />
         </Routes>
       </SmoothScrollWrapper>
     </Router>
