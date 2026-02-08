@@ -63,7 +63,7 @@ public class Product {
     public void setShopId(Long shopId) {
         if (shopId != null) {
             shop s = new shop();
-            s.setId(shopId); // Shop class එකේ ID එක set කරන්න
+            s.setId(shopId); // set shop class id
             this.shop = s;
         }
     }
