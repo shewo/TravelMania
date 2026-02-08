@@ -59,4 +59,12 @@ public class Product {
 
     @Column(name = "cleaning_fee")
     private String cleaningFee;
+
+    public void setShopId(Long shopId) {
+        if (shopId != null) {
+            shop s = new shop();
+            s.setId(shopId); // Shop class එකේ ID එක set කරන්න
+            this.shop = s;
+        }
+    }
 }

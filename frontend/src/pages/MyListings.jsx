@@ -51,12 +51,15 @@ export default function MyListings() {
     setSelectedCategory(category);
     setView("products");
     fetchProducts(category.name);
+    // auto update form category
+    setFormData(prev => ({ ...prev, category: category.name }));
   };
 
   const handleBack = () => {
     setView("categories");
     setSelectedCategory(null);
     setProducts([]);
+    setFormData(prev => ({ ...prev, category: "" }));
   };
 
   const handleInputChange = (e) => {
@@ -76,6 +79,7 @@ export default function MyListings() {
     }
 
     try {
+      // format data according to backend requirements before sending
       const productData = {
         shopId: parseInt(formData.shopId) || 1,
         productName: formData.productName.trim(),
@@ -84,20 +88,23 @@ export default function MyListings() {
         price: parseFloat(formData.price),
         available: parseInt(formData.available),
         imageUrl: formData.imageUrl?.trim() || null,
-        rentalCondition: formData.rentalCondition?.trim() || null,
+        // Backend එකේ Enum එකට ගැලපෙන විදිහට යවන්න ඕනේ
+        rentalCondition: formData.rentalCondition || null, 
         minDuration: formData.minDuration ? parseInt(formData.minDuration) : null,
-        cleaningFee: formData.cleaningFee?.trim() || null
+        cleaningFee: formData.cleaningFee ? parseFloat(formData.cleaningFee) : 0
       };
+
+      console.log("Sending Data:", productData); // viewing data before sending to backend for debugging
 
       const response = await axios.post('http://localhost:8080/api/products/add', productData);
       
-      if (response.status === 201) {
+      if (response.status === 201 || response.status === 200) {
         alert("Product added successfully!");
         setShowAddForm(false);
         setFormData({
           productName: "",
           productDescription: "",
-          category: "",
+          category: selectedCategory ? selectedCategory.name : "",
           price: "",
           available: "",
           imageUrl: "",
@@ -111,8 +118,15 @@ export default function MyListings() {
         }
       }
     } catch (error) {
+      // find best code to display error message from backend if available, otherwise show generic error
       console.error("Error adding product:", error);
-      alert("Failed to add product. Please check the console for details.");
+      if (error.response) {
+        //viewing backend error response for debugging
+        console.log("Backend Error Data:", error.response.data);
+        alert(`Failed: ${JSON.stringify(error.response.data)}`); 
+      } else {
+        alert("Failed to connect to server.");
+      }
     }
   };
 
@@ -254,14 +268,15 @@ export default function MyListings() {
 
                     <div style={{ marginBottom: "15px" }}>
                       <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>
-                        Category
+                        Category *
                       </label>
-                      <input
-                        type="text"
+                      {/* category dropdown */}
+                      <select
                         name="category"
                         value={selectedCategory?.name || formData.category}
                         onChange={handleInputChange}
-                        readOnly={!!selectedCategory}
+                        disabled={!!selectedCategory}
+                        required
                         style={{
                           width: "100%",
                           padding: "10px",
@@ -270,7 +285,14 @@ export default function MyListings() {
                           borderRadius: "5px",
                           color: "white"
                         }}
-                      />
+                      >
+                        <option value="" style={{color: "black"}}>Select Category</option>
+                        {CATEGORIES.map((cat) => (
+                            <option key={cat.name} value={cat.name} style={{color: "black"}}>
+                                {cat.name}
+                            </option>
+                        ))}
+                      </select>
                     </div>
 
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "15px", marginBottom: "15px" }}>
@@ -346,12 +368,11 @@ export default function MyListings() {
                         <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>
                           Rental Condition
                         </label>
-                        <input
-                          type="text"
+                        {/* Rental Condition Dropdown */}
+                        <select
                           name="rentalCondition"
                           value={formData.rentalCondition}
                           onChange={handleInputChange}
-                          placeholder="Grade A"
                           style={{
                             width: "100%",
                             padding: "10px",
@@ -360,7 +381,12 @@ export default function MyListings() {
                             borderRadius: "5px",
                             color: "white"
                           }}
-                        />
+                        >
+                            <option value="" style={{color: "black"}}>Select Condition</option>
+                            <option value="GRADE_A" style={{color: "black"}}>Grade A (New)</option>
+                            <option value="GRADE_B" style={{color: "black"}}>Grade B (Good)</option>
+                            <option value="GRADE_C" style={{color: "black"}}>Grade C (Fair)</option>
+                        </select>
                       </div>
 
                       <div>
@@ -388,14 +414,16 @@ export default function MyListings() {
 
                     <div style={{ marginBottom: "20px" }}>
                       <label style={{ display: "block", marginBottom: "5px", color: "#f5d07a" }}>
-                        Cleaning Fee
+                        Cleaning Fee (Rs.)
                       </label>
                       <input
-                        type="text"
+                        type="number"  // Changed to number
                         name="cleaningFee"
                         value={formData.cleaningFee}
                         onChange={handleInputChange}
-                        placeholder="Included"
+                        placeholder="0.00"
+                        min="0"
+                        step="0.01"
                         style={{
                           width: "100%",
                           padding: "10px",
