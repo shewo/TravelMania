@@ -10,9 +10,9 @@ public class SellerService {
     @Autowired
     private SellerRepository sellerRepository;
 
-    // අලුත් Seller කෙනෙක් හදන්න
+    // create new seller
     public Seller createSeller(Seller seller) {
-        // අපි බලෙන් Role එක 'SELLER' කියලා සෙට් කරමු, වැරදිලා හරි වෙන එකක් වැටෙන්නේ නැති වෙන්න
+        //
         seller.setRole("SELLER");
         return sellerRepository.save(seller);
     }
@@ -22,7 +22,7 @@ public class SellerService {
         return sellerRepository.findAll();
     }
 
-    // ID එකෙන් Seller කෙනෙක් ගන්න
+    // get seller using id
     public Seller getSellerById(Long id) {
         return sellerRepository.findById(id).orElse(null);
     }
