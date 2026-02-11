@@ -1,6 +1,6 @@
 package com.example.travelproject.map;
 
-import lombok.Data; // 1. Import Lombok
+import lombok.Data;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
@@ -30,13 +30,11 @@ public class ShopController {
             shop newShop = new shop();
             newShop.setName(request.getName());
             newShop.setDescription(request.getDescription());
-            newShop.setContactNo(request.getContactNo()); // <--- Ensure this is here!
+            newShop.setContactNo(request.getContactNo());
 
-            // Convert Lat/Lng from JSON to Geometry Point
             Point locationPoint = geometryFactory.createPoint(new Coordinate(request.getLongitude(), request.getLatitude()));
             newShop.setLocation(locationPoint);
 
-            // Save to Database
             shop savedShop = shopRepository.save(newShop);
             return new ResponseEntity<>(savedShop, HttpStatus.CREATED);
 
@@ -44,6 +42,12 @@ public class ShopController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // ✅ NEW: GET ALL SHOPS
+    @GetMapping("/all")
+    public List<shop> getAllShops() {
+        return shopRepository.findAll();
     }
 
     // --- EXISTING ENDPOINTS ---
@@ -61,7 +65,7 @@ public class ShopController {
     }
 
     // --- DTO CLASS ---
-    @Data // <--- 2. Add this annotation. No manual getters/setters needed!
+    @Data
     public static class ShopRequest {
         private String name;
         private String description;
