@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -99,3 +100,5 @@ const AllStores = () => {
 };
 
 export default AllStores;
+=======
+>>>>>>> Stashed changes

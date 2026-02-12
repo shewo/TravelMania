@@ -1,23 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CartContext } from './CartContext'; // Context Import
 import '../styles/Checkout.css';
 
 const Checkout = () => {
-  const [paymentMethod, setPaymentMethod] = useState('card');
+  const navigate = useNavigate();
+  
+  // --- GET DATA FROM GLOBAL CONTEXT ---
+  const { cartItems, getCartTotal, clearCart } = useContext(CartContext);
 
-  // Dummy Totals
-  const subtotal = 75900;
-  const shipping = 750;
+  const [paymentMethod, setPaymentMethod] = useState('card');
+  const [formData, setFormData] = useState({
+    firstName: '', lastName: '', email: '', address: '', city: '', zip: ''
+  });
+
+  // --- CALCULATIONS ---
+  const subtotal = getCartTotal();
+  const shipping = 750; // Flat rate
   const total = subtotal + shipping;
+
+  // If cart is empty, redirect back to cart (Safety check)
+  useEffect(() => {
+    if (cartItems.length === 0) {
+       navigate('/cart');
+    }
+  }, [cartItems, navigate]);
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handlePlaceOrder = (e) => {
     e.preventDefault();
-    alert("Order Placed Successfully!");
+    
+    // Methana API call ekak gahanna puluwan Backend ekata
+    const orderDetails = {
+        customer: formData,
+        items: cartItems,
+        amount: total,
+        method: paymentMethod
+    };
+
+    console.log("Processing Order:", orderDetails);
+
+    // Success Action
+    alert("Order Placed Successfully! Your gear is on the way.");
+    clearCart(); // Important: Cart eka his karanawa
+    navigate('/'); // Redirect to Home
   };
+
+  if (cartItems.length === 0) return null; // Avoid flickering before redirect
 
   return (
     <div className="checkout-container">
       <div className="checkout-header">
         <h1>Checkout</h1>
+        <button onClick={() => navigate('/cart')} style={{background:'transparent', border:'none', color:'#ccc', cursor:'pointer', fontSize:'14px'}}>
+            ← Back to Cart
+        </button>
       </div>
 
       <div className="checkout-layout">
@@ -33,32 +73,32 @@ const Checkout = () => {
               <div className="form-row">
                 <div className="form-group">
                   <label>First Name</label>
-                  <input type="text" className="glass-input" placeholder="John" required />
+                  <input type="text" name="firstName" className="glass-input" placeholder="John" required onChange={handleInputChange} />
                 </div>
                 <div className="form-group">
                   <label>Last Name</label>
-                  <input type="text" className="glass-input" placeholder="Doe" required />
+                  <input type="text" name="lastName" className="glass-input" placeholder="Doe" required onChange={handleInputChange} />
                 </div>
               </div>
 
               <div className="form-group" style={{ marginBottom: '25px' }}>
                 <label>Email Address</label>
-                <input type="email" className="glass-input" placeholder="john@example.com" required />
+                <input type="email" name="email" className="glass-input" placeholder="john@example.com" required onChange={handleInputChange} />
               </div>
 
               <div className="form-group" style={{ marginBottom: '25px' }}>
                 <label>Address</label>
-                <input type="text" className="glass-input" placeholder="123 Forest View Rd" required />
+                <input type="text" name="address" className="glass-input" placeholder="123 Forest View Rd" required onChange={handleInputChange} />
               </div>
 
               <div className="form-row">
                 <div className="form-group">
                   <label>City</label>
-                  <input type="text" className="glass-input" placeholder="Kandy" required />
+                  <input type="text" name="city" className="glass-input" placeholder="Kandy" required onChange={handleInputChange} />
                 </div>
                 <div className="form-group">
                   <label>Zip Code</label>
-                  <input type="text" className="glass-input" placeholder="20000" required />
+                  <input type="text" name="zip" className="glass-input" placeholder="20000" required onChange={handleInputChange} />
                 </div>
               </div>
 
@@ -112,22 +152,19 @@ const Checkout = () => {
           </div>
         </div>
 
-        {/* --- RIGHT COLUMN: SUMMARY --- */}
+        {/* --- RIGHT COLUMN: SUMMARY (DYNAMIC) --- */}
         <div className="checkout-summary">
           <div className="glass-panel">
             <h2 className="section-title">Your Order</h2>
             
-            <div className="summary-item">
-              <span>Summit Hiking Boots (x1)</span>
-              <span>LKR 18,500</span>
-            </div>
-            <div className="summary-item">
-              <span>Tactical Backpack (x2)</span>
-              <span>LKR 24,800</span>
-            </div>
-            <div className="summary-item">
-              <span>Waterproof Tent (x1)</span>
-              <span>LKR 45,000</span>
+            {/* DYNAMIC CART ITEMS LOOP */}
+            <div className="summary-items-scroll" style={{maxHeight:'300px', overflowY:'auto', marginBottom:'20px'}}>
+                {cartItems.map((item) => (
+                    <div key={item.id} className="summary-item">
+                        <span>{item.productName} <span style={{fontSize:'0.8em', color:'#aaa'}}>(x{item.quantity})</span></span>
+                        <span>LKR {(item.price * item.quantity).toLocaleString()}</span>
+                    </div>
+                ))}
             </div>
 
             <div className="summary-divider"></div>
