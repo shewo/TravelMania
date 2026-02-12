@@ -1,25 +1,26 @@
-package com.example.travelproject.orders; // ඔයාගේ Folder එකේ නම
+package com.example.travelproject.orders;
 
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// මෙතනට Order, OrderItem, OrderRepository වගේ imports ඕන නෑ.
-// මොකද ඒවා තියෙන්නේ මේ file එක තියෙන folder එකේමයි.
-
 @Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final EmailService emailService; // 1. Email Service එක ආයෙත් Active කළා
 
-    public OrderService(OrderRepository orderRepository) {
+    // 2. Constructor එකට Email Service එක ඇතුළත් කළා
+    public OrderService(OrderRepository orderRepository, EmailService emailService) {
         this.orderRepository = orderRepository;
+        this.emailService = emailService;
     }
 
     public Order placeOrder(OrderRequest request) {
         Order order = new Order();
-        // Request එකෙන් එන දත්ත Order එකට දාගන්නවා
+
+        // --- DATA MAPPING ---
         order.setCustomerName(request.getCustomerName());
         order.setCustomerEmail(request.getCustomerEmail());
         order.setAddress(request.getAddress());
@@ -28,8 +29,6 @@ public class OrderService {
 
         List<OrderItem> orderItems = new ArrayList<>();
 
-        // Cart එකේ තිබුන Items ටික Order Items වලට හරවනවා
-        // මෙතන 'OrderRequest.OrderItemRequest' කියල ගත්තේ අපි DTO එකේ Inner Class එකක් විදියට ඒක හදපු නිසා
         if (request.getItems() != null) {
             for (OrderRequest.OrderItemRequest itemRequest : request.getItems()) {
                 OrderItem item = new OrderItem();
@@ -39,10 +38,23 @@ public class OrderService {
                 orderItems.add(item);
             }
         }
-
         order.setItems(orderItems);
 
-        // Database එකේ Save කරනවා
-        return orderRepository.save(order);
+        // --- SAVE AND EMAIL LOGIC ---
+
+        // 3. Database එකේ Save කරනවා
+        Order savedOrder = orderRepository.save(order);
+        System.out.println("✅ Order Saved to Database! ID: " + savedOrder.getId());
+
+        // 4. Email එක යවන කෑල්ලේ Comments අයින් කළා
+        try {
+            emailService.sendOrderConfirmation(savedOrder);
+            System.out.println("📧 Email sent to: " + savedOrder.getCustomerEmail());
+        } catch (Exception e) {
+            // Email එක fail වුණත් Order එක DB එකේ තියෙන නිසා ප්‍රශ්නයක් වෙන්නේ නෑ
+            System.err.println("❌ Order saved, but failed to send email: " + e.getMessage());
+        }
+
+        return savedOrder;
     }
 }
