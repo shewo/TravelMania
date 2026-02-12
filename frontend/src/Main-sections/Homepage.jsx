@@ -10,7 +10,7 @@ import HomePage5 from '../pages/HomePage5'
 import Navbar from '../components/Navbar'
 import ParallaxGap from '../components/ParallaxGap'
 import ProductPage from '../pages/ProductPage' // Product Page eka import karala thiyenne, mokada meka Homepage eke thiyenna one kiyala hithanne
-
+import AllStores from '../pages/AllStores'
 // Images
 import gapBg from '../assets/footer-bg.jpg' 
 
@@ -68,6 +68,7 @@ function Homepage() {
       {/* 5. FINALLY PAGE 4 */}
       <HomePage4 />
       <ProductPage />
+      <AllStores />
     
       
       
