@@ -2,6 +2,7 @@ package com.example.travelproject.orders;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonManagedReference; // මේක ඕන
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,8 +21,7 @@ public class Order {
     private LocalDate orderDate;
     private Double totalAmount;
 
-    // එක Order එකක Items ගොඩක් තියෙනවා
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "order_id") // OrderItem table එකේ FK එක
     private List<OrderItem> items;
 }
