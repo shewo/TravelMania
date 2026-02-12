@@ -1,104 +1,63 @@
-<<<<<<< Updated upstream
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import '../styles/AllStores.css'; 
+import React, { createContext, useState, useEffect } from 'react';
 
-const AllStores = () => {
-  const navigate = useNavigate();
-  const [stores, setStores] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+export const CartContext = createContext();
 
-  // ✅ Fetch real stores from the database
+export const CartProvider = ({ children }) => {
+  // LocalStorage walin cart eka load karanawa (Refresh kalath nathi nowenna)
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem('tm-gear-cart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  // Cart eka wenas wena hamawelawe LocalStorage update karanawa
   useEffect(() => {
-    const fetchStores = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/shops/all');
-        setStores(response.data);
-      } catch (error) {
-        console.error("Error fetching stores:", error);
-        setStores([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchStores();
-  }, []);
+    localStorage.setItem('tm-gear-cart', JSON.stringify(cartItems));
+  }, [cartItems]);
 
-  const filteredStores = stores.filter(store =>
-    (store.name || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (store.description || "").toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // 1. Add to Cart (thiyena ekak nam qty wadi wenawa, nathi ekak nam add wenawa)
+  const addToCart = (product) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [...prevItems, { ...product, quantity: 1 }];
+    });
+  };
+
+  // 2. Remove Item
+  const removeItem = (id) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
+  // 3. Update Quantity
+  const updateQuantity = (id, change) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) => {
+        if (item.id === id) {
+          const newQty = item.quantity + change;
+          return { ...item, quantity: newQty > 0 ? newQty : 1 };
+        }
+        return item;
+      })
+    );
+  };
+
+  // 4. Clear Cart (Checkout ekata passe)
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  // Totals Calculate
+  const getCartTotal = () => {
+    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  };
 
   return (
-    <div className="stores-container">
-      {/* Header */}
-      <div className="stores-header">
-        <h1>Partner Stores</h1>
-        <p>Find the best travel gear near you</p>
-        
-        <div className="search-bar-container">
-          <input
-            type="text"
-            className="search-input"
-            placeholder="SEARCH FOR STORES..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <svg className="search-icon" viewBox="0 0 24 24">
-            <path d="M21.71 20.29l-5.01-5.01C17.54 13.68 18 11.91 18 10c0-4.41-3.59-8-8-8S2 5.59 2 10s3.59 8 8 8c1.91 0 3.68-.46 5.28-1.3l5.01 5.01c.39.39 1.02.39 1.41 0 .39-.39.39-1.02 0-1.41zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/>
-          </svg>
-        </div>
-      </div>
-
-      {/* Grid */}
-      <div className="stores-grid">
-        {loading ? (
-          <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#D1B48C', fontSize: '20px', padding: '40px' }}>
-            Loading stores...
-          </div>
-        ) : filteredStores.length === 0 ? (
-          <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#D1B48C', fontSize: '20px', padding: '40px' }}>
-            No stores found.
-          </div>
-        ) : (
-          filteredStores.map((store) => (
-            <div key={store.id} className="store-card">
-              
-              {/* Image Area */}
-              <div className="store-image-wrapper">
-                <img 
-                  src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=400&q=80" 
-                  alt={store.name} 
-                  className="store-img" 
-                />
-              </div>
-
-              {/* Content Area */}
-              <div className="store-details">
-                <h3 className="store-name">{store.name}</h3>
-                <p className="store-desc">{store.description}</p>
-                
-                <div className="store-footer">
-                  <span className="store-location">📞 {store.contactNo || "N/A"}</span>
-                  <button 
-                    className="store-btn"
-                    onClick={() => navigate(`/store/${store.id}`)}
-                  >
-                    Visit Store
-                  </button>
-                </div>
-              </div>
-
-            </div>
-          ))
-        )}
-      </div>
-    </div>
+    <CartContext.Provider value={{ cartItems, addToCart, removeItem, updateQuantity, clearCart, getCartTotal }}>
+      {children}
+    </CartContext.Provider>
   );
 };
-
-export default AllStores;
-=======
->>>>>>> Stashed changes

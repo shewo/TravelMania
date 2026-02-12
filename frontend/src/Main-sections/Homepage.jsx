@@ -21,26 +21,7 @@ function Homepage() {
     <>
       <Navbar />
       
-      {/* --- CART BUTTON (FLOATING) --- */}
-      <button 
-        onClick={() => navigate('/cart')} // Click kalama kelinma '/cart' page ekata yanawa
-        style={{
-          position: 'fixed',
-          top: '100px',
-          right: '30px',
-          zIndex: 9999,
-          padding: '15px 30px',
-          backgroundColor: '#ff4757',
-          color: 'white',
-          border: 'none',
-          borderRadius: '50px',
-          boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-          cursor: 'pointer',
-          fontWeight: 'bold'
-        }}
-      >
-        OPEN CART
-      </button>
+      
 
       {/* --- HOMEPAGE CONTENT ONLY --- */}
       
@@ -87,6 +68,8 @@ function Homepage() {
       {/* 5. FINALLY PAGE 4 */}
       <HomePage4 />
       <ProductPage />
+    
+      
       
       {/* IMPORTANT:
          Methana thibba <Cart/>, <Checkout/>, <ProductPage/> okkoma ain kara.
