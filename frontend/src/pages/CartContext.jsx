@@ -1,14 +1,9 @@
-// src/context/CartContext.js
 import React, { createContext, useState, useEffect } from 'react';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-<<<<<<< Updated upstream
   // LocalStorage walin cart eka load karanawa (Refresh kalath nathi nowenna)
-=======
-  // LocalStorage walin cart eka load karanawa
->>>>>>> Stashed changes
   const [cartItems, setCartItems] = useState(() => {
     const savedCart = localStorage.getItem('tm-gear-cart');
     return savedCart ? JSON.parse(savedCart) : [];
@@ -19,11 +14,7 @@ export const CartProvider = ({ children }) => {
     localStorage.setItem('tm-gear-cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-<<<<<<< Updated upstream
   // 1. Add to Cart (thiyena ekak nam qty wadi wenawa, nathi ekak nam add wenawa)
-=======
-  // 1. Add to Cart
->>>>>>> Stashed changes
   const addToCart = (product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
@@ -54,20 +45,12 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-<<<<<<< Updated upstream
   // 4. Clear Cart (Checkout ekata passe)
-=======
-  // 4. Clear Cart
->>>>>>> Stashed changes
   const clearCart = () => {
     setCartItems([]);
   };
 
-<<<<<<< Updated upstream
-  // Totals Calulcate karana eka
-=======
   // Totals Calculate
->>>>>>> Stashed changes
   const getCartTotal = () => {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
