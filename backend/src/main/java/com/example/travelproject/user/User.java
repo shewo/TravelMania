@@ -36,6 +36,8 @@ public class User implements UserDetails {
 
     private String role; // e.g., "SELLER", "TRAVELER"
 
+    private String phone;
+
     // --- Relationship Mapping ---
 
     /**
