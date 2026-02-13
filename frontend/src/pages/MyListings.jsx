@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../components/sidebar";
 import "../styles/dashboard.css";
@@ -20,6 +20,7 @@ export default function MyListings() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [shopId, setShopId] = useState(null);
   
   const [formData, setFormData] = useState({
     productName: "",
@@ -30,18 +31,40 @@ export default function MyListings() {
     imageUrl: "",
     rentalCondition: "",
     minDuration: "",
-    cleaningFee: "",
-    shopId: 1
+    cleaningFee: ""
   });
+
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem('travelUser');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        if (user.shopId) {
+          setShopId(user.shopId);
+        }
+      }
+    } catch (error) {
+      console.error("Error loading shop ID from localStorage:", error);
+    }
+  }, []);
 
   const fetchProducts = async (categoryName) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8080/api/products/category/${categoryName}`);
+      let response;
+      if (shopId) {
+        response = await axios.get(
+          `http://localhost:8080/api/products/shop/${shopId}/category/${categoryName}`
+        );
+      } else {
+        response = await axios.get(
+          `http://localhost:8080/api/products/category/${categoryName}`
+        );
+      }
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
-      setProducts([]); 
+      setProducts([]);
     } finally {
       setLoading(false);
     }
@@ -78,10 +101,15 @@ export default function MyListings() {
       return;
     }
 
+    if (!shopId) {
+      alert("Unable to add product. Please create a shop first or reload the page.");
+      return;
+    }
+
     try {
       // format data according to backend requirements before sending
       const productData = {
-        shopId: parseInt(formData.shopId) || 1,
+        shopId: shopId, // dynamic seller's shop ID
         productName: formData.productName.trim(),
         productDescription: formData.productDescription.trim(),
         category: selectedCategory?.name || formData.category,
@@ -110,8 +138,7 @@ export default function MyListings() {
           imageUrl: "",
           rentalCondition: "",
           minDuration: "",
-          cleaningFee: "",
-          shopId: 1
+          cleaningFee: ""
         });
         if (selectedCategory) {
           fetchProducts(selectedCategory.name);

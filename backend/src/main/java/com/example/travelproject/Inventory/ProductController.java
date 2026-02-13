@@ -86,6 +86,14 @@ public class ProductController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // 8. Get Products by Shop and Category
+    @GetMapping("/shop/{shopId}/category/{categoryName}")
+    public List<Product> getProductsByShopAndCategory(
+            @PathVariable Long shopId,
+            @PathVariable String categoryName) {
+        return productService.getProductsByShopAndCategory(shopId, categoryName);
+    }
+
 
 
 }
