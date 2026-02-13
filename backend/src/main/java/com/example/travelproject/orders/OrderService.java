@@ -9,18 +9,17 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final EmailService emailService; // 1. Email Service එක ආයෙත් Active කළා
+    private final EmailService emailService;
 
-    // 2. Constructor එකට Email Service එක ඇතුළත් කළා
     public OrderService(OrderRepository orderRepository, EmailService emailService) {
         this.orderRepository = orderRepository;
         this.emailService = emailService;
     }
 
+    // --- 1. Order Place කරන කොටස (මේක කලින් තිබ්බ එකමයි) ---
     public Order placeOrder(OrderRequest request) {
         Order order = new Order();
 
-        // --- DATA MAPPING ---
         order.setCustomerName(request.getCustomerName());
         order.setCustomerEmail(request.getCustomerEmail());
         order.setAddress(request.getAddress());
@@ -40,21 +39,21 @@ public class OrderService {
         }
         order.setItems(orderItems);
 
-        // --- SAVE AND EMAIL LOGIC ---
-
-        // 3. Database එකේ Save කරනවා
         Order savedOrder = orderRepository.save(order);
         System.out.println("✅ Order Saved to Database! ID: " + savedOrder.getId());
 
-        // 4. Email එක යවන කෑල්ලේ Comments අයින් කළා
         try {
             emailService.sendOrderConfirmation(savedOrder);
             System.out.println("📧 Email sent to: " + savedOrder.getCustomerEmail());
         } catch (Exception e) {
-            // Email එක fail වුණත් Order එක DB එකේ තියෙන නිසා ප්‍රශ්නයක් වෙන්නේ නෑ
             System.err.println("❌ Order saved, but failed to send email: " + e.getMessage());
         }
 
         return savedOrder;
+    }
+
+    // --- 2. 👇 අලුතෙන් එකතු කරපු කොටස (Orders Fetch කරන එක) ---
+    public List<Order> getOrdersByEmail(String email) {
+        return orderRepository.findByCustomerEmail(email);
     }
 }

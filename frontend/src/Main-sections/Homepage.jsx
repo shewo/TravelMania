@@ -1,5 +1,8 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom' // Link karanna meka one
+import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom' 
+
+// --- CONTEXT IMPORT ---
+import { CartContext } from '../pages/CartContext'; 
 
 // Components
 import HomePage1 from '../pages/HomePage1'  
@@ -9,74 +12,114 @@ import HomePage4 from '../pages/HomePage4'
 import HomePage5 from '../pages/HomePage5'
 import Navbar from '../components/Navbar'
 import ParallaxGap from '../components/ParallaxGap'
- // Product Page eka import karala thiyenne, mokada meka Homepage eke thiyenna one kiyala hithanne
 
 // Images
 import gapBg from '../assets/footer-bg.jpg' 
 
 function Homepage() {
-  const navigate = useNavigate(); // Page maru karana hook eka
+  const navigate = useNavigate();
+
+  // 1. Hooks හැමතිස්සෙම return එකට උඩින් තියෙන්න ඕන
+  const { cartItems } = useContext(CartContext);
 
   return (
     <>
       <Navbar />
-      
-      
 
-      {/* --- HOMEPAGE CONTENT ONLY --- */}
+      {/* --- FIXED CART ICON (Right Top) --- */}
+      {/* අපි මෙතන styles කෙලින්ම දෙනවා, පිටින් එන CSS වලට මේක අවුල් කරන්න බෑ */}
+      <div 
+        onClick={() => navigate('/cart')} 
+        style={{
+          position: 'fixed',
+          top: '80px',       // Navbar එකට යටින් පේන්න
+          right: '20px',     
+          zIndex: 99999,      // හැම එකටම උඩින්
+          backgroundColor: 'rgba(0, 0, 0, 0.8)', // කළු පසුබිම
+          width: '50px',      // ස්ථිර පළල
+          height: '50px',     // ස්ථිර උස
+          borderRadius: '50%', // රවුමක්
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          border: '2px solid #d4af37', // රත්තරන් පාට බෝඩර්
+          boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
+        }}
+      >
+         {/* Icon එකේ සයිස් එක මෙතනම fix කරල තියෙන්නේ */}
+         <svg 
+            width="24" 
+            height="24" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="#d4af37" 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+            style={{ minWidth: '24px', minHeight: '24px' }} // පොඩි වෙන්න දෙන්නෙත් නෑ, ලොකු වෙන්න දෙන්නෙත් නෑ
+         >
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+         
+         {/* Badge එක (Number එක) */}
+         {cartItems.length > 0 && (
+            <span style={{
+              position: 'absolute',
+              top: '-5px',
+              right: '-5px',
+              backgroundColor: '#e74c3c',
+              color: 'white',
+              borderRadius: '50%',
+              padding: '4px 6px',
+              fontSize: '11px',
+              fontWeight: 'bold',
+              minWidth: '18px',
+              textAlign: 'center',
+              border: '1px solid white'
+            }}>
+              {cartItems.length}
+            </span>
+         )}
+      </div>
+
+      {/* --- HOMEPAGE CONTENT --- */}
       
-      {/* 1. START */}
       <HomePage1 />
 
-      {/* GAP 1 */}
       <ParallaxGap 
         image={gapBg} 
         title="ADVENTURE AWAITS"
         subtitle="Explore the Unknown"
       />
 
-      {/* 2. NEXT IS PAGE 5 */}
       <HomePage5 />
 
-      {/* GAP 2 */}
       <ParallaxGap 
         image={gapBg}
         title="DIVE DEEP"
         subtitle="Discover the Blue World"
       />
 
-      {/* 3. THEN PAGE 2 */}
       <HomePage2 /> 
 
-      {/* GAP 3 */}
       <ParallaxGap 
         image={gapBg}
         title="INTO THE WILD"
         subtitle="Connect with Nature"
       />
 
-      {/* 4. THEN PAGE 3 */}
       <HomePage3 />
 
-      {/* GAP 4 */}
       <ParallaxGap 
         image={gapBg}
         title="FIND PEACE"
         subtitle="Sleep Under the Stars"
       />
 
-      {/* 5. FINALLY PAGE 4 */}
       <HomePage4 />
-      
-      
-    
-      
-      
-      {/* IMPORTANT:
-         Methana thibba <Cart/>, <Checkout/>, <ProductPage/> okkoma ain kara.
-         Mokada ewa wenama pages widiyata App.js eke define karala thiyenne.
-         Homepage eke thiyenna one Homepage eka witharai.
-      */}
    
     </>
   )
