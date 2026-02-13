@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/ProductInfo.css'; 
 import { FaStar } from 'react-icons/fa';
+
+// --- CONTEXT IMPORT ---
+import { CartContext } from './CartContext'; 
 
 import backpackVideo from '../assets/bg-video2.mp4'; 
 import logoPng from '../assets/title png1.png';
@@ -11,6 +14,10 @@ import defaultProductImage from '../assets/backpack.png';
 const ProductInfoSection = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // --- CONNECT TO GLOBAL CART ---
+  const { addToCart, cartItems } = useContext(CartContext);
+
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -25,6 +32,9 @@ const ProductInfoSection = () => {
             id: productData.id,
             title: productData.productName || "Product Name",
             subtitle: productData.category || "Category",
+            // Cart එකට යවන්න නම්බර් එකක් විදියට තියාගන්නවා
+            rawPrice: productData.price || 0, 
+            // Display කරන්න ලස්සනට හදාගන්නවා
             price: `Rs.${productData.price || 0} / day`,
             image: productData.imageUrl || defaultProductImage,
             description: productData.productDescription || "No description available.",
@@ -36,7 +46,7 @@ const ProductInfoSection = () => {
             ]
           });
         } else {
-          // If no ID, show first product
+          // If no ID, show first product (Fallback)
           const response = await axios.get('http://localhost:8080/api/products/all');
           const productData = response.data[0] || {};
           
@@ -44,6 +54,7 @@ const ProductInfoSection = () => {
             id: productData.id,
             title: productData.productName || "Product Name",
             subtitle: productData.category || "Category",
+            rawPrice: productData.price || 0,
             price: `Rs.${productData.price || 0} / day`,
             image: productData.imageUrl || defaultProductImage,
             description: productData.productDescription || "No description available.",
@@ -73,17 +84,26 @@ const ProductInfoSection = () => {
     ]
   };
 
+  // --- ADD TO CART HANDLER ---
+  const handleAddToCart = () => {
+    if (!product) return;
+
+    // Cart එකට ඕන කරන data format එකට object එක හදනවා
+    const cartItem = {
+      id: product.id,
+      productName: product.title,
+      price: product.rawPrice, // Number එක පාස් කරනවා
+      imageUrl: product.image,
+      category: product.subtitle
+    };
+
+    addToCart(cartItem);
+    alert(`${product.title} added to cart!`);
+  };
+
   if (loading) {
     return (
-      <div style={{ 
-        minHeight: '100vh', 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        background: '#050505',
-        color: 'white',
-        fontSize: '24px'
-      }}>
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#050505', color: 'white', fontSize: '24px' }}>
         Loading product...
       </div>
     );
@@ -91,30 +111,9 @@ const ProductInfoSection = () => {
 
   if (!product) {
     return (
-      <div style={{ 
-        minHeight: '100vh', 
-        display: 'flex', 
-        flexDirection: 'column',
-        alignItems: 'center', 
-        justifyContent: 'center',
-        background: '#050505',
-        color: 'white',
-        fontSize: '24px'
-      }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#050505', color: 'white', fontSize: '24px' }}>
         <p>Product not found</p>
-        <button 
-          onClick={() => navigate('/')}
-          style={{
-            marginTop: '20px',
-            padding: '12px 24px',
-            background: '#d4af37',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: '600'
-          }}
-        >
+        <button onClick={() => navigate('/')} style={{ marginTop: '20px', padding: '12px 24px', background: '#d4af37', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '16px', fontWeight: '600' }}>
           Back to Home
         </button>
       </div>
@@ -185,7 +184,8 @@ const ProductInfoSection = () => {
               <div className="action-area">
                 <div className="price-tag">{product.price}</div>
                 <div className="hp1-hero-action">
-                  <button className="hp1-cta">
+                  {/* ADD TO CART BUTTON CLICK */}
+                  <button className="hp1-cta" onClick={handleAddToCart}>
                     <svg className="hp1-frame" viewBox="0 0 320 60" preserveAspectRatio="none">
                       <polygon className="hp1-inner" points="30,5 290,5 315,30 290,55 30,55 5,30" />
                       <rect className="hp1-innerBox" x="12" y="10" width="296" height="40" rx="0" />
@@ -256,6 +256,21 @@ const ProductInfoSection = () => {
           </div>
 
         </div>
+      </div>
+
+      {/* --- Cart Icon Float (Added new) --- */}
+      {/* Note: Ensure styles for 'tm-gear-cart-float' are available in your CSS or copy them from ProductPage.css */}
+      <div className="tm-gear-cart-float" onClick={() => navigate('/cart')} style={{cursor:'pointer'}}>
+         <svg className="tm-gear-bag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+         
+         {/* Cart Count Badge */}
+         {cartItems.length > 0 && (
+            <span className="tm-gear-cart-count">{cartItems.length}</span>
+         )}
       </div>
 
     </div>
