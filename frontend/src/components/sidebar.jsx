@@ -1,10 +1,18 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom"; // ✅ FIX: Added useNavigate
 import { useState, useEffect } from "react";
 import "../styles/dashboard.css";
 
 export default function Sidebar() {
   const location = useLocation();
+  const navigate = useNavigate(); // ✅ FIX: Initialize navigate
   
+  // ✅ NEW: Logout handler - clears user data and redirects to home
+  const handleLogout = () => {
+    localStorage.removeItem('travelUser');
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+
   // State to store user data
   const [user, setUser] = useState({
     name: "Seller",
@@ -77,7 +85,8 @@ export default function Sidebar() {
             </Link>
           </li>
         ))}
-        <li className="logout">Logout</li>
+        {/* ✅ FIX: Added onClick={handleLogout} and cursor style */}
+        <li className="logout" onClick={handleLogout} style={{ cursor: 'pointer' }}>Logout</li>
       </ul>
     </div>
   );
