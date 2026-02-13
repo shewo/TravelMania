@@ -20,6 +20,18 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    // Helper method to build response with user data
+    private AuthenticationResponse buildResponse(User user) {
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .build();
+    }
+
     // Normal Register
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
@@ -29,8 +41,7 @@ public class AuthenticationService {
                 .role(request.getRole() == null ? "TRAVELER" : request.getRole())
                 .build();
         repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return buildResponse(user);
     }
 
     // Normal Login
@@ -39,28 +50,22 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
         var user = repository.findByEmail(request.getEmail()).orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return buildResponse(user);
     }
 
-    //  GOOGLE LOGIN LOGIC
+    // GOOGLE LOGIN LOGIC
     public AuthenticationResponse googleLogin(GoogleLoginRequest request) {
-        // 1. check user using email
         var user = repository.findByEmail(request.getEmail())
                 .orElseGet(() -> {
-                    // 2. create user when not found old user
                     var newUser = User.builder()
                             .name(request.getName())
                             .email(request.getEmail())
-                            // we dont know google users password.becouse we use random password (cant login, only google)
                             .password(passwordEncoder.encode(UUID.randomUUID().toString()))
                             .role("TRAVELER")
                             .build();
                     return repository.save(newUser);
                 });
 
-        // 3. create Token and send
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return buildResponse(user);
     }
 }

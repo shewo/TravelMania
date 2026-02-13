@@ -14,19 +14,19 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
 
   // --- HELPER: SAVE TOKEN & NOTIFY PARENT ---
   const handleAuthResponse = (data, userDetails = {}) => {
-    // 1. Token eka localStorage eke save karagannawa
     if (data.token) {
       localStorage.setItem('token', data.token);
       
-      // Token eka decode karala balamu (Optional)
       const decodedToken = jwtDecode(data.token);
       console.log("Decoded Token:", decodedToken);
 
-      // Parent component ekata kiyanawa api log una kiyala
-      // Backend eken user object eka enne nathi nisa, api thiyena details yawanawa
+      // ✅ FIX: Now saves id, name, email, role from the backend response
       onLoginSuccess({
-        email: decodedToken.sub, // JWT eke 'sub' kiyanne email ekata
-        ...userDetails, // Google walin nam name/picture enawa
+        id: data.id,                              // ✅ Database user ID from backend
+        email: data.email || decodedToken.sub,     // ✅ Email from backend (fallback to JWT)
+        name: data.name || userDetails.name,       // ✅ Name from backend
+        role: data.role || userDetails.role,        // ✅ Role from backend
+        picture: userDetails.picture || null,       // Google picture (if available)
         token: data.token
       });
     }
@@ -38,13 +38,11 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
         const decoded = jwtDecode(credentialResponse.credential);
         console.log("Google User Decoded:", decoded);
 
-        // Backend eke 'GoogleLoginRequest' ekata galapena object eka
         const googlePayload = {
             email: decoded.email,
             name: decoded.name
         };
 
-        // 🔥 URL Updated to /api/auth/google
         const response = await fetch('http://localhost:8080/api/auth/google', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -52,8 +50,7 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
         });
 
         if (response.ok) {
-            const data = await response.json(); // { token: "..." } enawa
-            // Token eka save karala UI update karanawa
+            const data = await response.json(); // ✅ Now returns { token, id, name, email, role }
             handleAuthResponse(data, { 
                 name: decoded.name, 
                 picture: decoded.picture, 
@@ -73,15 +70,13 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     
-    // 🔥 URLs Updated to /api/auth/...
     const url = isLogin 
       ? 'http://localhost:8080/api/auth/authenticate' 
       : 'http://localhost:8080/api/auth/register';
 
-    // Payload eka hadanawa
     const payload = isLogin 
-      ? { email: formData.email, password: formData.password } // Login
-      : { name: formData.name, email: formData.email, password: formData.password, role: 'TRAVELER' }; // Register
+      ? { email: formData.email, password: formData.password }
+      : { name: formData.name, email: formData.email, password: formData.password, role: 'TRAVELER' };
 
     try {
       const response = await fetch(url, {
@@ -91,18 +86,16 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
       });
 
       if (response.ok) {
-        const data = await response.json(); // { token: "..." }
+        const data = await response.json(); // ✅ Now returns { token, id, name, email, role }
         
-        // Success wunaama
         handleAuthResponse(data, { 
-            name: isLogin ? "User" : formData.name, // Login weddi nama danne na backend eken gannakan
-            email: formData.email 
+            name: data.name || (isLogin ? "User" : formData.name),
+            email: data.email || formData.email 
         });
 
         setFormData({ name: '', email: '', password: '' });
       } else {
         const errorMsg = await response.text(); 
-        // Backend eken json nathiwa text awoth handle karanna
         try {
             const errorJson = JSON.parse(errorMsg);
             alert("Error: " + (errorJson.message || "Authentication Failed"));
@@ -116,7 +109,7 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
     }
   };
 
-  // --- RENDER SECTION (UI eka wens kale na) ---
+  // --- RENDER SECTION ---
   return (
     <>
       <div className={`signup-backdrop ${isOpen ? 'open' : ''}`} onClick={onClose}/>
@@ -139,7 +132,7 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
             <div style={{flex: 1}}></div>
 
             <button onClick={() => {
-                localStorage.removeItem('token'); // Logout weddi token ain karanawa
+                localStorage.removeItem('token');
                 onLogout();
             }} className="gold-btn" style={{borderColor: '#ff4444', color: '#ff4444', backgroundColor: 'rgba(255, 68, 68, 0.1)'}}>
               SIGN OUT <LogOut size={16} />
