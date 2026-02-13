@@ -52,13 +52,29 @@ export default function MyListings() {
     setLoading(true);
     try {
       let response;
-      if (shopId) {
+      // Encode category name to handle special characters like "&"
+      const encodedCategory = encodeURIComponent(categoryName);
+      
+      // Try to get shopId from state, or fallback to localStorage
+      let currentShopId = shopId;
+      if (!currentShopId) {
+        const storedUser = localStorage.getItem('travelUser');
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          if (user.shopId) {
+            currentShopId = user.shopId;
+            setShopId(user.shopId); // update state too
+          }
+        }
+      }
+
+      if (currentShopId) {
         response = await axios.get(
-          `http://localhost:8080/api/products/shop/${shopId}/category/${categoryName}`
+          `http://localhost:8080/api/products/shop/${currentShopId}/category/${encodedCategory}`
         );
       } else {
         response = await axios.get(
-          `http://localhost:8080/api/products/category/${categoryName}`
+          `http://localhost:8080/api/products/category/${encodedCategory}`
         );
       }
       setProducts(response.data);
