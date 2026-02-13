@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import axios from 'axios'; 
-import { useNavigate } from 'react-router-dom'; // 1. Import this
+import { useNavigate } from 'react-router-dom';
 import "../styles/Seller.css"; 
 import { MdSwapHoriz, MdSettings, MdLogout, MdMyLocation } from "react-icons/md";
 
 const Sellersidebar = () => {
   const [showStoreForm, setShowStoreForm] = useState(false);
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
-  const navigate = useNavigate(); // 2. Initialize navigation
+  const navigate = useNavigate();
   
   const [storeDetails, setStoreDetails] = useState({
     name: '',
@@ -72,6 +72,13 @@ const Sellersidebar = () => {
     );
   };
 
+  // ✅ NEW: Logout handler - clears user data and redirects to home
+  const handleLogout = () => {
+    localStorage.removeItem('travelUser');
+    localStorage.removeItem('token');
+    navigate('/');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -81,7 +88,6 @@ const Sellersidebar = () => {
     }
 
     try {
-      // 3. Send data to backend to UPDATE DATABASE
       const response = await axios.post('http://localhost:8080/api/shops/create', {
         name: storeDetails.name,
         description: storeDetails.description,
@@ -93,7 +99,6 @@ const Sellersidebar = () => {
       console.log("Store Created:", response.data);
       alert("Store created successfully!");
       
-      // Save shopId to localStorage
       try {
         const storedUser = JSON.parse(localStorage.getItem('travelUser') || '{}');
         storedUser.shopId = response.data.id;
@@ -103,7 +108,6 @@ const Sellersidebar = () => {
         alert("Shop created but failed to save shop ID. Please reload the page.");
       }
       
-      // 4. Close Modal & Redirect to Dashboard
       setShowStoreForm(false);
       navigate('/dashboard'); 
 
@@ -131,7 +135,8 @@ const Sellersidebar = () => {
       </div>
 
       <div className="seller-sidebar-footer">
-        <button className="seller-menu-btn seller-logout-btn">
+        {/* ✅ FIX: Added onClick={handleLogout} */}
+        <button className="seller-menu-btn seller-logout-btn" onClick={handleLogout}>
           <MdLogout size={22} /> 
           <span>Log Out</span>
         </button>
