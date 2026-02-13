@@ -35,12 +35,16 @@ export default function MyListings() {
   });
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('travelUser');
-    if (storedUser) {
-      const user = JSON.parse(storedUser);
-      if (user.shopId) {
-        setShopId(user.shopId);
+    try {
+      const storedUser = localStorage.getItem('travelUser');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        if (user.shopId) {
+          setShopId(user.shopId);
+        }
       }
+    } catch (error) {
+      console.error("Error loading shop ID from localStorage:", error);
     }
   }, []);
 
@@ -94,6 +98,11 @@ export default function MyListings() {
     
     if (!formData.productName || !formData.productDescription) {
       alert("Product Name and Description are required!");
+      return;
+    }
+
+    if (!shopId) {
+      alert("Unable to add product. Please create a shop first or reload the page.");
       return;
     }
 

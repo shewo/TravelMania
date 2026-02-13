@@ -94,9 +94,14 @@ const Sellersidebar = () => {
       alert("Store created successfully!");
       
       // Save shopId to localStorage
-      const storedUser = JSON.parse(localStorage.getItem('travelUser') || '{}');
-      storedUser.shopId = response.data.id;
-      localStorage.setItem('travelUser', JSON.stringify(storedUser));
+      try {
+        const storedUser = JSON.parse(localStorage.getItem('travelUser') || '{}');
+        storedUser.shopId = response.data.id;
+        localStorage.setItem('travelUser', JSON.stringify(storedUser));
+      } catch (error) {
+        console.error("Error saving shop ID to localStorage:", error);
+        alert("Shop created but failed to save shop ID. Please reload the page.");
+      }
       
       // 4. Close Modal & Redirect to Dashboard
       setShowStoreForm(false);
