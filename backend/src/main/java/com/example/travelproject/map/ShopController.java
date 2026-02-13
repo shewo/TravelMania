@@ -71,6 +71,28 @@ public class ShopController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // --- UPDATE SHOP ---
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateShop(@PathVariable Long id, @RequestBody ShopUpdateRequest request) {
+        try {
+            Optional<shop> shopData = shopRepository.findById(id);
+            if (shopData.isEmpty()) {
+                return new ResponseEntity<>("Shop not found", HttpStatus.NOT_FOUND);
+            }
+            
+            shop existingShop = shopData.get();
+            existingShop.setName(request.getName());
+            existingShop.setDescription(request.getDescription());
+            existingShop.setContactNo(request.getContactNo());
+            
+            shop updatedShop = shopRepository.save(existingShop);
+            return new ResponseEntity<>(updatedShop, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to update shop", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     // --- DTO CLASS ---
     @Data
     public static class ShopRequest {
@@ -79,5 +101,12 @@ public class ShopController {
         private String contactNo;
         private double latitude;
         private double longitude;
+    }
+
+    @Data
+    public static class ShopUpdateRequest {
+        private String name;
+        private String description;
+        private String contactNo;
     }
 }
