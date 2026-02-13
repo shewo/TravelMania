@@ -11,6 +11,7 @@ import Sellerac from "./Main-sections/Sellerac";
 import Reviews from "./pages/Reviews";
 import ProductInfoSection from "./pages/ProductInfoSection";
 import SmoothScrollWrapper from "./components/SmoothScrollWrapper"; 
+import AllStores from "./pages/AllStores";
 
 // Cart Pages
 import Cart from "./pages/Cart";       
@@ -33,10 +34,11 @@ function App() {
             <Route path="/Sellerac" element={<Sellerac />} />
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/product/:id" element={<ProductInfoSection />} />
-            
+            <Route path="/all-stores" element={<AllStores />} />
             {/* Cart routes thiyenna one Routes athule */}
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+
           </Routes>
           
         </SmoothScrollWrapper>

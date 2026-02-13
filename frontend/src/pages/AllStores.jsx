@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/AllStores.css'; 
+import Navbar from '../components/Navbar'
+import HomePage4 from '../pages/HomePage4'
 
 const AllStores = () => {
   const navigate = useNavigate();
@@ -31,11 +33,14 @@ const AllStores = () => {
   );
 
   return (
-    <div className="stores-container">
-      {/* Header */}
-      <div className="stores-header">
-        <h1>Partner Stores</h1>
-        <p>Find the best travel gear near you</p>
+    <>
+    <Navbar />
+      <div className="stores-container">
+        
+        {/* Header */}
+        <div className="stores-header">
+          <h1>Partner Stores</h1>
+          <p>Find the best travel gear near you</p>
         
         <div className="search-bar-container">
           <input
@@ -95,6 +100,8 @@ const AllStores = () => {
         )}
       </div>
     </div>
+    <HomePage4 />
+    </>
   );
 };
 
