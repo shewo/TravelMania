@@ -40,8 +40,8 @@ public class ProductController {
     }
     // 4. Get by Category (Cooking, Fishing )
     @GetMapping("/category")
-    public List<Product> getProductsByCategory(@RequestParam String name) {
-        return productService.getProductsByCategory(name);
+    public List<Product> getProductsByCategory(@RequestParam String categoryName) {
+        return productService.getProductsByCategory(categoryName);
     }
 
     @PutMapping("/stock/{id}")
@@ -90,8 +90,8 @@ public class ProductController {
     @GetMapping("/shop/{shopId}/category")
     public List<Product> getProductsByShopAndCategory(
             @PathVariable Long shopId,
-            @RequestParam String name) {
-        return productService.getProductsByShopAndCategory(shopId, name);
+            @RequestParam String categoryName) {
+        return productService.getProductsByShopAndCategory(shopId, categoryName);
     }
 
 
