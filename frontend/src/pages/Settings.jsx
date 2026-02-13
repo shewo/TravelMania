@@ -15,8 +15,17 @@ export default function Settings() {
   const [store, setStore] = useState({
     storeName: "",
     storeDescription: "",
-    businessAddress: "",
+    storeContactNo: "",
   });
+
+  // Password change state
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+  const [passwordError, setPasswordError] = useState("");
 
   // Notification state
   const [notifications, setNotifications] = useState({
@@ -29,6 +38,8 @@ export default function Settings() {
   // Loading / feedback state
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [shopId, setShopId] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   // Load user data from localStorage on mount
   useEffect(() => {
@@ -36,16 +47,38 @@ export default function Settings() {
     if (storedUser) {
       try {
         const userData = JSON.parse(storedUser);
+        setUserId(userData.id);
         setProfile({
           name: userData.name || "",
           email: userData.email || "",
           phone: userData.phone || "",
         });
+
+        // Load shop data if user has a shop
+        if (userData.shopId) {
+          setShopId(userData.shopId);
+          loadShopData(userData.shopId);
+        }
       } catch (error) {
         console.error("Error parsing user data:", error);
       }
     }
   }, []);
+
+  // Load shop data from API
+  const loadShopData = async (shopId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/shops/${shopId}`);
+      const shopData = response.data;
+      setStore({
+        storeName: shopData.name || "",
+        storeDescription: shopData.description || "",
+        storeContactNo: shopData.contactNo || "",
+      });
+    } catch (error) {
+      console.error("Error loading shop data:", error);
+    }
+  };
 
   // Handle profile input changes
   const handleProfileChange = (e) => {
@@ -59,6 +92,13 @@ export default function Settings() {
     setStore((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Handle password input changes
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswordData((prev) => ({ ...prev, [name]: value }));
+    setPasswordError("");
+  };
+
   // Handle notification toggle changes
   const handleNotificationChange = (key) => {
     setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -69,18 +109,27 @@ export default function Settings() {
     setSaving(true);
     setMessage("");
     try {
+      if (!userId) {
+        setMessage("User ID not found. Please log in again.");
+        return;
+      }
+
+      // Call API to update profile
+      await axios.put(`http://localhost:8080/api/users/${userId}/profile`, {
+        name: profile.name,
+        email: profile.email,
+        phone: profile.phone,
+      });
+
       // Update localStorage
       const storedUser = JSON.parse(localStorage.getItem("travelUser") || "{}");
       const updatedUser = { ...storedUser, name: profile.name, email: profile.email, phone: profile.phone };
       localStorage.setItem("travelUser", JSON.stringify(updatedUser));
 
-      // TODO: Replace with your actual API endpoint
-      // await axios.put("http://localhost:8080/api/users/profile", profile);
-
       setMessage("Profile updated successfully!");
     } catch (error) {
       console.error("Error saving profile:", error);
-      setMessage("Failed to save profile. Please try again.");
+      setMessage(error.response?.data || "Failed to save profile. Please try again.");
     } finally {
       setSaving(false);
     }
@@ -91,22 +140,69 @@ export default function Settings() {
     setSaving(true);
     setMessage("");
     try {
-      // TODO: Replace with your actual API endpoint
-      // await axios.put("http://localhost:8080/api/shops/update", store);
+      if (!shopId) {
+        setMessage("No shop linked to this account.");
+        return;
+      }
+
+      // Call API to update shop
+      await axios.put(`http://localhost:8080/api/shops/update/${shopId}`, {
+        name: store.storeName,
+        description: store.storeDescription,
+        contactNo: store.storeContactNo,
+      });
 
       setMessage("Store settings updated successfully!");
     } catch (error) {
       console.error("Error updating store:", error);
-      setMessage("Failed to update store. Please try again.");
+      setMessage(error.response?.data || "Failed to update store. Please try again.");
     } finally {
       setSaving(false);
     }
   };
 
   // Change password handler
-  const handleChangePassword = () => {
-    // TODO: Implement password change modal or redirect
-    alert("Password change functionality coming soon!");
+  const handleChangePassword = async () => {
+    setPasswordError("");
+    setMessage("");
+
+    // Validate passwords
+    if (!passwordData.currentPassword || !passwordData.newPassword || !passwordData.confirmPassword) {
+      setPasswordError("All password fields are required.");
+      return;
+    }
+
+    if (passwordData.newPassword.length < 6) {
+      setPasswordError("New password must be at least 6 characters long.");
+      return;
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      setPasswordError("New passwords do not match.");
+      return;
+    }
+
+    setSaving(true);
+    try {
+      if (!userId) {
+        setPasswordError("User ID not found. Please log in again.");
+        return;
+      }
+
+      await axios.put(`http://localhost:8080/api/users/${userId}/change-password`, {
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword,
+      });
+
+      setMessage("Password changed successfully!");
+      setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
+      setShowPasswordForm(false);
+    } catch (error) {
+      console.error("Error changing password:", error);
+      setPasswordError(error.response?.data || "Failed to change password. Please try again.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   // Enable 2FA handler
@@ -188,46 +284,50 @@ export default function Settings() {
           {/* Store Settings */}
           <div style={{ background: 'white', padding: '20px', borderRadius: '8px' }}>
             <h2>Store Settings</h2>
-            <form style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '15px' }}
-                  onSubmit={(e) => { e.preventDefault(); handleUpdateStore(); }}>
-              <div>
-                <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Store Name</label>
-                <input
-                  type="text"
-                  name="storeName"
-                  value={store.storeName}
-                  onChange={handleStoreChange}
-                  style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
-                />
-              </div>
-              <div>
-                <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Store Description</label>
-                <textarea
-                  rows="3"
-                  name="storeDescription"
-                  value={store.storeDescription}
-                  onChange={handleStoreChange}
-                  style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
-                />
-              </div>
-              <div>
-                <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Business Address</label>
-                <input
-                  type="text"
-                  name="businessAddress"
-                  value={store.businessAddress}
-                  onChange={handleStoreChange}
-                  style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={saving}
-                style={{ padding: '10px 20px', background: '#4a90e2', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', width: 'fit-content', opacity: saving ? 0.6 : 1 }}
-              >
-                {saving ? "Saving..." : "Update Store"}
-              </button>
-            </form>
+            {!shopId ? (
+              <p style={{ marginTop: '15px', color: '#666' }}>No shop linked to this account.</p>
+            ) : (
+              <form style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '15px' }}
+                    onSubmit={(e) => { e.preventDefault(); handleUpdateStore(); }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Store Name</label>
+                  <input
+                    type="text"
+                    name="storeName"
+                    value={store.storeName}
+                    onChange={handleStoreChange}
+                    style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Store Description</label>
+                  <textarea
+                    rows="3"
+                    name="storeDescription"
+                    value={store.storeDescription}
+                    onChange={handleStoreChange}
+                    style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Store Contact Number</label>
+                  <input
+                    type="text"
+                    name="storeContactNo"
+                    value={store.storeContactNo}
+                    onChange={handleStoreChange}
+                    style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  style={{ padding: '10px 20px', background: '#4a90e2', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', width: 'fit-content', opacity: saving ? 0.6 : 1 }}
+                >
+                  {saving ? "Saving..." : "Update Store"}
+                </button>
+              </form>
+            )}
           </div>
 
           {/* Notification Settings */}
@@ -257,20 +357,93 @@ export default function Settings() {
           <div style={{ background: 'white', padding: '20px', borderRadius: '8px' }}>
             <h2>Security</h2>
             <div style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-              <button
-                type="button"
-                onClick={handleChangePassword}
-                style={{ padding: '10px 20px', background: '#ff9800', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', width: 'fit-content' }}
-              >
-                Change Password
-              </button>
-              <button
-                type="button"
-                onClick={handleEnable2FA}
-                style={{ padding: '10px 20px', background: '#4caf50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', width: 'fit-content' }}
-              >
-                Enable Two-Factor Authentication
-              </button>
+              {!showPasswordForm ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setShowPasswordForm(true)}
+                    style={{ padding: '10px 20px', background: '#ff9800', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', width: 'fit-content' }}
+                  >
+                    Change Password
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleEnable2FA}
+                    style={{ padding: '10px 20px', background: '#4caf50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', width: 'fit-content' }}
+                  >
+                    Enable Two-Factor Authentication
+                  </button>
+                </>
+              ) : (
+                <div style={{ border: '1px solid #ddd', padding: '15px', borderRadius: '5px' }}>
+                  <h3 style={{ marginTop: 0 }}>Change Password</h3>
+                  {passwordError && (
+                    <div style={{
+                      padding: '10px',
+                      marginBottom: '10px',
+                      borderRadius: '4px',
+                      background: '#ffebee',
+                      color: '#c62828',
+                      border: '1px solid #ef9a9a',
+                    }}>
+                      {passwordError}
+                    </div>
+                  )}
+                  <form style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}
+                        onSubmit={(e) => { e.preventDefault(); handleChangePassword(); }}>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Current Password</label>
+                      <input
+                        type="password"
+                        name="currentPassword"
+                        value={passwordData.currentPassword}
+                        onChange={handlePasswordChange}
+                        style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>New Password</label>
+                      <input
+                        type="password"
+                        name="newPassword"
+                        value={passwordData.newPassword}
+                        onChange={handlePasswordChange}
+                        style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: '5px', fontWeight: '500' }}>Confirm New Password</label>
+                      <input
+                        type="password"
+                        name="confirmPassword"
+                        value={passwordData.confirmPassword}
+                        onChange={handlePasswordChange}
+                        style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}
+                      />
+                    </div>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                      <button
+                        type="submit"
+                        disabled={saving}
+                        style={{ padding: '10px 20px', background: '#ff9800', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', opacity: saving ? 0.6 : 1 }}
+                      >
+                        {saving ? "Changing..." : "Change Password"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowPasswordForm(false);
+                          setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
+                          setPasswordError("");
+                        }}
+                        style={{ padding: '10px 20px', background: '#9e9e9e', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
             </div>
           </div>
 
