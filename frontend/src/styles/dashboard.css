@@ -36,12 +36,14 @@ body {
 .dashboard {
   display: flex;
   min-height: 100vh;
+  align-items: flex-start;
   background-image: url("/bg-dashboard.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  position: relative;
+  /* position: relative; removed for sticky sidebar */
+  /* overflow: hidden; removed for sticky sidebar */
 }
 
 .dashboard::before {
@@ -73,8 +75,11 @@ body {
   border-right: 1px solid rgba(212, 175, 55, 0.15);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  position: relative;
-  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
 }
 
 .sidebar::after {
@@ -195,6 +200,7 @@ body {
   background: rgba(0, 0, 0, 0.5);
   position: relative;
   z-index: 1;
+  margin-left: 260px;
 }
 
 .main-content h1 {
@@ -538,6 +544,7 @@ body {
     left: -260px;
     top: 0;
     bottom: 0;
+    height: 100vh;
     transition: left 0.3s ease;
     z-index: 100;
   }
