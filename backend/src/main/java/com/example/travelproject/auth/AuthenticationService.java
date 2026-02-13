@@ -3,6 +3,8 @@ package com.example.travelproject.auth;
 import com.example.travelproject.config.JwtService;
 import com.example.travelproject.user.User;
 import com.example.travelproject.user.UserRepository;
+import com.example.travelproject.map.ShopRepository;
+import com.example.travelproject.map.shop;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,16 +21,26 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final ShopRepository shopRepository;
 
     // Helper method to build response with user data
     private AuthenticationResponse buildResponse(User user) {
         var jwtToken = jwtService.generateToken(user);
+        // Try to find a shop for this user
+        Long shopId = null;
+        if (user.getId() != null) {
+            java.util.Optional<shop> shopOpt = shopRepository.findByUserId(user.getId());
+            if (shopOpt.isPresent()) {
+                shopId = shopOpt.get().getId();
+            }
+        }
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
                 .role(user.getRole())
+                .shopId(shopId)
                 .build();
     }
 

@@ -1,9 +1,12 @@
 package com.example.travelproject.map;
 
+import com.example.travelproject.user.User;
+import com.example.travelproject.user.UserRepository;
 import lombok.Data;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +20,13 @@ import java.util.Optional;
 public class ShopController {
 
     private final ShopRepository shopRepository;
+    private final UserRepository userRepository; // 1. Added User Repository
     private final GeometryFactory geometryFactory = new GeometryFactory();
 
-    public ShopController(ShopRepository shopRepository) {
+    // 2. Updated Constructor
+    public ShopController(ShopRepository shopRepository, UserRepository userRepository) {
         this.shopRepository = shopRepository;
+        this.userRepository = userRepository;
     }
 
     // --- CREATE SHOP & SAVE TO DB ---
@@ -32,6 +38,19 @@ public class ShopController {
             newShop.setDescription(request.getDescription());
             newShop.setContactNo(request.getContactNo());
 
+            // 3. Link the Shop to the User
+            if (request.getUserId() != null) {
+                Optional<User> user = userRepository.findById(request.getUserId());
+                if (user.isPresent()) {
+                    newShop.setUser(user.get());
+                } else {
+                    return new ResponseEntity<>((HttpHeaders) null, HttpStatus.BAD_REQUEST); // User not found
+                }
+            } else {
+                return new ResponseEntity<>((HttpHeaders) null, HttpStatus.BAD_REQUEST); // User ID is mandatory
+            }
+
+            // Create Geometry Point
             Point locationPoint = geometryFactory.createPoint(new Coordinate(request.getLongitude(), request.getLatitude()));
             newShop.setLocation(locationPoint);
 
@@ -44,19 +63,20 @@ public class ShopController {
         }
     }
 
-    // ✅ NEW: GET ALL SHOPS
+    // --- GET ALL SHOPS ---
     @GetMapping("/all")
     public List<shop> getAllShops() {
         return shopRepository.findAll();
     }
 
-    // --- EXISTING ENDPOINTS ---
+    // --- GET NEARBY SHOPS ---
     @GetMapping("/nearby")
     public List<shop> getNearbyShops(@RequestParam double lat, @RequestParam double lng) {
         Point userLocation = geometryFactory.createPoint(new Coordinate(lng, lat));
         return shopRepository.findShopsNearby(userLocation, 5000);
     }
 
+    // --- GET SHOP BY ID ---
     @GetMapping("/{id}")
     public ResponseEntity<shop> getShopById(@PathVariable Long id) {
         Optional<shop> shopData = shopRepository.findById(id);
@@ -64,6 +84,7 @@ public class ShopController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // --- GET SHOP BY USER ID ---
     @GetMapping("/user/{userId}")
     public ResponseEntity<shop> getShopByUser(@PathVariable Long userId) {
         Optional<shop> shopData = shopRepository.findByUserId(userId);
@@ -79,12 +100,12 @@ public class ShopController {
             if (shopData.isEmpty()) {
                 return new ResponseEntity<>("Shop not found", HttpStatus.NOT_FOUND);
             }
-            
+
             shop existingShop = shopData.get();
             existingShop.setName(request.getName());
             existingShop.setDescription(request.getDescription());
             existingShop.setContactNo(request.getContactNo());
-            
+
             shop updatedShop = shopRepository.save(existingShop);
             return new ResponseEntity<>(updatedShop, HttpStatus.OK);
         } catch (Exception e) {
@@ -93,7 +114,7 @@ public class ShopController {
         }
     }
 
-    // --- DTO CLASS ---
+    // --- DTO CLASSES ---
     @Data
     public static class ShopRequest {
         private String name;
@@ -101,6 +122,7 @@ public class ShopController {
         private String contactNo;
         private double latitude;
         private double longitude;
+        private Long userId; // 4. Added userId to DTO
     }
 
     @Data

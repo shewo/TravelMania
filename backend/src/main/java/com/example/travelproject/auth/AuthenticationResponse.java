@@ -15,4 +15,5 @@ public class AuthenticationResponse {
     private String name;
     private String email;
     private String role;
+    private Long shopId;
 }

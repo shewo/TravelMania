@@ -16,19 +16,22 @@ const Signup = ({ isOpen, onClose, onLoginSuccess, user, onLogout }) => {
   const handleAuthResponse = (data, userDetails = {}) => {
     if (data.token) {
       localStorage.setItem('token', data.token);
-      
       const decodedToken = jwtDecode(data.token);
       console.log("Decoded Token:", decodedToken);
 
-      // ✅ FIX: Now saves id, name, email, role from the backend response
-      onLoginSuccess({
-        id: data.id,                              // ✅ Database user ID from backend
-        email: data.email || decodedToken.sub,     // ✅ Email from backend (fallback to JWT)
-        name: data.name || userDetails.name,       // ✅ Name from backend
-        role: data.role || userDetails.role,        // ✅ Role from backend
-        picture: userDetails.picture || null,       // Google picture (if available)
+      // Add shopId if present
+      const userObj = {
+        id: data.id,
+        email: data.email || decodedToken.sub,
+        name: data.name || userDetails.name,
+        role: data.role || userDetails.role,
+        picture: userDetails.picture || null,
         token: data.token
-      });
+      };
+      if (data.shopId) {
+        userObj.shopId = data.shopId;
+      }
+      onLoginSuccess(userObj);
     }
   };
 
