@@ -3,7 +3,9 @@ package com.example.travelproject.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,41 +28,38 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // 1. CORS Configuration
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                // 1. CORS Configuration (Uses the Bean defined below automatically)
+                .cors(Customizer.withDefaults())
 
-                // 2. CSRF Disable (POST requests වැඩ කරන්න මේක ඕනේ)
+                // 2. CSRF Disable
                 .csrf(csrf -> csrf.disable())
 
                 // 3. Request Authorization
                 .authorizeHttpRequests(auth -> auth
-                        // Login and Register
-                        .requestMatchers("/api/auth/**").permitAll()
+                        // Allow static resources (optional but good practice)
+                        .requestMatchers("/error").permitAll() // IMPORTANT: Allows the server to send error messages instead of 403
 
-                        // Shops
+                        // Public Endpoints
+                        .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                         .requestMatchers("/api/shops/**").permitAll()
-
-                        // Products
                         .requestMatchers("/api/products/**").permitAll()
-
-                        // Users
                         .requestMatchers("/api/users/**").permitAll()
-
-                        // Sellers
                         .requestMatchers("/api/seller/**").permitAll()
-
-                        // ✅ ORDERS - මේක නැති නිසයි කලින් 403 Error එක ආවේ
                         .requestMatchers("/api/orders/**").permitAll()
 
-                        // අනිත් හැම එකකටම Authentication ඕනේ
+                        // Allow OPTIONS requests for all (Fixes some CORS pre-flight issues)
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // All other requests require authentication
                         .anyRequest().authenticated()
                 )
-                // 4. Session Management (JWT පාවිච්චි කරන නිසා Stateless තියන්න)
+
+                // 4. Session Management
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+
                 .authenticationProvider(authenticationProvider)
-                // 5. JWT Filter එක ඇතුළත් කරනවා
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -70,10 +69,16 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // React Ports (5173 and 5174) වලට අවසර දෙනවා
+        // Allow your React Frontend
         configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // Allow standard HTTP methods
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+
+        // Allow all headers (Authorization, Content-Type, etc.)
         configuration.setAllowedHeaders(List.of("*"));
+
+        // Allow credentials (cookies/auth headers)
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
