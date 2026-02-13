@@ -74,12 +74,12 @@ export default function MyListings() {
         // Use query parameter ?categoryName= instead of path variable to avoid Spring Security 403
         response = await axios.get(
           `http://localhost:8080/api/products/shop/${currentShopId}/category`,
-          { params: { categoryName: categoryName } }
+          { params: { categoryName } }
         );
       } else {
         response = await axios.get(
           `http://localhost:8080/api/products/category`,
-          { params: { categoryName: categoryName } }
+          { params: { categoryName } }
         );
       }
       setProducts(response.data);
