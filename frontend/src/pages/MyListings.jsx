@@ -52,8 +52,6 @@ export default function MyListings() {
     setLoading(true);
     try {
       let response;
-      // Encode category name for URL transmission to handle special characters like "&", spaces, etc.
-      const encodedCategory = encodeURIComponent(categoryName);
       
       // Try to get shopId from state, or fallback to localStorage
       let currentShopId = shopId;
@@ -73,12 +71,15 @@ export default function MyListings() {
       }
 
       if (currentShopId) {
+        // Use query parameter ?categoryName= instead of path variable to avoid Spring Security 403
         response = await axios.get(
-          `http://localhost:8080/api/products/shop/${currentShopId}/category/${encodedCategory}`
+          `http://localhost:8080/api/products/shop/${currentShopId}/category`,
+          { params: { categoryName } }
         );
       } else {
         response = await axios.get(
-          `http://localhost:8080/api/products/category/${encodedCategory}`
+          `http://localhost:8080/api/products/category`,
+          { params: { categoryName } }
         );
       }
       setProducts(response.data);
