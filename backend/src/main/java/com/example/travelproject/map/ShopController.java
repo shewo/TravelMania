@@ -64,6 +64,13 @@ public class ShopController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<shop> getShopByUser(@PathVariable Long userId) {
+        Optional<shop> shopData = shopRepository.findByUserId(userId);
+        return shopData.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     // --- DTO CLASS ---
     @Data
     public static class ShopRequest {

@@ -68,4 +68,9 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    // 4. Get Products by Shop and Category
+    public List<Product> getProductsByShopAndCategory(Long shopId, String categoryName) {
+        return productRepository.findAllByShopIdAndCategory(shopId, categoryName);
+    }
+
 }
