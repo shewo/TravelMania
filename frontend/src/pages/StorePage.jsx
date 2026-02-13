@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/HomePage1.css';
-import '../styles/ProductPage.css'; // ✅ Reuse ProductPage card styles
+import '../styles/ProductPage.css';
 
 import defaultImg from '../assets/backpack.png';
+import bgVideo from '../assets/bg-video2.mp4'; // ✅ Same video as ProductPage
 
 const StorePage = () => {
     const { id } = useParams();
@@ -13,8 +14,9 @@ const StorePage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [productsLoading, setProductsLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('All');
 
-    // Fetch shop details
     useEffect(() => {
         axios.get(`http://localhost:8080/api/shops/${id}`)
             .then(response => {
@@ -27,7 +29,6 @@ const StorePage = () => {
             });
     }, [id]);
 
-    // ✅ Fetch products belonging to this shop
     useEffect(() => {
         axios.get(`http://localhost:8080/api/products/shop/${id}`)
             .then(response => {
@@ -45,98 +46,204 @@ const StorePage = () => {
         navigate(`/product/${productId}`);
     };
 
-    if (loading) return <div style={{ color: "white", textAlign: "center", marginTop: "100px" }}>Loading Shop...</div>;
-    if (!shop) return <div style={{ color: "white", textAlign: "center", marginTop: "100px" }}>Shop not found!</div>;
+    const categories = ['All', ...new Set(products.map(p => p.category).filter(Boolean))];
+
+    const filteredProducts = products.filter(product => {
+        const matchesSearch = product.productName?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+        return matchesSearch && matchesCategory;
+    });
+
+    if (loading) {
+        return (
+            <div style={{
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#050505',
+                color: '#f1e2ab',
+                fontSize: '24px',
+                fontFamily: "'Cinzel', serif"
+            }}>
+                Loading Store...
+            </div>
+        );
+    }
+
+    if (!shop) {
+        return (
+            <div style={{
+                minHeight: '100vh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#050505',
+                color: '#f1e2ab',
+                fontSize: '24px',
+                fontFamily: "'Cinzel', serif"
+            }}>
+                <p>Store not found!</p>
+                <button
+                    onClick={() => navigate('/')}
+                    style={{
+                        marginTop: '20px',
+                        padding: '12px 24px',
+                        background: '#d4af37',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        fontSize: '16px',
+                        color: '#050505',
+                        fontWeight: 'bold'
+                    }}
+                >
+                    Go Home
+                </button>
+            </div>
+        );
+    }
 
     return (
-        <div style={{ backgroundColor: "#0b0a0a", minHeight: "100vh", color: "white" }}>
-            
-            {/* Navbar */}
-            <nav className="hero-nav" style={{ padding: "20px 5%" }}>
-                <Link to="/" style={{ color: "#D4AF37", textDecoration: "none", fontSize: "18px" }}>
-                    ← BACK
-                </Link>
-                <h1 className="logo-text" style={{ fontSize: "24px", margin: 0 }}>TRAVELMANIA</h1>
-            </nav>
+        <div id="tm-gear-page-wrapper">
 
-            {/* Shop Details */}
-            <div style={{ padding: "40px 10%", textAlign: "center" }}>
-                
-                <h1 className="hero-title" style={{ fontSize: "3rem", marginBottom: "20px" }}>
-                    {shop.name}
-                </h1>
-                
-                <p style={{ 
-                    fontFamily: "Montserrat, sans-serif", 
-                    fontSize: "1.2rem", 
-                    color: "#C5B097", 
-                    maxWidth: "800px", 
-                    margin: "0 auto 20px" 
-                }}>
-                    {shop.description}
-                </p>
+            {/* ===== VIDEO BACKGROUND (Same pattern as ProductPage) ===== */}
+            <div className="tm-gear-video-container">
+                <video autoPlay loop muted playsInline className="tm-gear-video-bg" src={bgVideo} />
+                <div className="tm-gear-video-overlay"></div>
+            </div>
 
-                {shop.contactNo && (
-                    <p style={{ color: "#D4AF37", fontSize: "1rem", marginBottom: "40px" }}>
-                        📞 {shop.contactNo}
-                    </p>
-                )}
+            {/* ===== CONTENT LAYER ===== */}
+            <div className="tm-gear-content-layer">
 
-                {/* ✅ PRODUCTS SECTION - ProductPage Theme */}
-                <div style={{ 
-                    borderTop: "1px solid #333", 
-                    paddingTop: "40px", 
-                    marginTop: "20px" 
-                }}>
-                    <h2 style={{ 
-                        color: "#D4AF37", 
-                        fontFamily: "'Cinzel', serif",
-                        fontSize: "2rem",
-                        marginBottom: "40px",
-                        letterSpacing: "2px"
+                {/* --- Back Navigation --- */}
+                <div style={{ marginBottom: '20px' }}>
+                    <Link to="/stores" style={{
+                        color: '#D1B48C',
+                        textDecoration: 'none',
+                        fontSize: '1rem',
+                        fontFamily: "'Montserrat', sans-serif",
+                        letterSpacing: '2px',
+                        textTransform: 'uppercase',
+                        transition: 'color 0.3s ease'
                     }}>
-                        AVAILABLE GEAR
-                    </h2>
+                        ← BACK TO STORES
+                    </Link>
+                </div>
 
-                    <div id="tm-gear-page-wrapper">
-                        <div className="tm-gear-grid">
-                            {productsLoading ? (
-                                <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#f1e2ab', fontSize: '20px', padding: '40px' }}>
-                                    Loading products...
-                                </div>
-                            ) : products.length === 0 ? (
-                                <div style={{ gridColumn: '1 / -1', textAlign: 'center', color: '#f1e2ab', fontSize: '20px', padding: '40px' }}>
-                                    No products available in this store yet.
-                                </div>
-                            ) : (
-                                products.map(product => (
-                                    <div 
-                                        key={product.id} 
-                                        className="tm-gear-card"
-                                        onClick={() => handleProductClick(product.id)}
-                                        style={{ cursor: 'pointer' }}
-                                    >
-                                        <div className="tm-gear-img-box">
-                                            <img 
-                                                src={product.imageUrl || defaultImg} 
-                                                alt={product.productName}
-                                                referrerPolicy="no-referrer"
-                                                onError={(e) => {
-                                                    if (!e.target.dataset.fallback) {
-                                                        e.target.dataset.fallback = "true";
-                                                        e.target.src = defaultImg;
-                                                    }
-                                                }}
-                                            />
-                                        </div>
-                                        <span className="tm-gear-category-tag">{product.category}</span>
-                                        <h3 className="tm-gear-name">{product.productName}</h3>
-                                        <p className="tm-gear-price">Rs.{product.price} / day</p>
-                                    </div>
-                                ))
-                            )}
+                {/* --- HEADER --- */}
+                <div className="tm-gear-header">
+                    <h1 className="tm-gear-title">{shop.name}</h1>
+                    <p style={{
+                        fontFamily: "'Montserrat', sans-serif",
+                        fontSize: '1.2rem',
+                        color: '#C5B097',
+                        maxWidth: '800px',
+                        margin: '0 auto 15px',
+                        lineHeight: '1.8',
+                        textShadow: '0 2px 5px rgba(0,0,0,1)'
+                    }}>
+                        {shop.description}
+                    </p>
+
+                    {shop.contactNo && (
+                        <p style={{
+                            color: '#D1B48C',
+                            fontSize: '1rem',
+                            fontFamily: "'Montserrat', sans-serif",
+                            letterSpacing: '1px',
+                            textShadow: '0 2px 4px rgba(0,0,0,0.8)'
+                        }}>
+                            📞 {shop.contactNo}
+                        </p>
+                    )}
+
+                    {/* --- SEARCH BAR --- */}
+                    <div className="tm-gear-search-wrapper">
+                        <input
+                            type="text"
+                            className="tm-gear-search-input"
+                            placeholder="SEARCH FOR GEAR..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        <svg className="tm-gear-search-icon" viewBox="0 0 24 24">
+                            <path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                        </svg>
+                    </div>
+                </div>
+
+                {/* --- CATEGORY FILTERS --- */}
+                {categories.length > 1 && (
+                    <div className="tm-gear-filter-row">
+                        <div className="tm-gear-filter-group">
+                            {categories.map(cat => (
+                                <button
+                                    key={cat}
+                                    className={`tm-gear-cat-btn ${selectedCategory === cat ? 'active' : ''}`}
+                                    onClick={() => setSelectedCategory(cat)}
+                                >
+                                    {cat}
+                                </button>
+                            ))}
                         </div>
                     </div>
+                )}
+
+                {/* --- PRODUCT GRID --- */}
+                <div className="tm-gear-grid">
+                    {productsLoading ? (
+                        <div style={{
+                            gridColumn: '1 / -1',
+                            textAlign: 'center',
+                            color: '#f1e2ab',
+                            fontSize: '20px',
+                            padding: '40px',
+                            fontFamily: "'Cinzel', serif"
+                        }}>
+                            Loading products...
+                        </div>
+                    ) : filteredProducts.length === 0 ? (
+                        <div style={{
+                            gridColumn: '1 / -1',
+                            textAlign: 'center',
+                            color: '#f1e2ab',
+                            fontSize: '20px',
+                            padding: '40px',
+                            fontFamily: "'Cinzel', serif"
+                        }}>
+                            {searchTerm || selectedCategory !== 'All'
+                                ? 'No products match your search.'
+                                : 'No products available in this store yet.'}
+                        </div>
+                    ) : (
+                        filteredProducts.map(product => (
+                            <div
+                                key={product.id}
+                                className="tm-gear-card"
+                                onClick={() => handleProductClick(product.id)}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <div className="tm-gear-img-box">
+                                    <img
+                                        src={product.imageUrl || defaultImg}
+                                        alt={product.productName}
+                                        referrerPolicy="no-referrer"
+                                        onError={(e) => {
+                                            if (!e.target.dataset.fallback) {
+                                                e.target.dataset.fallback = "true";
+                                                e.target.src = defaultImg;
+                                            }
+                                        }}
+                                    />
+                                </div>
+                                <span className="tm-gear-category-tag">{product.category}</span>
+                                <h3 className="tm-gear-name">{product.productName}</h3>
+                                <p className="tm-gear-price">Rs.{product.price} / day</p>
+                            </div>
+                        ))
+                    )}
                 </div>
 
             </div>
