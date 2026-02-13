@@ -39,10 +39,9 @@ public class ProductController {
         return productService.getProductsByShop(shopId);
     }
     // 4. Get by Category (Cooking, Fishing )
-    @GetMapping("/category/{categoryName}")
-    public List<Product> getProductsByCategory(@PathVariable String categoryName) {
-        String decodedCategory = java.net.URLDecoder.decode(categoryName, java.nio.charset.StandardCharsets.UTF_8);
-        return productService.getProductsByCategory(decodedCategory);
+    @GetMapping("/category")
+    public List<Product> getProductsByCategory(@RequestParam String categoryName) {
+        return productService.getProductsByCategory(categoryName);
     }
 
     @PutMapping("/stock/{id}")
@@ -88,12 +87,11 @@ public class ProductController {
     }
 
     // 8. Get Products by Shop and Category
-    @GetMapping("/shop/{shopId}/category/{categoryName}")
+    @GetMapping("/shop/{shopId}/category")
     public List<Product> getProductsByShopAndCategory(
             @PathVariable Long shopId,
-            @PathVariable String categoryName) {
-        String decodedCategory = java.net.URLDecoder.decode(categoryName, java.nio.charset.StandardCharsets.UTF_8);
-        return productService.getProductsByShopAndCategory(shopId, decodedCategory);
+            @RequestParam String categoryName) {
+        return productService.getProductsByShopAndCategory(shopId, categoryName);
     }
 
 
