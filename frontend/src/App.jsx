@@ -12,6 +12,7 @@ import Reviews from "./pages/Reviews";
 import ProductInfoSection from "./pages/ProductInfoSection";
 import SmoothScrollWrapper from "./components/SmoothScrollWrapper"; 
 import AllStores from "./pages/AllStores";
+import ProductPage from "./pages/ProductPage";
 
 // Cart Pages
 import Cart from "./pages/Cart";       
@@ -38,6 +39,7 @@ function App() {
             {/* Cart routes thiyenna one Routes athule */}
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/productpage" element={<ProductPage />} />
 
           </Routes>
           

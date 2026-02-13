@@ -11,6 +11,7 @@
   box-sizing: border-box;
   position: relative;
   overflow-x: hidden;
+  margin: 80px auto 0 auto;
 }
 
 /* =========================================

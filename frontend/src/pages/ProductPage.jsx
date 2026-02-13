@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback, useContext } from 'rea
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/ProductPage.css';
+import Navbar from '../components/Navbar'
+import HomePage4 from '../pages/HomePage4'
 
 // --- CONTEXT IMPORT ---
 // File deka ekama folder eke (pages) nisa meka hari:
@@ -55,6 +57,8 @@ const ProductPage = () => {
   });
 
   return (
+    <>
+    <Navbar />
     <div id="tm-gear-page-wrapper">
       
       {/* Video Background */}
@@ -138,6 +142,8 @@ const ProductPage = () => {
       </div>
 
     </div>
+    <HomePage4 />
+    </>
   );
 };
 
