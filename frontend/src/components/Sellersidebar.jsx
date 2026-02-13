@@ -93,6 +93,11 @@ const Sellersidebar = () => {
       console.log("Store Created:", response.data);
       alert("Store created successfully!");
       
+      // Save shopId to localStorage
+      const storedUser = JSON.parse(localStorage.getItem('travelUser') || '{}');
+      storedUser.shopId = response.data.id;
+      localStorage.setItem('travelUser', JSON.stringify(storedUser));
+      
       // 4. Close Modal & Redirect to Dashboard
       setShowStoreForm(false);
       navigate('/dashboard'); 
