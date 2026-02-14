@@ -15,6 +15,7 @@ import ProductInfoSection from "./pages/ProductInfoSection";
 import SmoothScrollWrapper from "./components/SmoothScrollWrapper"; 
 import AllStores from "./pages/AllStores";
 import ProductPage from "./pages/ProductPage";
+import AdminDashboard from "./pages/AdminDashboard";
 
 // Cart Pages
 import Cart from "./pages/Cart";       
@@ -58,6 +59,7 @@ function App() {
             <Route path="/aboutus" element={<AboutUsExact />} />
             {/* Contact Us Route */}
             <Route path="/contactus" element={<ContactGods />} />
+            <Route path="/admin" element={<AdminDashboard />} />
 
           </Routes>
           

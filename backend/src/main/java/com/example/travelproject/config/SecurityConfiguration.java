@@ -36,21 +36,24 @@ public class SecurityConfiguration {
 
                 // 3. Request Authorization
                 .authorizeHttpRequests(auth -> auth
-                        // Allow static resources (optional but good practice)
-                        .requestMatchers("/error").permitAll() // IMPORTANT: Allows the server to send error messages instead of 403
+                        .requestMatchers("/error").permitAll()
 
                         // Public Endpoints
                         .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
                         .requestMatchers("/api/shops/**").permitAll()
                         .requestMatchers("/api/products/**").permitAll()
-                        .requestMatchers("/api/users/**").permitAll()
                         .requestMatchers("/api/seller/**").permitAll()
                         .requestMatchers("/api/orders/**").permitAll()
 
-                        // Allow OPTIONS requests for all (Fixes some CORS pre-flight issues)
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        // 👇 NEW: User Registration/Profile is public or authenticated
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/users/**").authenticated()
 
-                        // All other requests require authentication
+                        // 👇 NEW: Only ADMIN can view all users or delete users
+                        .requestMatchers(HttpMethod.GET, "/api/users").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority("ADMIN")
+
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
