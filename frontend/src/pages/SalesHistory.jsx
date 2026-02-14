@@ -13,7 +13,7 @@ export default function SalesHistory() {
         {/* Date Filter */}
         <div className="filters" style={{ marginBottom: '20px', display: 'flex', gap: '10px', alignItems: 'center' }}>
           <label>Filter by date:</label>
-          <select style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ddd' }}>
+          <select style={{background: 'black', color: 'white',padding: '8px', borderRadius: '4px', border: '1px solid #000000' }}>
             <option>Last 7 days</option>
             <option>Last 30 days</option>
             <option>Last 3 months</option>
@@ -44,7 +44,7 @@ export default function SalesHistory() {
 
         {/* Sales Table */}
         <h2>Recent Sales</h2>
-        <div className="table-container" style={{ background: 'white', padding: '20px', borderRadius: '8px', marginTop: '20px' }}>
+        <div className="table-container" style={{ background: 'black', padding: '20px', borderRadius: '8px', marginTop: '20px' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid #e0e0e0', textAlign: 'left' }}>

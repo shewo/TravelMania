@@ -237,7 +237,7 @@ export default function Settings() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '20px' }}>
 
           {/* Profile Settings */}
-          <div style={{ background: 'white', padding: '20px', borderRadius: '8px' }}>
+          <div style={{ background: 'black', padding: '20px', borderRadius: '8px' }}>
             <h2>Profile Information</h2>
             <form style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '15px' }}
                   onSubmit={(e) => { e.preventDefault(); handleSaveProfile(); }}>
@@ -282,7 +282,7 @@ export default function Settings() {
           </div>
 
           {/* Store Settings */}
-          <div style={{ background: 'white', padding: '20px', borderRadius: '8px' }}>
+          <div style={{ background: 'black', padding: '20px', borderRadius: '8px' }}>
             <h2>Store Settings</h2>
             {!shopId ? (
               <p style={{ marginTop: '15px', color: '#666' }}>No shop linked to this account.</p>
@@ -331,7 +331,7 @@ export default function Settings() {
           </div>
 
           {/* Notification Settings */}
-          <div style={{ background: 'white', padding: '20px', borderRadius: '8px' }}>
+          <div style={{ background: 'black', padding: '20px', borderRadius: '8px' }}>
             <h2>Notifications</h2>
             <div style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <label style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -354,7 +354,7 @@ export default function Settings() {
           </div>
 
           {/* Security Settings */}
-          <div style={{ background: 'white', padding: '20px', borderRadius: '8px' }}>
+          <div style={{ background: 'black', padding: '20px', borderRadius: '8px' }}>
             <h2>Security</h2>
             <div style={{ marginTop: '15px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
               {!showPasswordForm ? (
