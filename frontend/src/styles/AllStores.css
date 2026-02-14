@@ -1,3 +1,50 @@
+/* Background Video Styles */
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  /* Remove overflow-x: hidden to allow normal scrolling */
+}
+
+body {
+  background: #1a2327; /* fallback color for video */
+}
+
+
+.allstores-bg-video-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: -100;
+  overflow: hidden;
+  /* pointer-events: none; removed to allow normal scroll */
+}
+
+.allstores-bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  object-fit: cover;
+  z-index: -100;
+  pointer-events: none;
+  background: #1a2327;
+}
+
+.stores-container {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  /* ...existing styles... */
+}
 /* Container: Make sure it's transparent so your main background shows */
 .stores-container {
   padding: 40px 20px;

@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/AllStores.css'; 
-import Navbar from '../components/Navbar'
-import HomePage4 from '../pages/HomePage4'
+
+import Navbar from '../components/Navbar';
+import HomePage4 from '../pages/HomePage4';
+
+// Import the video asset
+import bgVideo2 from '../assets/bg-video2.mp4';
 
 const AllStores = () => {
   const navigate = useNavigate();
@@ -34,9 +38,13 @@ const AllStores = () => {
 
   return (
     <>
-    <Navbar />
+      <div className="allstores-bg-video-wrapper">
+        <video autoPlay loop muted playsInline className="allstores-bg-video">
+          <source src={bgVideo2} type="video/mp4" />
+        </video>
+      </div>
+      <Navbar />
       <div className="stores-container">
-        
         {/* Header */}
         <div className="stores-header">
           <h1>Partner Stores</h1>

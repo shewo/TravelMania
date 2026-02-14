@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 import { CartContext } from './CartContext'; 
 import '../styles/Checkout.css';
+import bgVideo2 from '../assets/bg-video2.mp4';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -67,6 +68,12 @@ const Checkout = () => {
   if (!cartItems) return <div style={{padding:'50px', color:'white', textAlign:'center'}}>Loading Cart...</div>;
 
   return (
+    <>
+      <div className="checkout-bg-video-wrapper">
+        <video autoPlay loop muted playsInline className="checkout-bg-video">
+          <source src={bgVideo2} type="video/mp4" />
+        </video>
+      </div>
     <div className="checkout-container">
       <div className="checkout-header">
         <h1>Checkout</h1>
@@ -181,7 +188,7 @@ const Checkout = () => {
 
       </div>
     </div>
-  );
-};
+  </>);
+}
 
 export default Checkout;
