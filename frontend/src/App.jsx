@@ -4,6 +4,8 @@ import { CartProvider } from './pages/CartContext';
 
 // Pages
 import HomePage from "./Main-sections/Homepage";
+import AboutUsExact from "./pages/Aboutus";
+import ContactGods from "./pages/ContactUs";
 import MapPage from "./pages/MapPage";
 import Dashboard from "./Main-sections/Dashboard";
 import StorePage from "./pages/StorePage";
@@ -51,6 +53,11 @@ function App() {
             <Route path="/mylistings" element={<MyListings />} />
             <Route path="/rentals" element={<Rentals />} />
             <Route path="/saleshistory" element={<SalesHistory />} />
+
+            {/* About Us Route */}
+            <Route path="/aboutus" element={<AboutUsExact />} />
+            {/* Contact Us Route */}
+            <Route path="/contactus" element={<ContactGods />} />
 
           </Routes>
           

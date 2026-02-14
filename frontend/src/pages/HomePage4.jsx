@@ -1,6 +1,9 @@
+
 import React from 'react';
 import '../styles/HomePage4.css'; 
 import { FaInstagram, FaFacebookF } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+
 
 export default function Footer() {
   return (
@@ -16,20 +19,18 @@ export default function Footer() {
 
           <div className="footer__col">
             <h4 className="footer__title">EXPLORE</h4>
-            <a className="footer__link" href="#rent-gear">Rent Gear</a>
-            <a className="footer__link" href="#equipment">Buy Equipment</a>
-            <a className="footer__link" href="#destinations-map">
-              Destinations Map
-            </a>
+            <Link className="footer__link" to="/all-stores">All Stores</Link>
+            <Link className="footer__link" to="/productpage">Product</Link>
+            <Link className="footer__link" to="/map">Map</Link>
           </div>
 
           <div className="footer__col">
             <h4 className="footer__title">COMPANY</h4>
-            <a className="footer__link" href="#about">About Us</a>
+            <Link className="footer__link" to="/aboutus">About Us</Link>
             <a className="footer__link" href="#journal">Journal</a>
-            <a className="footer__link" href="#faqs-contact">
-              FAQs &amp; Contact
-            </a>
+            <Link className="footer__link" to="/contactus">
+              Contact Us
+            </Link>
           </div>
         </div>
 
@@ -68,14 +69,14 @@ export default function Footer() {
 
         {/* BOTTOM */}
         <div className="footer__bottom">
-          <p>Copyright © 2025 REY DEL ISTMO</p>
+          <p>Copyright © 2025 TRAVEL MANIA</p>
 
           <p className="footer__policies">
             <a href="#terms">TERMS &amp; CONDITIONS</a> |{" "}
             <a href="#privacy">PRIVACY POLICY</a>
           </p>
 
-          <p className="footer__siteby">Site by Society Studios</p>
+          <p className="footer__siteby">Site by NSBM</p>
         </div>
 
         

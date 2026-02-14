@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bgImage from "../assets/footer-bg.jpg";
 import Navbar from "../components/Navbar";
+import HomePage4 from "./HomePage4";
+
 
 export default function AboutUsExact() {
   const navigate = useNavigate();
@@ -173,6 +175,7 @@ export default function AboutUsExact() {
   };
 
   return (
+    <>
     <section style={styles.section}>
       {/* NAV */}
       <nav style={styles.heroNav}>
@@ -237,5 +240,7 @@ export default function AboutUsExact() {
         </div>
       </div>
     </section>
+    <HomePage4 />
+    </>
   );
 }

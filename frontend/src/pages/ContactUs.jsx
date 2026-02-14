@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bgImage from "../assets/footer-bg.jpg";
 import Navbar from "../components/Navbar";
+import HomePage4 from "./HomePage4";
 
 export default function ContactGods() {
   const navigate = useNavigate();
@@ -185,6 +186,7 @@ export default function ContactGods() {
   };
 
   return (
+    <>
     <section style={styles.contactSection}>
       <div style={styles.contactBg}>
         {/* Header */}
@@ -270,5 +272,7 @@ export default function ContactGods() {
         </main>
       </div>
     </section>
+    <HomePage4 />
+    </>
   );
 }
