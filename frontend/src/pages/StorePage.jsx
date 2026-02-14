@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/HomePage1.css';
 import '../styles/ProductPage.css';
+import Navbar from '../components/Navbar';
+import HomePage4 from './HomePage4';
+// --- IMPORT CART CONTEXT ---
+import { CartContext } from './CartContext'; 
 
 import defaultImg from '../assets/backpack.png';
-import bgVideo from '../assets/bg-video2.mp4'; // ✅ Same video as ProductPage
+import bgVideo from '../assets/bg-video2.mp4'; 
 
 const StorePage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    
+    // --- CONNECT TO GLOBAL CART ---
+    const { addToCart } = useContext(CartContext);
+
     const [shop, setShop] = useState(null);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -106,33 +114,50 @@ const StorePage = () => {
     }
 
     return (
+        <>
+        <Navbar />
         <div id="tm-gear-page-wrapper">
 
-            {/* ===== VIDEO BACKGROUND (Same pattern as ProductPage) ===== */}
             <div className="tm-gear-video-container">
                 <video autoPlay loop muted playsInline className="tm-gear-video-bg" src={bgVideo} />
                 <div className="tm-gear-video-overlay"></div>
             </div>
 
-            {/* ===== CONTENT LAYER ===== */}
             <div className="tm-gear-content-layer">
 
-                {/* --- Back Navigation --- */}
                 <div style={{ marginBottom: '20px' }}>
-                    <Link to="/stores" style={{
-                        color: '#D1B48C',
-                        textDecoration: 'none',
-                        fontSize: '1rem',
-                        fontFamily: "'Montserrat', sans-serif",
-                        letterSpacing: '2px',
-                        textTransform: 'uppercase',
-                        transition: 'color 0.3s ease'
-                    }}>
+                    <button
+                        onClick={() => navigate('/all-stores')}
+                        style={{
+                            background: 'rgba(212, 175, 55, 0.15)',
+                            border: '1.5px solid #D1B48C',
+                            color: '#D1B48C',
+                            fontFamily: "'Montserrat', sans-serif",
+                            fontWeight: 600,
+                            fontSize: '1rem',
+                            letterSpacing: '2px',
+                            textTransform: 'uppercase',
+                            borderRadius: '8px',
+                            padding: '10px 28px',
+                            cursor: 'pointer',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
+                            transition: 'background 0.3s, color 0.3s, border 0.3s',
+                        }}
+                        onMouseOver={e => {
+                            e.target.style.background = 'rgba(212, 175, 55, 0.3)';
+                            e.target.style.color = '#fff';
+                            e.target.style.border = '1.5px solid #fff';
+                        }}
+                        onMouseOut={e => {
+                            e.target.style.background = 'rgba(212, 175, 55, 0.15)';
+                            e.target.style.color = '#D1B48C';
+                            e.target.style.border = '1.5px solid #D1B48C';
+                        }}
+                    >
                         ← BACK TO STORES
-                    </Link>
+                    </button>
                 </div>
 
-                {/* --- HEADER --- */}
                 <div className="tm-gear-header">
                     <h1 className="tm-gear-title">{shop.name}</h1>
                     <p style={{
@@ -159,7 +184,6 @@ const StorePage = () => {
                         </p>
                     )}
 
-                    {/* --- SEARCH BAR --- */}
                     <div className="tm-gear-search-wrapper">
                         <input
                             type="text"
@@ -174,7 +198,6 @@ const StorePage = () => {
                     </div>
                 </div>
 
-                {/* --- CATEGORY FILTERS --- */}
                 {categories.length > 1 && (
                     <div className="tm-gear-filter-row">
                         <div className="tm-gear-filter-group">
@@ -191,7 +214,6 @@ const StorePage = () => {
                     </div>
                 )}
 
-                {/* --- PRODUCT GRID --- */}
                 <div className="tm-gear-grid">
                     {productsLoading ? (
                         <div style={{
@@ -241,6 +263,23 @@ const StorePage = () => {
                                 <span className="tm-gear-category-tag">{product.category}</span>
                                 <h3 className="tm-gear-name">{product.productName}</h3>
                                 <p className="tm-gear-price">Rs.{product.price} / day</p>
+                                
+                                {/* --- ADDED RENT BUTTON --- */}
+                                <button 
+                                  className="tm-gear-rent-btn tm-gear-btn-small" 
+                                  onClick={(e) => {
+                                    e.stopPropagation(); // Prevents navigating to the product detail page when clicking the button
+                                    addToCart(product); 
+                                    alert(`${product.productName} added to cart!`);
+                                  }}
+                                >
+                                    <svg className="tm-gear-btn-frame" viewBox="0 0 420 64" preserveAspectRatio="none">
+                                        <polygon className="tm-gear-btn-poly" points="40,12 380,12 408,32 380,52 40,52 12,32" />
+                                        <rect className="tm-gear-btn-rect" x="20" y="18" width="380" height="28" />
+                                    </svg>
+                                   <span>Rent Now</span>
+                                </button>
+
                             </div>
                         ))
                     )}
@@ -248,6 +287,8 @@ const StorePage = () => {
 
             </div>
         </div>
+        <HomePage4 />
+        </>
     );
 };
 

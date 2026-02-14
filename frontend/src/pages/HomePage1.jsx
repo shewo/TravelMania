@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/HomePage1.css';
 import bgImage from '../assets/footer-bg.jpg';
 import musicBg from '../assets/travel-music.mp3';
@@ -7,6 +8,8 @@ import logoPng from '../assets/hero-title.png'; // Make sure to import your PNG
 const HomePage1 = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
+
+  const navigate = useNavigate();
 
   const toggleMusic = () => {
     if (isPlaying) {
@@ -33,7 +36,7 @@ const HomePage1 = () => {
         </div>
 
         <div className="hp1-hero-action">
-          <button className="hp1-cta">
+          <button className="hp1-cta" onClick={() => navigate('/map')}>
             <svg className="hp1-frame" viewBox="0 0 320 60" preserveAspectRatio="none">
               <polygon className="hp1-inner" points="30,5 290,5 315,30 290,55 30,55 5,30" />
               <rect className="hp1-innerBox" x="12" y="10" width="296" height="40" rx="0" />

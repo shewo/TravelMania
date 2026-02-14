@@ -19,35 +19,34 @@ import gapBg from '../assets/footer-bg.jpg'
 function Homepage() {
   const navigate = useNavigate();
 
-  // 1. Hooks හැමතිස්සෙම return එකට උඩින් තියෙන්න ඕන
+  
   const { cartItems } = useContext(CartContext);
 
   return (
     <>
       <Navbar />
 
-      {/* --- FIXED CART ICON (Right Top) --- */}
-      {/* අපි මෙතන styles කෙලින්ම දෙනවා, පිටින් එන CSS වලට මේක අවුල් කරන්න බෑ */}
+      
       <div 
         onClick={() => navigate('/cart')} 
         style={{
           position: 'fixed',
-          top: '80px',       // Navbar එකට යටින් පේන්න
+          top: '80px',       
           right: '20px',     
-          zIndex: 99999,      // හැම එකටම උඩින්
-          backgroundColor: 'rgba(0, 0, 0, 0.8)', // කළු පසුබිම
-          width: '50px',      // ස්ථිර පළල
-          height: '50px',     // ස්ථිර උස
-          borderRadius: '50%', // රවුමක්
+          zIndex: 99999,      
+          backgroundColor: 'rgba(0, 0, 0, 0.8)', 
+          width: '50px',      
+          height: '50px',     
+          borderRadius: '50%', 
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
-          border: '2px solid #d4af37', // රත්තරන් පාට බෝඩර්
+          border: '2px solid #d4af37', 
           boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
         }}
       >
-         {/* Icon එකේ සයිස් එක මෙතනම fix කරල තියෙන්නේ */}
+         
          <svg 
             width="24" 
             height="24" 
@@ -57,14 +56,14 @@ function Homepage() {
             strokeWidth="2" 
             strokeLinecap="round" 
             strokeLinejoin="round"
-            style={{ minWidth: '24px', minHeight: '24px' }} // පොඩි වෙන්න දෙන්නෙත් නෑ, ලොකු වෙන්න දෙන්නෙත් නෑ
+            style={{ minWidth: '24px', minHeight: '24px' }} 
          >
           <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <path d="M16 10a4 4 0 0 1-8 0"></path>
         </svg>
          
-         {/* Badge එක (Number එක) */}
+         
          {cartItems.length > 0 && (
             <span style={{
               position: 'absolute',
