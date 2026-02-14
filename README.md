@@ -56,7 +56,3 @@ TravelMania is a full-stack web application designed for travel enthusiasts to e
 * **PostgreSQL** with the **PostGIS** extension installed (or a cloud DB like Neon.tech).
 * **Maven** (Included via `mvnw` wrapper in the project).
 
-### 1. Backend Setup (Spring Boot)
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
