@@ -28,12 +28,15 @@ const Checkout = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // --- API CALL LOGIC (මෙතන විතරයි මම වෙනස් කළේ) ---
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     
-    // 1. Backend එකේ 'OrderRequest' එකට ගැලපෙන්න JSON එක හදාගන්නවා
+    // 👇 Extract the dynamic shopId from the first item in the cart
+    const orderShopId = cartItems.length > 0 ? cartItems[0].shopId : null;
+    
+    // 👇 Add shopId to the payload sent to the backend
     const orderPayload = {
+        shopId: orderShopId, // Connects the order to the correct seller's dashboard
         customerName: `${formData.firstName} ${formData.lastName}`,
         customerEmail: formData.email,
         address: `${formData.address}, ${formData.city}, ${formData.zip}`,
@@ -48,10 +51,8 @@ const Checkout = () => {
     try {
         console.log("Sending Order to Backend...", orderPayload);
 
-        // 2. මෙතනින් තමයි Backend එකට Data යවන්නේ
         const response = await axios.post('http://localhost:8080/api/orders/place', orderPayload);
 
-        // 3. Response එක OK නම් විතරක් ඉදිරියට යනවා
         if (response.status === 200 || response.status === 201) {
             alert("Order Placed Successfully! Check your Email.");
             clearCart(); 

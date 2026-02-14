@@ -1,11 +1,12 @@
 package com.example.travelproject.orders;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List; // List එක import කරන්න ඕන
+import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    // 👇 මේක තමයි අලුතෙන් එකතු කළේ.
-    // Database එකෙන් Email එකට අදාළ Orders හොයන Method එක.
     List<Order> findByCustomerEmail(String customerEmail);
+
+    // 👇 Fetch orders for a specific seller's shop
+    List<Order> findByShopId(Long shopId);
 }

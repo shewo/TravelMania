@@ -5,26 +5,40 @@ import "../styles/dashboard.css";
 
 export default function Rentals() {
   const [orders, setOrders] = useState([]);
-  
-  // Postman එකේ තිබ්බ Email එකම මෙතනට දාන්න
-  const userEmail = "sashikmindaka23@gmail.com"; 
+  const [shopId, setShopId] = useState(null);
 
+  // Load the current seller's shop ID from local storage
+  useEffect(() => {
+    try {
+      const storedUser = localStorage.getItem('travelUser');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        if (user.shopId) {
+          setShopId(user.shopId);
+        }
+      }
+    } catch (error) {
+      console.error("Error loading shop ID from localStorage:", error);
+    }
+  }, []);
+
+  // Fetch only this seller's orders
   useEffect(() => {
     const fetchOrders = async () => {
+      if (!shopId) return; // Wait until we know the seller's shop ID
+
       try {
-        // 👇 වෙනස් කළේ මෙතන විතරයි (Query Param විදියට යවනවා)
-        const response = await axios.get(`http://localhost:8080/api/orders/user?email=${userEmail}`);
-        
-        console.log("Orders Data:", response.data); // Console එකේ Data එනවද බලන්න
+        const response = await axios.get(`http://localhost:8080/api/orders/shop/${shopId}`);
+        console.log("Seller's Orders Data:", response.data); 
         setOrders(response.data);
       } catch (error) {
         console.error("Error fetching rental data:", error);
       }
     };
     fetchOrders();
-  }, []);
+  }, [shopId]);
 
-  // Return Date එක දවස් 7කින් පස්සේ (Auto Calculate)
+  // Return Date is 7 days after the order date
   const calculateReturnDate = (orderDate) => {
     if (!orderDate) return "N/A";
     const date = new Date(orderDate);
@@ -44,7 +58,7 @@ export default function Rentals() {
         <div className="stats-container">
           <div className="stat-card">
             <h3>Currently Rented</h3>
-            <p className="stat-value">{orders.length}</p> {/* Order ගාණ */}
+            <p className="stat-value">{orders.length}</p> 
           </div>
           <div className="stat-card">
             <h3>Available</h3><p className="stat-value">5</p>
@@ -61,7 +75,9 @@ export default function Rentals() {
         <h2>Active Rentals</h2>
         <div className="table-container" style={{ background: 'black', padding: '20px', borderRadius: '8px', marginTop: '20px' }}>
           
-          {orders.length === 0 ? (
+          {!shopId ? (
+            <p style={{ color: 'white', textAlign: 'center' }}>Loading seller account data...</p>
+          ) : orders.length === 0 ? (
             <p style={{ color: 'white', textAlign: 'center' }}>No active rentals found.</p>
           ) : (
             <table style={{ width: '100%', borderCollapse: 'collapse', color: 'white' }}>
@@ -81,7 +97,6 @@ export default function Rentals() {
                   <tr key={order.id} style={{ borderBottom: '1px solid #333' }}>
                     <td style={{ padding: '12px' }}>#{order.id}</td>
                     
-                    {/* Items ටික කොමා දාලා පෙන්වන්න */}
                     <td style={{ padding: '12px' }}>
                       {order.items.map(item => `${item.productName} (x${item.quantity})`).join(", ")}
                     </td>

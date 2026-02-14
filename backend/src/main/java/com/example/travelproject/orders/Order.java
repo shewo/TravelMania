@@ -15,16 +15,16 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long shopId; // 👈 Identifies which seller's shop this order belongs to
+
     private String customerName;
-    private String customerEmail; // මේක තමයි අපිට Email යවන්න ඕන වෙන්නේ
+    private String customerEmail;
     private String address;
 
-    // මෙතනට = LocalDate.now(); දැම්මම Order එක save වෙන දවස auto ගන්නවා
     private LocalDate orderDate = LocalDate.now();
 
     private Double totalAmount;
 
-    // ඔයා Import කරපු එක මෙතනට පාවිච්චි කරන්න
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "order_id")

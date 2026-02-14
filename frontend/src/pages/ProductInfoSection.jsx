@@ -4,7 +4,6 @@ import axios from 'axios';
 import '../styles/ProductInfo.css'; 
 import { FaStar } from 'react-icons/fa';
 
-// --- CONTEXT IMPORT ---
 import { CartContext } from './CartContext'; 
 
 import backpackVideo from '../assets/bg-video2.mp4'; 
@@ -15,7 +14,6 @@ const ProductInfoSection = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // --- CONNECT TO GLOBAL CART ---
   const { addToCart, cartItems } = useContext(CartContext);
 
   const [product, setProduct] = useState(null);
@@ -30,11 +28,10 @@ const ProductInfoSection = () => {
           
           setProduct({
             id: productData.id,
+            shopId: productData.shopId, // 👈 ADDED THIS: Capture the shopId from backend
             title: productData.productName || "Product Name",
             subtitle: productData.category || "Category",
-            // Cart එකට යවන්න නම්බර් එකක් විදියට තියාගන්නවා
             rawPrice: productData.price || 0, 
-            // Display කරන්න ලස්සනට හදාගන්නවා
             price: `Rs.${productData.price || 0} / day`,
             image: productData.imageUrl || defaultProductImage,
             description: productData.productDescription || "No description available.",
@@ -46,12 +43,12 @@ const ProductInfoSection = () => {
             ]
           });
         } else {
-          // If no ID, show first product (Fallback)
           const response = await axios.get('http://localhost:8080/api/products/all');
           const productData = response.data[0] || {};
           
           setProduct({
             id: productData.id,
+            shopId: productData.shopId, // 👈 ADDED THIS: Fallback capture
             title: productData.productName || "Product Name",
             subtitle: productData.category || "Category",
             rawPrice: productData.price || 0,
@@ -84,15 +81,14 @@ const ProductInfoSection = () => {
     ]
   };
 
-  // --- ADD TO CART HANDLER ---
   const handleAddToCart = () => {
     if (!product) return;
 
-    // Cart එකට ඕන කරන data format එකට object එක හදනවා
     const cartItem = {
       id: product.id,
+      shopId: product.shopId, // 👈 CRITICAL FIX: Pass the shopId to the cart!
       productName: product.title,
-      price: product.rawPrice, // Number එක පාස් කරනවා
+      price: product.rawPrice, 
       imageUrl: product.image,
       category: product.subtitle
     };
@@ -123,20 +119,16 @@ const ProductInfoSection = () => {
   return (
     <div className="product-page-wrapper">
       
-      {/* Background Video */}
       <video className="bg-video" autoPlay loop muted playsInline>
         <source src={backpackVideo} type="video/mp4" />
       </video>
 
-      {/* Dark Overlay */}
       <div className="video-overlay"></div>
 
-      {/* Watermark Logo */}
       <div className="watermark-container">
         <img src={logoPng} alt="Travel Mania Watermark" className="watermark-logo" />
       </div>
 
-      {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
         style={{
@@ -157,11 +149,9 @@ const ProductInfoSection = () => {
         ← Back
       </button>
 
-      {/* HERO SECTION */}
       <div className="hero-container">
         <div className="product-grid">
           
-          {/* LEFT COLUMN */}
           <div className="col-left">
             <div className="content-wrapper">
               <h2 className="product-title">{product.title}</h2>
@@ -180,11 +170,9 @@ const ProductInfoSection = () => {
                 </div>
               </div>
 
-              {/* ACTION AREA */}
               <div className="action-area">
                 <div className="price-tag">{product.price}</div>
                 <div className="hp1-hero-action">
-                  {/* ADD TO CART BUTTON CLICK */}
                   <button className="hp1-cta" onClick={handleAddToCart}>
                     <svg className="hp1-frame" viewBox="0 0 320 60" preserveAspectRatio="none">
                       <polygon className="hp1-inner" points="30,5 290,5 315,30 290,55 30,55 5,30" />
@@ -197,7 +185,6 @@ const ProductInfoSection = () => {
             </div>
           </div>
 
-          {/* RIGHT COLUMN */}
           <div className="col-right">
             <div className="product-image-container">
               <img 
@@ -218,11 +205,9 @@ const ProductInfoSection = () => {
         </div>
       </div>
 
-      {/* DETAILS SECTION */}
       <div className="details-container">
         <div className="details-grid">
           
-          {/* DESCRIPTION */}
           <div className="details-col description-col">
             <div className="gold-bar-vertical"></div>
             <div>
@@ -231,7 +216,6 @@ const ProductInfoSection = () => {
             </div>
           </div>
 
-          {/* REVIEWS */}
           <div className="details-col reviews-col">
             <div className="reviews-header-row">
               <h3 className="section-title">Field Reports</h3>
@@ -258,8 +242,6 @@ const ProductInfoSection = () => {
         </div>
       </div>
 
-      {/* --- Cart Icon Float (Added new) --- */}
-      {/* Note: Ensure styles for 'tm-gear-cart-float' are available in your CSS or copy them from ProductPage.css */}
       <div className="tm-gear-cart-float" onClick={() => navigate('/cart')} style={{cursor:'pointer'}}>
          <svg className="tm-gear-bag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -267,7 +249,6 @@ const ProductInfoSection = () => {
           <path d="M16 10a4 4 0 0 1-8 0"></path>
         </svg>
          
-         {/* Cart Count Badge */}
          {cartItems.length > 0 && (
             <span className="tm-gear-cart-count">{cartItems.length}</span>
          )}

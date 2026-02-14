@@ -16,10 +16,10 @@ public class OrderService {
         this.emailService = emailService;
     }
 
-    // --- 1. Order Place කරන කොටස (මේක කලින් තිබ්බ එකමයි) ---
     public Order placeOrder(OrderRequest request) {
         Order order = new Order();
 
+        order.setShopId(request.getShopId()); // 👈 Save shopId to the DB
         order.setCustomerName(request.getCustomerName());
         order.setCustomerEmail(request.getCustomerEmail());
         order.setAddress(request.getAddress());
@@ -52,8 +52,12 @@ public class OrderService {
         return savedOrder;
     }
 
-    // --- 2. 👇 අලුතෙන් එකතු කරපු කොටස (Orders Fetch කරන එක) ---
     public List<Order> getOrdersByEmail(String email) {
         return orderRepository.findByCustomerEmail(email);
+    }
+
+    // 👇 Get orders by Seller's Shop ID
+    public List<Order> getOrdersByShopId(Long shopId) {
+        return orderRepository.findByShopId(shopId);
     }
 }
