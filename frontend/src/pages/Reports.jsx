@@ -1,101 +1,125 @@
+import React from 'react';
 import Sidebar from "../components/sidebar";
 import "../styles/dashboard.css";
+import { 
+  LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer 
+} from 'recharts';
 
 export default function Reports() {
+
+  // --- MOCK DATA FOR DEMO CHARTS ---
+  
+  // Data for Chart 1: Monthly Revenue
+  const monthlyRevenueData = [
+    { name: 'Jan', revenue: 15000 },
+    { name: 'Feb', revenue: 22000 },
+    { name: 'Mar', revenue: 18000 },
+    { name: 'Apr', revenue: 30000 },
+    { name: 'May', revenue: 28000 },
+    { name: 'Jun', revenue: 45000 }, // Peak season!
+  ];
+
+  // Data for Chart 2: Most Rented Categories
+  const categoryData = [
+    { name: 'Tents & Shelter', value: 45 },
+    { name: 'Backpacks', value: 30 },
+    { name: 'Sleeping Gear', value: 15 },
+    { name: 'Cooking', value: 10 },
+  ];
+
+  // Colors for the Pie Chart matching your gold/dark theme
+  const PIE_COLORS = ['#d4af37', '#f5d07a', '#a67c00', '#ebd8a0'];
+
+  // Custom tooltip style for dark mode
+  const customTooltipStyle = {
+    backgroundColor: '#222',
+    border: '1px solid #d4af37',
+    borderRadius: '8px',
+    color: '#fff'
+  };
+
   return (
     <div className="dashboard">
       <Sidebar />
 
       <div className="main-content">
         <h1>Reports & Analytics</h1>
-        <p className="subtitle">Track your business performance and insights</p>
+        <p className="subtitle">View your store's performance and rental trends</p>
 
-        {/* Report Type Selector */}
-        <div className="filters" style={{ marginBottom: '20px' }}>
-          <button className="filter-btn active">Overview</button>
-          <button className="filter-btn">Sales</button>
-          <button className="filter-btn">Inventory</button>
-          <button className="filter-btn">Customer</button>
-        </div>
-
-        {/* Key Metrics */}
-        <div className="stats-container">
+        {/* --- STATS SUMMARY (Optional, just for looks) --- */}
+        <div className="stats-container" style={{ marginBottom: '30px' }}>
           <div className="stat-card">
-            <h3>Revenue Growth</h3>
-            <p className="stat-value">+23%</p>
-            <small style={{ color: '#4caf50' }}>vs last month</small>
+            <h3>Total Earnings (YTD)</h3>
+            <p className="stat-value">LKR 158,000</p>
           </div>
           <div className="stat-card">
-            <h3>Conversion Rate</h3>
-            <p className="stat-value">18.5%</p>
-            <small style={{ color: '#4caf50' }}>+2.3%</small>
+            <h3>Total Rentals</h3>
+            <p className="stat-value">142</p>
           </div>
           <div className="stat-card">
-            <h3>Avg. Rating</h3>
-            <p className="stat-value">4.7/5</p>
-            <small style={{ color: '#666' }}>from 156 reviews</small>
-          </div>
-          <div className="stat-card">
-            <h3>Return Rate</h3>
-            <p className="stat-value">2.1%</p>
-            <small style={{ color: '#4caf50' }}>-0.5%</small>
+            <h3>Top Item</h3>
+            <p className="stat-value" style={{ fontSize: '1.2rem' }}>4-Person Camping Tent</p>
           </div>
         </div>
 
-        {/* Charts Section */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '30px' }}>
-          <div style={{ background: 'white', padding: '20px', borderRadius: '8px' }}>
-            <h2>Sales Trend</h2>
-            <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f5f5', marginTop: '10px', borderRadius: '4px' }}>
-              <p style={{ color: '#999' }}>📈 Sales Chart Visualization</p>
+        {/* --- CHARTS GRID --- */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '20px' }}>
+          
+          {/* CHART 1: Monthly Revenue Line Chart */}
+          <div style={{ background: '#1a1a1a', padding: '20px', borderRadius: '12px', border: '1px solid #333' }}>
+            <h3 style={{ color: '#d4af37', marginBottom: '20px', textAlign: 'center' }}>Monthly Revenue (Last 6 Months)</h3>
+            <div style={{ width: '100%', height: 300 }}>
+              <ResponsiveContainer>
+                <LineChart data={monthlyRevenueData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+                  <XAxis dataKey="name" stroke="#aaa" />
+                  <YAxis stroke="#aaa" />
+                  <Tooltip contentStyle={customTooltipStyle} itemStyle={{ color: '#d4af37' }} />
+                  <Legend wrapperStyle={{ paddingTop: '10px' }}/>
+                  <Line 
+                    type="monotone" 
+                    dataKey="revenue" 
+                    name="Revenue (LKR)"
+                    stroke="#d4af37" 
+                    strokeWidth={3} 
+                    dot={{ fill: '#d4af37', strokeWidth: 2, r: 4 }} 
+                    activeDot={{ r: 8 }} 
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
           </div>
-          <div style={{ background: 'white', padding: '20px', borderRadius: '8px' }}>
-            <h2>Popular Categories</h2>
-            <div style={{ height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f5f5', marginTop: '10px', borderRadius: '4px' }}>
-              <p style={{ color: '#999' }}>📊 Category Chart Visualization</p>
+
+          {/* CHART 2: Category Pie Chart */}
+          <div style={{ background: '#1a1a1a', padding: '20px', borderRadius: '12px', border: '1px solid #333' }}>
+            <h3 style={{ color: '#d4af37', marginBottom: '20px', textAlign: 'center' }}>Most Popular Categories</h3>
+            <div style={{ width: '100%', height: 300 }}>
+              <ResponsiveContainer>
+                <PieChart>
+                  <Pie
+                    data={categoryData}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    outerRadius={100}
+                    fill="#8884d8"
+                    dataKey="value"
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  >
+                    {categoryData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip contentStyle={customTooltipStyle} itemStyle={{ color: 'white' }} />
+                  <Legend wrapperStyle={{ paddingTop: '10px' }} />
+                </PieChart>
+              </ResponsiveContainer>
             </div>
           </div>
+
         </div>
 
-        {/* Top Products */}
-        <h2 style={{ marginTop: '30px' }}>Top Performing Products</h2>
-        <div className="table-container" style={{ background: 'white', padding: '20px', borderRadius: '8px', marginTop: '20px' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-            <thead>
-              <tr style={{ borderBottom: '2px solid #e0e0e0', textAlign: 'left' }}>
-                <th style={{ padding: '12px' }}>Rank</th>
-                <th style={{ padding: '12px' }}>Product</th>
-                <th style={{ padding: '12px' }}>Sales</th>
-                <th style={{ padding: '12px' }}>Revenue</th>
-                <th style={{ padding: '12px' }}>Growth</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style={{ borderBottom: '1px solid #e0e0e0' }}>
-                <td style={{ padding: '12px' }}>1</td>
-                <td style={{ padding: '12px' }}>Hiking Gear Set</td>
-                <td style={{ padding: '12px' }}>42</td>
-                <td style={{ padding: '12px' }}>$4,200</td>
-                <td style={{ padding: '12px', color: '#4caf50' }}>+15%</td>
-              </tr>
-              <tr style={{ borderBottom: '1px solid #e0e0e0' }}>
-                <td style={{ padding: '12px' }}>2</td>
-                <td style={{ padding: '12px' }}>Tent Rental</td>
-                <td style={{ padding: '12px' }}>38</td>
-                <td style={{ padding: '12px' }}>$3,230</td>
-                <td style={{ padding: '12px', color: '#4caf50' }}>+8%</td>
-              </tr>
-              <tr>
-                <td style={{ padding: '12px' }}>3</td>
-                <td style={{ padding: '12px' }}>Camping Stove</td>
-                <td style={{ padding: '12px' }}>35</td>
-                <td style={{ padding: '12px' }}>$3,150</td>
-                <td style={{ padding: '12px', color: '#4caf50' }}>+12%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
     </div>
   );
