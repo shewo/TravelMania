@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { CartProvider } from './pages/CartContext'; // Path eka ube hatiyata './pages/CartContext' wenna one
+import { CartProvider } from './pages/CartContext'; 
 
 // Pages
 import HomePage from "./Main-sections/Homepage";
@@ -18,17 +18,21 @@ import ProductPage from "./pages/ProductPage";
 import Cart from "./pages/Cart";       
 import Checkout from "./pages/Checkout"; 
 
+// 👇 NEW: Import your Seller Dashboard Pages
+import SellerDashboard from "./pages/SellerDashboard";
+import MyListings from "./pages/MyListings";
+import Rentals from "./pages/Rentals";
+import SalesHistory from "./pages/SalesHistory";
+
 function App() {
   return (
     <CartProvider>
       <Router>
         <SmoothScrollWrapper>
-          {/* METHANA check karanna: <Cart /> methana thiyenna BA */}
           
           <Routes>
-            {/* '/' path eka HomePage wenna one */}
+            {/* Main Routes */}
             <Route path="/" element={<HomePage />} />
-            
             <Route path="/map" element={<MapPage />} />
             <Route path="/dashboard/*" element={<Dashboard />} />
             <Route path="/store/:id" element={<StorePage />} />
@@ -36,10 +40,17 @@ function App() {
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/product/:id" element={<ProductInfoSection />} />
             <Route path="/all-stores" element={<AllStores />} />
-            {/* Cart routes thiyenna one Routes athule */}
+            
+            {/* Cart Routes */}
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/productpage" element={<ProductPage />} />
+
+            {/* 👇 NEW: Routes for Seller Dashboard Navigation */}
+            <Route path="/sellerdashboard" element={<SellerDashboard />} />
+            <Route path="/mylistings" element={<MyListings />} />
+            <Route path="/rentals" element={<Rentals />} />
+            <Route path="/saleshistory" element={<SalesHistory />} />
 
           </Routes>
           

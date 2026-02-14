@@ -15,7 +15,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long shopId; // 👈 Identifies which seller's shop this order belongs to
+    @Column(name = "shop_id")
+    private Long shopId; // Keeping the shopId connection!
 
     private String customerName;
     private String customerEmail;
@@ -24,6 +25,9 @@ public class Order {
     private LocalDate orderDate = LocalDate.now();
 
     private Double totalAmount;
+
+    // 👇 NEW: Default status is "ACTIVE" when a new order is placed
+    private String status = "ACTIVE";
 
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

@@ -31,4 +31,12 @@ public class OrderController {
     public ResponseEntity<List<Order>> getShopOrders(@PathVariable Long shopId) {
         return ResponseEntity.ok(orderService.getOrdersByShopId(shopId));
     }
+
+    // 👇 NEW: Endpoint to change the status from React
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Order> updateOrderStatus(
+            @PathVariable Long id,
+            @RequestParam("status") String status) {
+        return ResponseEntity.ok(orderService.updateOrderStatus(id, status));
+    }
 }

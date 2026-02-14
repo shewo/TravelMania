@@ -60,4 +60,12 @@ public class OrderService {
     public List<Order> getOrdersByShopId(Long shopId) {
         return orderRepository.findByShopId(shopId);
     }
+
+    // 👇 NEW: Method to update order status
+    public Order updateOrderStatus(Long orderId, String newStatus) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
+        order.setStatus(newStatus);
+        return orderRepository.save(order);
+    }
 }
