@@ -102,14 +102,7 @@ const HomePage3 = () => {
                     <span className="hp3-category">{item.category}</span>
                     <p className="hp3-price">{item.price}</p>
                     
-                    {/* SVG BUTTON (Rent Now) */}
-                    <button className="hp3-cta-btn hp3-btn-small">
-                      <svg className="hp3-frame" viewBox="0 0 420 64" preserveAspectRatio="none">
-                        <polygon className="hp3-inner" points="40,12 380,12 408,32 380,52 40,52 12,32" />
-                        <rect className="hp3-innerBox" x="20" y="18" width="380" height="28" />
-                      </svg>
-                      <span>Rent Now</span>
-                    </button>
+
 
                   </div>
                 </div>

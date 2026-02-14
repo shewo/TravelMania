@@ -56,6 +56,17 @@ public class UserController {
         }
     }
 
+    // 5. Delete user
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok().body("User deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     // --- DTO Classes ---
     @Data
     public static class ProfileUpdateRequest {

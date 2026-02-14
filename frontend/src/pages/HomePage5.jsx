@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/HomePage5.css'; 
 
 // 1. IMPORT YOUR TITLE PNG HERE
 import titlePng from '../assets/hero-title 2.png'; 
 
 const HomePage5 = () => {
+  const navigate = useNavigate();
   return (
     <div className="hp5-hero-section">
       
@@ -41,7 +43,7 @@ const HomePage5 = () => {
         <div className="hp5-buttons-container">
           
           {/* BUTTON 1 */}
-          <button className="hp5-fancy-btn">
+          <button className="hp5-fancy-btn" onClick={() => navigate('/productpage')}>
             <svg className="hp5-svg-frame" viewBox="0 0 420 64" preserveAspectRatio="none">
               <polygon className="hp5-poly" points="40,12 380,12 408,32 380,52 40,52 12,32" />
               <rect className="hp5-rect" x="20" y="18" width="380" height="28" />

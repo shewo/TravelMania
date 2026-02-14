@@ -12,13 +12,13 @@ public class SellerController {
     @Autowired
     private SellerService sellerService;
 
-    // 1. අලුත් Seller කෙනෙක් හදන්න (Register වෙන්න)
+
     @PostMapping("/register")
     public Seller registerSeller(@RequestBody Seller seller) {
         return sellerService.createSeller(seller);
     }
 
-    // 2. ඔක්කොම Sellers ලා බලන්න
+
     @GetMapping("/all")
     public List<Seller> getAllSellers() {
         return sellerService.getAllSellers();

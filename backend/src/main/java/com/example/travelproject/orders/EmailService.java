@@ -1,4 +1,4 @@
-package com.example.travelproject.orders; // ඔයාගේ පැකේජ් එක
+package com.example.travelproject.orders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,12 +11,12 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    // Seller ගේ Email එක (Admin) - මෙතනට උඹේ Email එක දාගන්න
+
     private final String SELLER_EMAIL = "admin@travelmania.com";
 
     public void sendOrderConfirmation(Order order) {
 
-        // 1. Order Items ටික ලස්සනට String එකක් විදියට හදාගන්නවා
+
         StringBuilder itemsList = new StringBuilder();
         if (order.getItems() != null) {
             for (OrderItem item : order.getItems()) {
